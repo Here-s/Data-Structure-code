@@ -1,15 +1,15 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<iostream>
 using namespace std;
-#define h 100 //Í¨¹ýdefine¶¨ÒåÊ¹µÃ h ×î´óÎª100 ÒòÎªÌ«´ó»áµ¼ÖÂÕ»Òç³ö
+#define h 100 //é€šè¿‡defineå®šä¹‰ä½¿å¾— h æœ€å¤§ä¸º100 å› ä¸ºå¤ªå¤§ä¼šå¯¼è‡´æ ˆæº¢å‡º
 
 void setjudge()
 {
     int size = 4;
-    //Ì«´óµÄÊ±ºò ¾Í»áµ¼ÖÂÕ»Òç³ö
-    cout << "ÇëÊäÈë¾ØÕóµÄ³¤£¬²»¿ÉÒÔ´óÓÚ100" << endl;
+    //å¤ªå¤§çš„æ—¶å€™ å°±ä¼šå¯¼è‡´æ ˆæº¢å‡º
+    cout << "è¯·è¾“å…¥çŸ©é˜µçš„é•¿ï¼Œä¸å¯ä»¥å¤§äºŽ100" << endl;
     cin >> size;
-    cout << "ÇëÊäÈë¾ØÕó×ø±êµÄÖµ£¬Ö»¿ÉÊäÈë1»òÕß0" << endl;
+    cout << "è¯·è¾“å…¥çŸ©é˜µåæ ‡çš„å€¼ï¼Œåªå¯è¾“å…¥1æˆ–è€…0" << endl;
     int a[h][h];
     for (int i = 1; i <= size; i++)
     {
@@ -29,7 +29,7 @@ void setjudge()
         }
         if (count == size)
         {
-            cout << "´Ë¾ØÕó¾ßÓÐ×Ô·´ÐÔ" << endl;
+            cout << "æ­¤çŸ©é˜µå…·æœ‰è‡ªåæ€§" << endl;
         }
     }
     count = 0;
@@ -41,11 +41,11 @@ void setjudge()
         }
         if (count == size)
         {
-            cout << "´Ë¾ØÕó¾ßÓÐ·´×Ô·´ÐÔ" << endl;
+            cout << "æ­¤çŸ©é˜µå…·æœ‰åè‡ªåæ€§" << endl;
         }
     }
     count = 0;
-    for (i = 1; i <= size; i++)//iÊÇÐÐ jÊÇÁÐ
+    for (i = 1; i <= size; i++)//iæ˜¯è¡Œ jæ˜¯åˆ—
     {
         for (j = size; j >= 1; j--)
         {
@@ -55,7 +55,7 @@ void setjudge()
             }
             if (count == size * size)
             {
-                cout << "´Ë¾ØÕó¾ßÓÐ¶Ô³ÆÐÔ" << endl;
+                cout << "æ­¤çŸ©é˜µå…·æœ‰å¯¹ç§°æ€§" << endl;
                 goto abc;
             }
         }
@@ -63,7 +63,7 @@ void setjudge()
 abc:
     cout << endl;
     count = 0;
-    for (i = 1; i <= size; i++)//iÊÇÐÐ jÊÇÁÐ
+    for (i = 1; i <= size; i++)//iæ˜¯è¡Œ jæ˜¯åˆ—
     {       
         for (j = size ; j >= 1; j--)
         {
@@ -73,18 +73,18 @@ abc:
             }
             if (a[i][i] == 1 && count>0)
             {
-                cout << "¼È²»ÊÇ¶Ô³ÆÐÔ£¬ÓÖ²»ÊÇ·´¶Ô³ÆÐÔ" << endl;
+                cout << "æ—¢ä¸æ˜¯å¯¹ç§°æ€§ï¼Œåˆä¸æ˜¯åå¯¹ç§°æ€§" << endl;
                 goto ddd;
             }
         }
         if (a[i][i] == 1 && count == 0)
         {
-            cout << "¼ÈÊÇ¶Ô³ÆÐÔ£¬ÓÖÊÇ·´¶Ô³ÆÐÔ" << endl;
+            cout << "æ—¢æ˜¯å¯¹ç§°æ€§ï¼Œåˆæ˜¯åå¯¹ç§°æ€§" << endl;
         }
     }             
     if (count >0 )//size * (size - 1)
         {
-            cout << "´Ë¾ØÕó¾ßÓÐ·´¶Ô³ÆÐÔ" << endl;
+            cout << "æ­¤çŸ©é˜µå…·æœ‰åå¯¹ç§°æ€§" << endl;
             goto def;
         }
 def:
@@ -100,7 +100,7 @@ ddd:
             {
                 if (a[i][j] == 1 && a[j][k] == 1 && a[i][k] ==1)
                 {
-                    cout << "´Ë¾ØÕó¾ßÓÐ´«µÝÐÔ" << endl;
+                    cout << "æ­¤çŸ©é˜µå…·æœ‰ä¼ é€’æ€§" << endl;
                 }
             }
         }
