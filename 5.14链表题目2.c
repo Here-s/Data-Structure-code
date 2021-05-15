@@ -20,14 +20,14 @@ struct ListNode* reverseList(struct ListNode* head)
 	//核心思路：取cur头插到以newhead为头的新链表当中
 	struct ListNode* newHead = NULL;
 	struct ListNode* cur = head;
-	struct ListNode* next = cur->next;
 	while (cur != NULL)
 	{
+		struct ListNode* next = cur->next;//写在循环里面 就不需要判断是否为空指针了，因为
+		//因为如果是空的话 就进不了循环 所以这样更方便
 		//头插
 		cur->next = newHead;
 		newHead = cur;//完成头插
 		cur = next;
-		next = next->next;
 	}
 	return newHead;//这里就是链表新的头
 }
