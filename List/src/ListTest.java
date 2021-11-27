@@ -5,6 +5,7 @@ import java.util.ListIterator;
 
 public class ListTest {
 
+    
     public static void main(String[] args) {
         //add 方法 默认是放到数组的最后一个位置的
         ArrayList<String> list = new ArrayList<>();
