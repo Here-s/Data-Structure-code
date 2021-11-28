@@ -8,7 +8,7 @@ public class Test {
         Integer b = 129;
         System.out.println(a == b);//123 为 true   129 为 false
         //因为底层是 valueOf 所以找到出发点 从 valueOf 里面看 发现范围是 [-128……127]
-
+        //因为 129 超过了下面的范围，所以又会 new 一个对象 所以 new 了对象之后 就是 false 了
     }
 
     //装箱 和 拆箱 （装包 和 拆包）
