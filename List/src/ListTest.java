@@ -114,11 +114,103 @@ class MyArrayList<E> {
     public int size() {
         return this.usedSize;
     }
+
+
 }
+
+class Student {
+    private String name;
+    private String classes;
+    private double score;
+
+    public Student(String name, String classes, double score) {
+        this.name = name;
+        this.classes = classes;
+        this.score = score;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getClasses() {
+        return classes;
+    }
+
+    public void setClasses(String classes) {
+        this.classes = classes;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", classes='" + classes + '\'' +
+                ", score=" + score +
+                '}';
+    }
+}
+
 public class ListTest {
 
-    
+
+    //删除第一个字符串当中出现的第二个字符串中的字符（cntv面试题）
     public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        String str = "welcome to bit";
+        String str1 = "come";
+        for (int i = 0 ; i < str.length(); i++) {
+            char ret = str.charAt(i);
+            if (!str1.contains(ret+"")) {
+                list.add(ret+"");
+            }
+        }
+        for (String ch:list) {
+            System.out.print(ch);
+        }
+        System.out.println();
+        System.out.println(list);
+    }
+
+    public static void main15(String[] args) {
+        ArrayList<Integer> integers = new ArrayList<>();
+        integers.add(11);
+        integers.add(2);
+        integers.add(13);
+        Collections.sort(integers);
+        System.out.println(integers);
+    }
+
+    public static void main14(String[] args) {
+        ArrayList<Student> students = new ArrayList<>();
+        students.add(new Student("123","101",99.9));
+        students.add(new Student("124","102",98.9));
+        students.add(new Student("125","103",97.9));
+        System.out.println(students);
+    }
+
+    public static void main13(String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list1 = new ArrayList<>(34);
+
+        //list2 的方法比 list 的方法更多
+        List<String> list2 = new ArrayList<>();
+
+    }
+    
+    public static void main12(String[] args) {
         MyArrayList<String> list = new MyArrayList<>();
         list.add("ab");
         list.add("c");
