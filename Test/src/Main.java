@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 public class Main {
 
-
     //找到小镇的法官
 
     /*在一个小镇里，按从 1 到 n 为 n 个人进行编号。传言称，这些人中有一个是小镇上的秘密法官。
