@@ -2,8 +2,6 @@ import java.util.Scanner;
 import java.util.*;
 
 public class Main {
-    
-    
 
     //找出数组中重复的数字。
 
