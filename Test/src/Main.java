@@ -1,7 +1,15 @@
-import java.util.Scanner;
 import java.util.*;
 
 public class Main {
+
+
+    //十六进制转换为十进制
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String str = scanner.nextLine();
+        long a = Long.parseLong(str,16);
+        System.out.println(a);
+    }
 
     //找出数组中重复的数字。
 
