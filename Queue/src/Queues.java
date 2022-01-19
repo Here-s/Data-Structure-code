@@ -2,6 +2,7 @@ import java.util.*;
 
 public class Queues {
 
+    
     public static void main(String[] args) {
         MyQueue queue = new MyQueue();
         queue.offer(1);
