@@ -57,20 +57,23 @@ public class CollectionTest {
 
         boolean flag = map.containsKey("Lockey");
         System.out.println(flag);
-
-        Map<String,String> map2 = new TreeMap<>();
     }
 
     public static void main3(String[] args) {
         Collection<String> collection = new ArrayList<>();
         collection.add("hello");
         collection.add("word");
-        //System.out.println(collection);
+        System.out.println(collection);
+        System.out.println(collection.size());
+        System.out.println(collection.isEmpty());
+        collection.remove("word");
+        System.out.println(collection);
         Object[] objects = collection.toArray();
         System.out.println(Arrays.toString(objects));
+        System.out.println(objects);
         //String 会报错 因为涉及到 JVM 对数组的处理， 对于数组 不建议进行整体的进行强制类型的转换
         //Object 转换为其他类型时 暂且理解为：内部的元素 并没有全部进行转换
-        String[] str = (String[]) collection.toArray();
+//        String[] str = (String[]) collection.toArray();
     }
 
     public static void main2(String[] args) {
@@ -93,6 +96,8 @@ public class CollectionTest {
         Collection<String> collection = new ArrayList<String>();//后面的 String 可以不写
         //写上 <>(泛型) 里面限定类型之后 就只能放那个类型的数据了。就只能 add 泛型的类型
         collection.add("hello");
+        collection.add("word");
+        System.out.println(collection);
 
         //<> 里面的类型 只能是类类型 不能是基本类型 比如说整型 放 Integer
         Collection<Integer> collection1 = new ArrayList<>();
