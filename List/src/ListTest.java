@@ -166,7 +166,7 @@ class Student {
 public class ListTest {
 
 
-    //删除第一个字符串当中出现的第二个字符串中的字符（cntv面试题）
+    //删除第一个字符串当中出现的第二个字符串中的字符（cvte面试题）
     public static void main(String[] args) {
         ArrayList<String> list = new ArrayList<>();
         String str = "welcome to bit";
@@ -380,9 +380,10 @@ public class ListTest {
             if (ret.equals("hello")) {
                 i.remove();
             }else {
-                System.out.println(i.next());//因为 i 指向空的一个 所以 next 就是下一个元素
+                System.out.println(ret);
             }
         }
+        System.out.println(list2);
     }
 
     public static void main2(String[] args) {
@@ -431,5 +432,6 @@ public class ListTest {
 
         //使用另外一个 Arraylist 对 list3 初始化
         ArrayList<String> list3 = new ArrayList<>(list2);
+        System.out.println(list3);
     }
 }

@@ -2,7 +2,7 @@ public class Test {
 
 
     //阿里面试题：下面的输出是否相等 为什么
-    public static void main4(String[] args) {
+    public static void main(String[] args) {
         //遇到问题 找焦点 找最主要的地方
         Integer a = 129;
         Integer b = 129;
@@ -18,12 +18,12 @@ public class Test {
         //装箱
         Integer a = 123;
         //拆箱
-        int b = a;//隐式的
+        int b = a;//隐式的：因为把 Integer 变为 int 了
         System.out.println(a+"   "+b);
 
-        System.out.println("=====================");
+//        System.out.println("=====================");
 
-        //这里就睡显式的装包
+        //这里就是显式的装包
         Integer a2 = Integer.valueOf(123);
         Integer a3 = new Integer(123);
 
