@@ -1,9 +1,140 @@
 import java.util.*;
 
 public class Main {
+
+    class Solution {
+        public int calPoints(String[] ops) {
+            if (ops == null) {
+                return 0;
+            }
+            Stack<String> stack = new Stack<>();
+            int num2 = 0;
+            int num1 = 0;
+            for (int i = 0; i < ops.length; i++) {
+                if (ops[i].equals("+")) {
+                    num2 = Integer.parseInt(stack.pop());
+                    num1 = Integer.parseInt(stack.pop());
+                    stack.push(String.valueOf(num2 + num1));
+                } else if (ops[i].equals("D")) {
+                    num2 = Integer.parseInt(stack.pop());
+                    num1 = Integer.parseInt(stack.pop());
+                    stack.push(String.valueOf(num2 * num1));
+                } else if (ops[i].equals("C")) {
+                    stack.pop();
+                } else {
+                    stack.push(ops[i]);
+                }
+            }
+            int sum = 0;
+            for (int i = 0; i < stack.size(); i++) {
+                sum += Integer.parseInt(stack.pop());
+            }
+            return sum;
+        }
+    }
+
+    public class Solution {
+        public boolean IsPopOrder(int [] pushA,int [] popA) {
+            Stack<Integer> stack = new Stack<>();
+            int i = 0;
+            int j = 0;
+            while (i < pushA.length && j < popA.length) {
+                stack.push(pushA[i]);
+                i++;
+                if (stack.peek() == popA[j]) {
+                    stack.pop();
+                    j++;
+                }
+            }
+            if (stack != null) {
+                return false;
+            }
+            return true;
+        }
+    }
+
+    class Solution {
+        public boolean backspaceCompare(String s, String t) {
+            if (s == null || t == null) {
+                return false;
+            }
+            Stack<String> stack = new Stack<>();
+            String[] strings = s.split("");
+            Stack<String> stack1 = new Stack<>();
+            String[] strings1 = t.split("");
+            for (int i = 0; i < s.length(); i++) {
+                if (strings[i].equals("#")) {
+                    if (!stack.isEmpty()) {
+                        stack.pop();
+                    }
+                } else {
+                    stack.push(strings[i]);
+                }
+            }
+            for (int i = 0; i < t.length(); i++) {
+                if (strings1[i].equals("#")) {
+                    if (!stack1.isEmpty()) {
+                        stack1.pop();
+                    }
+                } else {
+                    stack1.push(strings1[i]);
+                }
+            }
+            return stack.equals(stack1);
+
+//            int flag = 0;
+//            while (stack.isEmpty() && stack1.isEmpty()) {
+//                String s1 = stack.peek();
+//                String s2 = stack1.peek();
+//                if (!s1.equals(s2)) {
+//                    flag = 1;//说明为假
+//                }
+//                stack.pop();
+//                stack1.pop();
+//            }
+//            if (flag == 1){
+//                return false;
+//            }
+//            return true;
+        }
+    }
+
+    public List<List<Integer>> shiftGrid(int[][] grid, int k) {
+        List<List<Integer>> list1 = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        k %= grid.length*grid[0].length;
+        int[] arr = new int[grid.length*grid[0].length];
+        int[] arr1 = new int[grid.length*grid[0].length];
+        int len = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                arr[len] = grid[i][j];
+                len++;
+            }
+        }
+        int x = 0;
+        for (int i = arr.length - k; i < arr.length; i++) {
+            arr1[x] = arr[i];
+            x++;
+        }
+        for (int i = 0; i < arr.length - k; i++) {
+            arr1[x] = arr[i];
+            x++;
+        }
+        int count = 0;
+        for (int i = 0; i < grid.length; i++) {
+            List<Integer> list2 = new ArrayList<>();
+            for (int j = 0; j < grid[0].length; j++) {
+                list2.add(arr1[count]);
+                count++;
+            }
+            list1.add(list2);
+        }
+        return list1;
+    }
     
     //十六进制转换为十进制
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
         long a = Long.parseLong(str,16);
