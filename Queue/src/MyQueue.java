@@ -5,6 +5,7 @@ class Node {
         this.val = val;
     }
 }
+
 public class MyQueue {
     public Node head;
     public Node last;
