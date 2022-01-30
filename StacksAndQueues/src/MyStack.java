@@ -41,4 +41,8 @@ public class MyStack {
         }
         return this.elem[this.usedSize-1];
     }
+
+    public int size() {
+        return this.usedSize;
+    }
 }

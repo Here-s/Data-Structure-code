@@ -1,4 +1,16 @@
+import java.util.*;
+
 public class Stack {
+
+    public static void main3(String[] args) {
+        java.util.Stack<Integer> stack = new java.util.Stack<>();
+        java.util.Stack<Integer> stack1 = new java.util.Stack<>();
+        stack.push(1);
+        stack.push(2);
+        stack1.push(1);
+        stack1.push(2);
+        System.out.println(stack.equals(stack1));
+    }
 
     public static void main(String[] args) {
         MyStack stack = new MyStack();
@@ -9,10 +21,9 @@ public class Stack {
         stack.push(5);
         stack.push(6);
         stack.push(7);
-        //弹出栈顶元素并且删除
-        System.out.println(stack.pop());
-        //获取栈顶元素，不删除
-        System.out.println(stack.pop());
+        System.out.println(stack.size());
+        stack.pop();
+        stack.pop();
         System.out.println(stack.peek());
         System.out.println(stack.isEmpty());
     }
