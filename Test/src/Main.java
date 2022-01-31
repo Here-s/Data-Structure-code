@@ -2,6 +2,162 @@ import java.util.*;
 
 public class Main {
 
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int num = 2;
+        StringBuilder stringBuilder = new StringBuilder();
+        while (num <= n) {
+            if (n % num == 0) {
+                stringBuilder.append(num+" ");
+                n /= num;
+            } else {
+                num++;
+            }
+        }
+        System.out.println(stringBuilder);
+    }
+
+    public static void main6(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        if (n <= 0) {
+            return;
+        }
+        Stack<Integer> stack = new Stack<>();
+        stack.push(0);
+        for (int i = 0; i < n; i++) {
+            stack.push(scanner.nextInt());
+        }
+        int count = 1;
+        int num = 0;
+        int max = 0;
+        for (int i = 0; i < n; i++) {
+            int val = stack.pop();
+            if (val == stack.peek()) {
+                count++;
+            } else {
+                if (num <= count) {
+                    num = count;
+                    max = val;
+                    count = 1;
+                }
+            }
+        }
+        System.out.println(max);
+    }
+
+    public static void main5(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        List<List<Integer>> list = new ArrayList<>();
+        //第一行：
+        List<Integer> list1 = new ArrayList<>();
+        list1.add(1);
+        list.add(list1);
+        for (int i = 1; i < n; i++) {
+            List<Integer> list2 = new ArrayList<>();
+
+            list2.add(1);//每一行的开始都是 1
+
+            List<Integer> preRow = list.get(i - 1);//拿到上一行
+            for (int j = 1; j < i; j++) {
+                int num1 = preRow.get(j) + preRow.get(j - 1);
+                list2.add(num1);
+            }
+
+            list2.add(1);//每一行的结尾都是 1
+            list.add(list2);
+        }
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.get(i).size(); j++) {
+                System.out.print(list.get(i).get(j)+" ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main4(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = scanner.nextInt();
+        }
+        Arrays.sort(arr);
+        for (int a:arr) {
+            System.out.print(a);
+        }
+    }
+
+    public static boolean isValid(String s) {
+        Stack<String> stack = new Stack<>();
+        Stack<String> stack1 = new Stack<>();
+        String[] strings = s.split("");
+        for (int i = 0; i < strings.length; i++) {
+            if (strings[i].equals("(") || strings[i].equals("[") || strings[i].equals("{")) {
+                stack.push(strings[i]);
+            } else {
+                if (stack.isEmpty()) {
+                    return false;
+                }
+                if (stack.peek().equals("(") && strings[i].equals(")") ||
+                        stack.peek().equals("[") && strings[i].equals("]") ||
+                        stack.peek().equals("{") && strings[i].equals("}")) {
+                    stack.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        if (stack.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void main3(String[] args) {
+        String s = "]";
+        System.out.println(isValid(s));
+    }
+
+
+    public static int calPoints(String[] ops) {
+        if (ops == null) {
+            return 0;
+        }
+        Stack<String> stack = new Stack<>();
+        int num2 = 0;
+        int num1 = 0;
+        for (int i = 0; i < ops.length; i++) {
+            if (ops[i].equals("+")) {
+                num2 = Integer.parseInt(stack.pop());
+                num1 = Integer.parseInt(stack.peek());
+                stack.push(String.valueOf(num2));
+                stack.push(String.valueOf(num2 + num1));
+            } else if (ops[i].equals("D")) {
+                num2 = Integer.parseInt(stack.peek());
+                stack.push(String.valueOf(num2 * 2));
+            } else if (ops[i].equals("C")) {
+                stack.pop();
+            } else {
+                stack.push(ops[i]);
+            }
+        }
+        int sum = 0;
+        int k = stack.size();
+        for (int i = 0; i < k; i++) {
+            sum += Integer.parseInt(stack.pop());
+        }
+        return sum;
+    }
+
+    public static void main2(String[] args) {
+        String[] strings = "52CD+".split("");
+        int sum = calPoints(strings);
+        System.out.println(sum);
+    }
+
     class Solution {
         public int calPoints(String[] ops) {
             if (ops == null) {
@@ -33,7 +189,7 @@ public class Main {
         }
     }
 
-    public class Solution {
+    public class Solution1 {
         public boolean IsPopOrder(int [] pushA,int [] popA) {
             Stack<Integer> stack = new Stack<>();
             int i = 0;
@@ -53,7 +209,7 @@ public class Main {
         }
     }
 
-    class Solution {
+    class Solution2 {
         public boolean backspaceCompare(String s, String t) {
             if (s == null || t == null) {
                 return false;
@@ -147,7 +303,7 @@ public class Main {
     数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。
     请找出数组中任意一个重复的数字。*/
 
-    class Solution {
+    class Solution3 {
         public int findRepeatNumber(int[] nums) {
             Arrays.sort(nums);
             for(int i = 1; i < nums.length; i++){
@@ -167,7 +323,7 @@ public class Main {
     你可以按任意顺序返回答案。*/
 
     //这里通过暴力遍历的方法去求解
-    class Solution2 {
+    class Solution4 {
         public int[] twoSum(int[] nums, int target) {
             for(int i = 0;i< nums.length; i++){
                 for(int j = 0;j<nums.length; j++){
@@ -192,7 +348,7 @@ public class Main {
     给定数组 trust，该数组由信任对 trust[i] = [a, b] 组成，表示编号为 a 的人信任编号为 b 的人。
     如果小镇存在秘密法官并且可以确定他的身份，请返回该法官的编号。否则，返回 -1。*/
 
-    class Solution1 {
+    class Solution5 {
         public int findJudge(int n, int[][] trust) {
             if (n == 1) return 1;
             int[] arr = new int[n + 1];
