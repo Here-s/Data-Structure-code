@@ -3,7 +3,7 @@ import java.util.*;
 public class Queues {
 
     
-    public static void main(String[] args) {
+    public static void main4(String[] args) {
         MyQueue queue = new MyQueue();
         queue.offer(1);
         queue.offer(2);
@@ -24,6 +24,13 @@ public class Queues {
         Deque<Integer> queue2 = new LinkedList<>();
         queue2.offerFirst(1);
         queue2.offerLast(2);
+        queue2.offerLast(3);
+        queue2.offerLast(4);
+        queue2.offerLast(5);
+        System.out.println(queue2);
+        queue2.removeFirst();
+        queue2.removeLast();
+        System.out.println(queue2);
         System.out.println(queue2.peekFirst());
         System.out.println(queue2.peekLast());
 
@@ -35,8 +42,11 @@ public class Queues {
         //add 可能会抛异常，所以多用 offer
         queue.add(1);
         queue.offer(2);
+        queue.offer(3);
+        queue.offer(4);
+        queue.offer(5);
+        System.out.println(queue.element());
         System.out.println(queue.peek());
-        System.out.println(queue.poll());
     }
 
     public static void main1(String[] args) {
