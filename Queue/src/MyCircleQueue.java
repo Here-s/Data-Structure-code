@@ -9,6 +9,9 @@ public class MyCircleQueue {
     }
 
     public boolean enQueue(int value) {
+        if (isFull()) {
+            return false;
+        }
         this.elem[rear] = value;
         rear = (rear+1)% elem.length;
         return true;
@@ -25,7 +28,7 @@ public class MyCircleQueue {
     public int Front() {
         if (isEmpty()) {
             //OJ 上面只能返回 -1 如果抛异常的话，可能会认为代码出错了
-            return -1;
+            throw new  RuntimeException("队列为空");
         }
         return this.elem[front];
     }

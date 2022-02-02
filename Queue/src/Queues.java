@@ -2,17 +2,34 @@ import java.util.*;
 
 public class Queues {
 
+
+    public static void main(String[] args) {
+        MyCircleQueue myCircleQueue = new MyCircleQueue(4);
+        myCircleQueue.enQueue(1);
+        myCircleQueue.enQueue(2);
+        myCircleQueue.enQueue(3);
+        myCircleQueue.enQueue(4);
+        myCircleQueue.deQueue();
+        int val = myCircleQueue.front;//得到队头元素
+        System.out.println(val);
+        int val2 = myCircleQueue.rear;//得到队尾元素
+        System.out.println(val2);
+        myCircleQueue.deQueue();
+        int val3 = myCircleQueue.front;
+        System.out.println(val3);
+    }
     
     public static void main4(String[] args) {
         MyQueue queue = new MyQueue();
         queue.offer(1);
         queue.offer(2);
         queue.offer(3);
+        System.out.println(queue.isEmpty());
         System.out.println(queue.peek());//1
         System.out.println(queue.poll());//1
         System.out.println(queue.poll());//2
         System.out.println(queue.poll());//3
-        System.out.println(queue.poll());//队列为空了
+//        System.out.println(queue.poll());//队列为空了
     }
 
     //用单链表实现队列要求尾 last 双向链表就不用这样
