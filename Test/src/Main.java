@@ -3,6 +3,14 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
+        RecentCounter recentCounter = new RecentCounter();
+        System.out.println(recentCounter.ping(1));
+        System.out.println(recentCounter.ping(100));
+        System.out.println(recentCounter.ping(3001));
+        System.out.println(recentCounter.ping(3002));
+    }
+
+    public static void main7(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         int num = 2;
