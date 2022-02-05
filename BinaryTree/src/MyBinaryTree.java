@@ -28,4 +28,34 @@ public class MyBinaryTree {
         E.right = H;
         return A;
     }
+
+    //前序遍历
+    void preOrder(BTNode root) {
+        if (root == null) {
+            return;
+        }
+        System.out.print(root.val+" ");
+        preOrder(root.left);
+        preOrder(root.right);
+    }
+
+    //中序遍历
+    void inOrder(BTNode root) {
+        if (root == null) {
+            return;
+        }
+        inOrder(root.left);
+        System.out.print(root.val+" ");
+        inOrder(root.right);
+    }
+
+    //后序遍历
+    void postOrder(BTNode root) {
+        if (root == null) {
+            return;
+        }
+        postOrder(root.left);
+        postOrder(root.right);
+        System.out.print(root.val+" ");
+    }
 }

@@ -1,16 +1,26 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class BinaryTree {
 
     //所有二叉树相关的题目，基本上都是通过某种遍历方法来去解题的。
     //   有前序遍历（先根遍历），中序遍历，后续遍历   是因为访问的时机不一样
     //   遍历(Traversal)是指沿着某条搜索路线，依次对树中每个结点均做一次且仅做一次访问。访问结点所做的操作
     //   依赖于具体的应用问题(比如：打印节点内容、节点内容加1)
-    //前序遍历：先根-》左子树-》右子树
+    //前序遍历：先根-》左子树-》右子树  每棵树的访问方式都是根左右这样
     //中序遍历：左子树-》根-》右子树
-    //后序遍历：
+    //后序遍历：左子树-》右子树-》根
+    //因为每棵树的访问方式一样，所以就可以用递归来访问
 
     public static void main(String[] args) {
         MyBinaryTree myBinaryTree = new MyBinaryTree();
         BTNode root = myBinaryTree.creatTree();
+        System.out.println();
+        myBinaryTree.preOrder(root );
+        System.out.println();
+        myBinaryTree.inOrder(root);
+        System.out.println();
+        myBinaryTree.postOrder(root);
         System.out.println();
     }
 
