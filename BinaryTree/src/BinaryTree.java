@@ -22,6 +22,9 @@ public class BinaryTree {
         System.out.println();
         myBinaryTree.postOrder(root);
         System.out.println();
+        System.out.println(myBinaryTree.size1(root));
+        System.out.println(myBinaryTree.getLeafNodeCount1(root));
+        System.out.println(myBinaryTree.getKLevelNodeCount(root, 3));
     }
 
     //二叉树的存储：顺序存储，和链式存储
