@@ -2,6 +2,8 @@ import java.util.*;
 
 public class Main {
 
+
+
     public static void main(String[] args) {
         RecentCounter recentCounter = new RecentCounter();
         System.out.println(recentCounter.ping(1));
