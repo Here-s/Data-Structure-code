@@ -4,7 +4,11 @@ public class Main {
 
 
 
+<<<<<<< HEAD
     public static void main8(String[] args) {
+=======
+    public static void main(String[] args) {
+>>>>>>> 96d1396b953c15daf591febbe034588f61776dda
         RecentCounter recentCounter = new RecentCounter();
         System.out.println(recentCounter.ping(1));
         System.out.println(recentCounter.ping(100));
