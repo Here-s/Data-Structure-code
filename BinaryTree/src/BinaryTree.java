@@ -11,6 +11,7 @@ public class BinaryTree {
     //中序遍历：左子树-》根-》右子树
     //后序遍历：左子树-》右子树-》根
     //因为每棵树的访问方式一样，所以就可以用递归来访问
+    //超出时间限制有两种情况：1、死循环  2、递归次数太多
 
     public static void main(String[] args) {
         MyBinaryTree myBinaryTree = new MyBinaryTree();
@@ -25,6 +26,17 @@ public class BinaryTree {
         System.out.println(myBinaryTree.size1(root));
         System.out.println(myBinaryTree.getLeafNodeCount1(root));
         System.out.println(myBinaryTree.getKLevelNodeCount(root, 3));
+        System.out.println("数的高度");
+        System.out.println(myBinaryTree.getHeight(root));
+        try {
+            System.out.println(myBinaryTree.find(root, 'G').val);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            System.out.println("没有这个节点");
+        }
+        System.out.println(myBinaryTree.isCompleteTree(root));
+        myBinaryTree.levelOrder(root);
+
     }
 
     //二叉树的存储：顺序存储，和链式存储
