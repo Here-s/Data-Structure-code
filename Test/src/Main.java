@@ -2,7 +2,9 @@ import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) {
+
+
+    public static void main8(String[] args) {
         RecentCounter recentCounter = new RecentCounter();
         System.out.println(recentCounter.ping(1));
         System.out.println(recentCounter.ping(100));
