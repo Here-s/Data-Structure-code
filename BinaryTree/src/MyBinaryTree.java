@@ -199,7 +199,7 @@ public class MyBinaryTree {
         }
     }
 
-    public List<List<Character>> levelOrder(BTNode root) {
+    public List<List<Character>> levelOrder1(BTNode root) {
         List<List<Character>> ret = new ArrayList<>();
         Queue<BTNode> queue = new LinkedList<>();
         queue.offer(root);

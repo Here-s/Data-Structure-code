@@ -3,12 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3e2b05fa-9393-4e8a-8a5b-259e2ec6c773" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/BinaryTree/BTNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BinaryTree/BTNode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/BinaryTree/BinaryTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BinaryTree/BinaryTree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/BinaryTree/MyBinaryTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BinaryTree/MyBinaryTree.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BinaryTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BinaryTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MyBinaryTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MyBinaryTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Test/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Test/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +74,7 @@
       <workItem from="1644028361127" duration="5753000" />
       <workItem from="1644141304773" duration="5352000" />
       <workItem from="1644201580383" duration="15202000" />
+      <workItem from="1644403298129" duration="1160000" />
     </task>
     <servers />
   </component>

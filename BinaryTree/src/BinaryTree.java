@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BinaryTree {
+    //面试技巧：和面试官一起讨论
 
     //所有二叉树相关的题目，基本上都是通过某种遍历方法来去解题的。
     //   有前序遍历（先根遍历），中序遍历，后续遍历   是因为访问的时机不一样
@@ -13,6 +14,7 @@ public class BinaryTree {
     //因为每棵树的访问方式一样，所以就可以用递归来访问
     //超出时间限制有两种情况：1、死循环  2、递归次数太多
 
+    //二叉搜索树：根节点左边都比根节点小，右边都比根节点大   中序遍历的大小是有序的
     public static void main(String[] args) {
         MyBinaryTree myBinaryTree = new MyBinaryTree();
         BTNode root = myBinaryTree.creatTree();
