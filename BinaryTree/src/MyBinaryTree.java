@@ -1,8 +1,5 @@
 import javax.swing.tree.TreeNode;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 class BTNode {
     public char val;
@@ -220,5 +217,143 @@ public class MyBinaryTree {
             ret.add(list);
         }
         return ret;
+    }
+
+    //查找最近的公共祖先：方法一
+    public BTNode lowestCommonAncestor(BTNode root, TreeNode p, TreeNode q) {
+        if(root == null) {
+            return null;
+        }
+        if(root == p || root == q) {
+            return root;
+        }
+        BTNode left = lowestCommonAncestor(root.left, p, q);
+        BTNode right = lowestCommonAncestor(root.right, p, q);
+        if(left != null && right != null) {
+            return root;
+        } else if (left != null) {
+            return left;
+        } else {
+            return right;
+        }
+    }
+    /**
+     * 用栈来求公共祖先
+     */
+    //查找最近的公共祖先：方法二：链表求交点、或者用栈来求相同的值
+    // 1、用两个栈存储路径  2、求栈的大小  3、让栈中多的元素 出差值个元素
+    // 4、出栈，直到栈顶元素相同，此时就是公共祖先
+    /*public boolean getPath(TreeNode root, TreeNode node, Stack<TreeNode> stack) {
+        if(root == null || node == null) {
+            return false;
+        }
+        stack.push(root);
+        if(root == node) {
+            return true;
+        }
+        boolean flag = getPath(root.left, node, stack);
+        if(flag == true) {
+            return true;
+        }
+        flag = getPath(root.right, node, stack);
+        if(flag == true) {
+            return true;
+        }
+        stack.pop();
+        return false;
+    }
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null) {
+            return null;
+        }
+        Stack<TreeNode> stack1 = new Stack<>();
+        getPath(root, p, stack1);
+        Stack<TreeNode> stack2 = new Stack<>();
+        getPath(root, q, stack2);
+        int size1 = stack1.size();
+        int size2 = stack2.size();
+        if(size1 > size2) {
+            int size = size1 - size2;
+            while(size != 0) {
+                //出栈
+                stack1.pop();
+                size--;
+            }
+            while(!stack1.isEmpty() && !stack2.isEmpty()) {
+                if(stack1.peek() == stack2.peek()) {
+                    return stack1.pop();
+                } else {
+                    stack1.pop();
+                    stack2.pop();
+                }
+            }
+        } else {
+            int size = size2 - size1;
+            while(size != 0) {
+                //出栈
+                stack2.pop();
+                size--;
+            }
+            while(!stack1.isEmpty() && !stack2.isEmpty()) {
+                if(stack1.peek() == stack2.peek()) {
+                    return stack2.pop();
+                } else {
+                    stack1.pop();
+                    stack2.pop();
+                }
+            }
+        }
+        return null;
+    }
+     */
+
+    //前序遍历非递归
+    void preOrderNor(BTNode root) {
+        Stack<BTNode> stack = new Stack<>();
+        BTNode cur = root;
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                System.out.print(cur.val + " ");
+                cur = cur.left;
+            }
+            BTNode top = stack.pop();
+            cur = top.right;
+        }
+    }
+
+    //中序遍历非递归
+    void inOrderNor(BTNode root) {
+        Stack<BTNode> stack = new Stack<>();
+        BTNode cur = root;
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            BTNode top = stack.pop();
+            System.out.println(top.val);
+            cur = top.right;
+        }
+    }
+
+    //后序遍历非递归
+    void postOrderNor(BTNode root) {
+        Stack<BTNode> stack = new Stack<>();
+        BTNode cur = root;
+        BTNode prev = null;
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            BTNode top = stack.peek();
+            if (top.right == null) {
+                stack.pop();
+                System.out.println(top.val+" ");
+            } else {
+                cur = top.right;
+            }
+        }
     }
 }

@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BinaryTree {
+
+
+    //二叉树非递归遍历的时候，只要牵扯到顺序相关的，就考虑栈和队列去
+
     //面试技巧：和面试官一起讨论
 
     //所有二叉树相关的题目，基本上都是通过某种遍历方法来去解题的。
