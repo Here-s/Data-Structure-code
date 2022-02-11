@@ -22,8 +22,7 @@ public class BinaryTree {
     public static void main(String[] args) {
         MyBinaryTree myBinaryTree = new MyBinaryTree();
         BTNode root = myBinaryTree.creatTree();
-        System.out.println();
-        myBinaryTree.preOrder(root );
+        myBinaryTree.preOrder(root);
         System.out.println();
         myBinaryTree.inOrder(root);
         System.out.println();
@@ -42,7 +41,6 @@ public class BinaryTree {
         }
         System.out.println(myBinaryTree.isCompleteTree(root));
         myBinaryTree.levelOrder(root);
-
     }
 
     //二叉树的存储：顺序存储，和链式存储

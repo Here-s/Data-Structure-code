@@ -348,9 +348,10 @@ public class MyBinaryTree {
                 cur = cur.left;
             }
             BTNode top = stack.peek();
-            if (top.right == null) {
+            if (top.right == null || top.right == prev) {
                 stack.pop();
                 System.out.println(top.val+" ");
+                prev = top;
             } else {
                 cur = top.right;
             }
