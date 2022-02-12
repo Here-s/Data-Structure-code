@@ -4,7 +4,6 @@
     <list default="true" id="3e2b05fa-9393-4e8a-8a5b-259e2ec6c773" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BinaryTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BinaryTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MyBinaryTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MyBinaryTree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +76,7 @@
       <workItem from="1644403298129" duration="1160000" />
       <workItem from="1644459538403" duration="8437000" />
       <workItem from="1644545897804" duration="9137000" />
+      <workItem from="1644633221571" duration="7094000" />
     </task>
     <servers />
   </component>

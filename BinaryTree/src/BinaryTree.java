@@ -22,24 +22,33 @@ public class BinaryTree {
     public static void main(String[] args) {
         MyBinaryTree myBinaryTree = new MyBinaryTree();
         BTNode root = myBinaryTree.creatTree();
+        System.out.println("前序遍历");
         myBinaryTree.preOrder(root);
         System.out.println();
+        System.out.println("中序遍历");
         myBinaryTree.inOrder(root);
         System.out.println();
+        System.out.println("后序遍历");
         myBinaryTree.postOrder(root);
         System.out.println();
+        System.out.println("二叉树当中结点的个数");
         System.out.println(myBinaryTree.size1(root));
+        System.out.println("二叉树当中叶子结点的个数");
         System.out.println(myBinaryTree.getLeafNodeCount1(root));
+        System.out.println("二叉树当中第 k 层结点的个数");
         System.out.println(myBinaryTree.getKLevelNodeCount(root, 3));
         System.out.println("数的高度");
         System.out.println(myBinaryTree.getHeight(root));
+        System.out.println("是否包含此节点，包含的话，输出此节点");
         try {
             System.out.println(myBinaryTree.find(root, 'G').val);
         } catch (NullPointerException e) {
             e.printStackTrace();
             System.out.println("没有这个节点");
         }
+        System.out.println("是不是完全二叉树");
         System.out.println(myBinaryTree.isCompleteTree(root));
+        System.out.println("层序遍历");
         myBinaryTree.levelOrder(root);
     }
 
