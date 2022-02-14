@@ -2,13 +2,161 @@ import java.util.*;
 
 public class Main {
 
+    public boolean isCompleteTree(TreeNode root) {
+        if(root == null) {
+            return true;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode cur = queue.poll();
+            if (cur != null) {
+                queue.offer(cur.left);
+                queue.offer(cur.right);
+            } else {
+                break;
+            }
+        }
+        while (!queue.isEmpty()) {
+            TreeNode cur = queue.peek();
+            if (cur == null) {
+                return false;
+            }
+            queue.poll();
+        }
+        return true;
+    }
+
+    public static void main14(String[] args) {
+        //用哈希表做
+        Scanner scanner = new Scanner(System.in);
+        int goods = scanner.nextInt();
+        int weight = scanner.nextInt();
+        int[][] goodsInfo = new int[goods][2];
+        double[][] valueRatio = new double[goods][2];
+        for (int i = 0; i < goods; i++) {
+            //放重量
+            goodsInfo[i][0] = scanner.nextInt();
+            //放价值
+            goodsInfo[i][1] = scanner.nextInt();
+            //放比值对应的位置
+            valueRatio[i][0] = i;
+            //放比值
+            valueRatio[i][1] = (double) goodsInfo[i][1] / goodsInfo[i][0];
+        }
+        //得到最大回报率
+        double sum = 0;
+        Arrays.sort(valueRatio, (o1, o2) -> {
+            if(o1[1] - o2[1] >= 0){
+                return -1;
+            }
+            return 1;
+        });
+        for (int i = 0; i < goods; i++) {
+            int k = (int) valueRatio[i][0];
+            if (goodsInfo[k][0] > weight) {
+                sum += valueRatio[i][1] * weight;
+                break;
+            }
+            sum += goodsInfo[k][1];
+            weight -= goodsInfo[k][0];
+        }
+        System.out.println(String.format("%.1f" , sum));
+    }
+
+    public static void main13(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = scanner.nextInt();
+        }
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 1; i < n; i++) {
+            Arrays.sort(arr);
+            arr[i] += arr[i - 1];
+            stack.push(arr[i]);
+        }
+        int sum = 0;
+        while (!stack.isEmpty()) {
+            sum += stack.pop();
+        }
+        System.out.println(sum);
+    }
+
+    public static void main12(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int k = scanner.nextInt();
+        int count = 0;
+        for (int i = 1; i <= n; i++) {
+            for (int j = i; j <= n; j++) {
+                for (int m = i; m <= n; m++) {
+                    if (i + j + m == n) {
+                        count++;
+                    }
+                }
+            }
+        }
+        System.out.println(count);
+    }
+
+    public static void main11(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int dan = 0;
+        int wei = 0;
+        while (scanner.hasNext()) {
+            int k = scanner.nextInt();
+            if (k == 0) {
+                dan++;
+            } else {
+                wei++;
+            }
+            if (wei >= 21 || dan >= 21) {
+                if (wei - dan > 1) {
+                    System.out.println(1);
+                    break;
+                } else if (dan - wei > 1){
+                    System.out.println(0);
+                    break;
+                }
+            }
+        }
+    }
+
+    public static void main10(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String str1 = scanner.next();
+        String str2 = scanner.next();
+        StringBuilder s1 = new StringBuilder(str1);
+        StringBuilder s2 = new StringBuilder(str2);
+        s1.reverse();
+        s2.reverse();
+        int sum = Integer.parseInt(String.valueOf(s1)) + Integer.parseInt(String.valueOf(s2));
+        StringBuilder s3 = new StringBuilder(String.valueOf(sum));
+        s3.reverse();
+        int num = Integer.parseInt(s3.toString());
+        System.out.println(num);
+    }
+
+    public static void main9(String[] args) {
+        BinaryTree binaryTree = new BinaryTree();
+        TreeNode root = binaryTree.creatTree();
+        binaryTree.preOrder(root);
+        System.out.println();
+        binaryTree.inOrder(root);
+        System.out.println();
+        binaryTree.postOrder(root);
+        System.out.println();
+        System.out.println(binaryTree.size(root));
+        System.out.println(binaryTree.levelSize(root));
+        System.out.println(binaryTree.getKLevelNodeCount(root,3));
+        System.out.println(binaryTree.find(root, 'E').val);
+    }
 
 
-<<<<<<< HEAD
+
     public static void main8(String[] args) {
-=======
-    public static void main(String[] args) {
->>>>>>> 96d1396b953c15daf591febbe034588f61776dda
         RecentCounter recentCounter = new RecentCounter();
         System.out.println(recentCounter.ping(1));
         System.out.println(recentCounter.ping(100));
