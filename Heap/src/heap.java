@@ -4,6 +4,17 @@ import java.util.PriorityQueue;
 public class heap {
 
     //堆排序：对一组数据进行从小到大排序，用大根堆
+    //用是大根堆进行排序的时候：
+    // 1、调整为大根堆
+    // 2、0 下标和最后一个未排序的元素进行交换即可
+    // 3、end--
+    public static void main(String[] args) {
+        int[] arr = {27,15,19,18,28,34,65,49,25,37};
+        TestHeap testHeap = new TestHeap();
+        testHeap.createHeap(arr);
+        testHeap.heapSort();
+        System.out.println(Arrays.toString(testHeap.elem));
+    }
 
     //topK 问题：给你 100w 个数据，找到前 10 个最大的数据
     // 思路一：对整体进行排序，输出前 10 个最大的元素
