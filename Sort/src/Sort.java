@@ -4,15 +4,235 @@ import java.util.Stack;
 
 public class Sort {
 
+    //往往不比较数据大小去排序的话，时间复杂度一般是：O(N)
+
+
+    //其它基于非比较的排序：计数排序、基数排序、桶排序
+    // 基数排序：就是按照个位的大小排除了，然后是十位数，最后是大位数。
+    // 桶排序：确定区间，然后把区间内的数排序，然后拿出来就可以了
+    // 计数排序（适用于某个范围）：
+
+
+    //计数排序
+    /**
+     *一般适用于有 n 个数，数据范围是 0-n 之间的
+     * 时间复杂度：O(N)
+     * 空间复杂度：O(M) M：当前数据的范围
+     * 稳定性：当前代码是不稳定的，但本质是稳定的
+     * @param array
+     */
+    public static void countingSort(int[] array) {
+        int maxVal = array[0];
+        int minVal = array[0];
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] < minVal) {
+                minVal = array[i];
+            }
+            if (array[i] > maxVal) {
+                maxVal = array[i];
+            }
+        }
+        //说明已经找到了最大值和最小值
+        int[] count = new int[maxVal-minVal+1];
+        //统计 array 数组当中，每个数据出现的次数
+        for (int i = 0; i < array.length; i++) {
+            int index = array[i];
+            //为了空间的合理使用，达到区间的使用
+            count[index-minVal]++;
+        }
+        //说明在计数数组当中，已经把 array 数组当中，每个数据出现的次数统计好了。
+        //接下来只需要遍历输出就可以了
+        int indexArray = 0;
+        for (int i = 0; i < count.length; i++) {
+            while (count[i] > 0) {
+                //加上 minVal 因为可能是区间
+                array[indexArray] = i+minVal;
+                count[i]--;
+                indexArray++;
+            }
+        }
+    }
+    public static void main(String[] args) {
+        int[] arr = {12,5,6,2,5,418,10,4,2,23,546,97,34,89};
+        countingSort(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+
+
+    //海量数据排序：内存只有1G 排序的数据有100G
+    //因为内存中无法把所有数据放下，所以需要外部排序，而归并排序是最常用的外部排序（外部是指数据在硬盘）
+    // 1、把 100 G的文件切成 200 分，每个 512 M
+    // 2、分别对 512 M排序，因为内存已经可以放得下，所以任意排序方式都可以
+    // 3、进行 200 路归并，同时对 200 份有序文件做归并过程，最终结果就有序了
+
+
     //对时间有要求，就用快排
     //对空间有要求：用堆排或归并
+    //只有冒泡、插入、归并是稳定的
+
+    //归并排序：非递归
+    /**
+     *
+     * @param array
+     */
+    public static void mergeSort(int[] array) {
+        int nums = 1;//代表每组的数据个数
+        while (nums < array.length) {
+            //数组每次都要进行遍历
+            for (int i = 0; i < array.length; i += nums*2) {
+                int left = i;
+                int mid = left+nums-1;
+                //防止越界
+                if (mid >= array.length) {
+                    mid = array.length - 1;
+                }
+                int right = mid+nums;
+                if (right >= array.length) {
+                    right = array.length - 1;
+                }
+                //下标确定之后，进行合并
+                merge(array, left, mid, right);
+            }
+            nums *= 2;
+        }
+    }
+    public static void main10(String[] args) {
+        int[] arr = {12,5,18,10,4,2,23,546,97,34,89};
+        mergeSort(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+
+
+
+    //归并排序：将已有的子序列合并，得到完全有序的的序列。将一个一个的元素二路归并为有序数组
+    /**
+     * 归并排序
+     * 时间复杂度：O(N*log以2为底N)
+     * 空间复杂度：O(N)
+     * 稳定性：稳定
+     * @param array
+     */
+    public static void mergeSort1(int[] array) {
+        mergeSortInternal(array,0, array.length-1);
+    }
+    private static void mergeSortInternal(int[] array, int low, int high) {
+        if (low >= high) {
+            return;
+        }
+        int mid = low + (high - low)/2;
+        //左边
+        mergeSortInternal(array, low, mid);
+        //右边
+        mergeSortInternal(array, mid+1, high);
+        //合并
+        merge(array,low,mid,high);
+    }
+    private static void merge(int[] array, int low, int mid, int high) {
+        int[] tmp = new int[high-low+1];
+        int index = 0;
+        int s1 = low;
+        int e1 = mid;
+        int s2 = mid+1;
+        int e2 = high;
+        while (s1 <= e1 && s2 <= e2) {
+            if (array[s1] <= array[s2]) {
+                tmp[index++] = array[s1++];
+            } else {
+                tmp[index++] = array[s2++];
+            }
+        }
+        while (s1 <= e1) {
+            tmp[index++] = array[s1++];
+        }
+        while (s2 <= e2) {
+            tmp[index++] = array[s2++];
+        }
+        //说明排好序了，拷贝 tmp 数组的元素放到原来的数组当中
+        for (int i = 0; i < index; i++) {
+            array[i+low] = tmp[i];
+        }
+    }
+    public static void main9(String[] args) {
+        int[] arr = {12,5,18,10,4,2,23,546,97,34,89};
+        mergeSort(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    //给两个有序数组，合并成一个有序数组   合并后的长度是 这个两个数组长度的和 合并后的数组定义为 tmp
+    //定义 s1 和 e1 表示 start1 和 end1    s2 和 e2  表示 start2
+    //比较 s1 和 s2 谁小把谁放到数组当中，然后再++ 然后继续比较
+    /**
+     * 合并两个有序数组为一个有序数组
+     * @param array1 有序数组1
+     * @param array2 有序数组2
+     * @return
+     */
+    public static int[] mergeArray(int[] array1, int[] array2) {
+        int s1 = 0;
+        int e1 = array1.length - 1;
+        int s2 = 0;
+        int e2 = array2.length - 1;
+        int[] tmp = new int[array1.length+array2.length];
+        int index = 0;
+        while (s1 <= e1 && s2 <= e2) {
+            if (array1[s1] <= array2[s2]) {
+                tmp[index++] = array1[s1++];
+            } else {
+                tmp[index++] = array2[s2++];
+            }
+        }
+        while (s1 <= e1) {
+            tmp[index++] = array1[s1++];
+        }
+        while (s2 <= e2) {
+            tmp[index++] = array2[s2++];
+        }
+        return tmp;
+    }
+
+    public static void main8(String[] args) {
+        int[] arr1 = {1,3,5,7,9};
+        int[] arr2 = {2,4,6,8,10};
+        int[] arr = mergeArray(arr1, arr2);
+        System.out.println(Arrays.toString(arr));
+    }
+
 
     //快速排序：非递归
+    // 第一次划分之后，八左右的数对都放到栈当中。前提：Pivot 左边有两个元素，右边有两个元素
     public static void quickSort(int[] array) {
         Stack<Integer> stack = new Stack<>();
         int start = 0;
         int end = array.length - 1;
         int pivot = partition(array,start,end);
+        if (pivot > start+1) {
+            //左边有两个元素
+            stack.push(start);
+            stack.push(pivot - 1);
+        }
+        if (pivot < end - 1) {
+            stack.push(pivot+1);
+            stack.push(end);
+        }
+        while (!stack.isEmpty()) {
+            end = stack.pop();
+            start = stack.pop();
+            pivot = partition(array,start,end);
+            if (pivot > start+1) {
+                //左边有两个元素
+                stack.push(start);
+                stack.push(pivot - 1);
+            }
+            if (pivot < end - 1) {
+                stack.push(pivot+1);
+                stack.push(end);
+            }
+        }
+    }
+    public static void main7(String[] args) {
+        int[] arr = {12,5,18,10,4,2,23,546,97,34,89};
+        quickSort(arr);
+        System.out.println(Arrays.toString(arr));
     }
 
 
@@ -106,7 +326,7 @@ public class Sort {
         array[start] = tmp;
         return start;
     }
-    public static void main(String[] args) {
+    public static void main6(String[] args) {
         int[] arr = {12,5,18,10,4,2,23,546,97,34,89};
         quickSort(arr);
         System.out.println(Arrays.toString(arr));
