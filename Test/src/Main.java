@@ -1,6 +1,385 @@
+import java.time.LocalDate;
 import java.util.*;
+class ListNode {
+      int val;
+      ListNode next;
+      ListNode(int x) { val = x; }
+}
 
 public class Main {
+
+    public ListNode sortList(ListNode head) {
+        List<Integer> list = new ArrayList<>();
+        while (head != null) {
+            list.add(head.val);
+            head = head.next;
+        }
+        Collections.sort(list);
+        ListNode cur = new ListNode(-1);
+        ListNode newHead = cur;
+        for (int i = 0; i < list.size(); i++) {
+            newHead.next = new ListNode(list.get(i));
+            newHead = newHead.next;
+        }
+        return cur.next;
+    }
+
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode cur = new ListNode(0);
+        ListNode head = cur;
+        if (l1.val == 0 && l2.val == 0 && l1.next == null && l2.next == null) {
+            return cur;
+        }
+        Stack<Integer> stack1 = new Stack<>();
+        Stack<Integer> stack2 = new Stack<>();
+        while (l1 != null) {
+            stack1.push(l1.val);
+            l1 = l1.next;
+        }
+        while (l2 != null) {
+            stack2.push(l2.val);
+            l2 = l2.next;
+        }
+        StringBuilder s1 = new StringBuilder();
+        StringBuilder s2 = new StringBuilder();
+        while (!stack1.isEmpty()) {
+            s1.append(stack1.pop());
+        }
+        while (!stack2.isEmpty()) {
+            s2.append(stack2.pop());
+        }
+        long sum = Long.parseLong(s1.toString()) + Long.parseLong(s2.toString());
+        while (sum != 0) {
+            cur.next = new ListNode((int) (sum % 10));
+            cur = cur.next;
+            sum /= 10;
+        }
+        return head.next;
+    }
+    public static void main(String[] args) {
+        ListNode cur1 = new ListNode(2);
+        ListNode head1 = cur1;
+        cur1.next = new ListNode(4);
+        cur1 = cur1.next;
+        cur1.next = new ListNode(9);
+        ListNode cur2 = new ListNode(5);
+        ListNode head2 = cur2;
+        cur2.next = new ListNode(6);
+        cur2 = cur2.next;
+        cur2.next = new ListNode(4);
+        cur2 = cur2.next;
+        cur2.next = new ListNode(9);
+        addTwoNumbers(head1,head2);
+    }
+
+    public static ListNode removeZeroSumSublists(ListNode head) {
+        ListNode cur = new ListNode(0);
+        cur.next = head;
+        Map<Integer, ListNode> map = new HashMap<>();
+        int sum = 0;
+        for (ListNode d = cur; d != null; d = d.next) {
+            sum += d.val;
+            map.put(sum, d);
+        }
+        sum = 0;
+        for (ListNode d = cur; d != null; d = d.next) {
+            sum += d.val;
+            d.next = map.get(sum).next;
+        }
+        return cur.next;
+    }
+    public static void main22(String[] args) {
+        ListNode cur = new ListNode(1);
+        ListNode head = cur;
+        cur.next = new ListNode(2);
+        cur = cur.next;
+        cur.next = new ListNode(-3);
+        cur = cur.next;
+        cur.next = new ListNode(3);
+        cur = cur.next;
+        cur.next = new ListNode(1);
+        cur = cur.next;
+        removeZeroSumSublists(head);
+    }
+
+    public static ListNode removeDuplicateNodes(ListNode head) {
+        Set<Integer> set = new HashSet<>();
+        ListNode cur = new ListNode(-1);
+        ListNode newHead = cur;
+        while (head != null) {
+            if (!set.contains(head.val)) {
+                cur.next = new ListNode(head.val);
+                cur = cur.next;
+                set.add(head.val);
+            }
+            head = head.next;
+        }
+        cur.next = null;
+        return newHead.next;
+    }
+    public static void main21(String[] args) {
+        ListNode cur = new ListNode(1);
+        ListNode head = cur;
+        cur.next = new ListNode(2);
+        cur = cur.next;
+        cur.next = new ListNode(3);
+        cur = cur.next;
+        cur.next = new ListNode(3);
+        cur = cur.next;
+        cur.next = new ListNode(2);
+        cur = cur.next;
+        cur.next = new ListNode(1);
+        cur = cur.next;
+        cur.next = null;
+        removeDuplicateNodes(head);
+    }
+
+
+    public int[] reversePrint(ListNode head) {
+        Stack<Integer> stack = new Stack<>();
+        while (head != null) {
+            stack.push(head.val);
+            head = head.next;
+        }
+        int[] arr = new int[stack.size()];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = stack.pop();
+        }
+        return arr;
+    }
+
+    //一年中的第几天
+    public static int dayOfYear(String date) {
+        int year = Integer.parseInt(date.substring(0, 4));
+        int month = Integer.parseInt(date.substring(5, 7));
+        int day = Integer.parseInt(date.substring(8, 10));
+        int[] num = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) {
+            num[1] = 29;
+        }
+        int sumDay = 0;
+        for (int i = 0; i < month - 1; i++) {
+            sumDay += num[i];
+        }
+        sumDay += day;
+        return sumDay;
+
+        //也可以用 API 来做
+        //return LocalDate.parse(date).getDayOfYear();
+    }
+
+    public static void main20(String[] args) {
+        String s = "2019-01-09";
+        int num = dayOfYear(s);
+        System.out.println(num);
+    }
+
+    public static int countCharacters(String[] words, String chars) {
+        //把单母的词个数放进去
+        Map<Character,Integer> map = new HashMap<>();
+        for (char ch:chars.toCharArray()) {
+            map.put(ch,map.getOrDefault(ch,0)+1);
+        }
+        int count = 0;
+        for (String str:words) {
+            Map<Character,Integer> mapWords = new HashMap<>();
+            for (char word:str.toCharArray()) {
+                mapWords.put(word,mapWords.getOrDefault(word,0)+1);
+            }
+            boolean flg = true;
+            for (char wordCount:str.toCharArray()) {
+                if (map.getOrDefault(wordCount,0) < mapWords.getOrDefault(wordCount,0)) {
+                    flg = false;
+                    break;
+                }
+            }
+            if (flg == true) {
+                count += str.length();
+            }
+        }
+        return count;
+    }
+
+    public static void main19(String[] args) {
+        String[] str = {"cat","bt","hat","tree"};
+        String str1 = "atach";
+        int tmp = countCharacters(str, str1);
+        System.out.println(tmp);
+    }
+
+    public int lastStoneWeight(int[] stones) {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(1, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
+        for (int x:stones) {
+            maxHeap.offer(x);
+        }
+        while (maxHeap.size() > 1) {
+            int a = maxHeap.poll();
+            int b = maxHeap.poll();
+            if (a > b) {
+                maxHeap.offer(a-b);
+            }
+        }
+        return maxHeap.isEmpty() ? 0 : maxHeap.poll();
+    }
+
+    public boolean CheckPermutation(String s1, String s2) {
+        if (s1.length() != s2.length()) {
+            return false;
+        }
+        Map<Character, Integer> map1 = new HashMap<>();
+        Map<Character, Integer> map2 = new HashMap<>();
+        for (int i = 0; i < s1.length(); i++){
+            map1.put(s1.charAt(i), map1.getOrDefault(s1.charAt(i), 0) + 1);
+        }
+        for (int i = 0; i < s2.length(); i++){
+            map2.put(s2.charAt(i), map2.getOrDefault(s2.charAt(i), 0) + 1);
+        }
+        for (char key : map1.keySet()){
+            if (map1.get(key) != map2.get(key))
+                return false;
+        }
+        return true;
+    }
+
+    public int searchInsert(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        int index = nums.length;
+        while (left <= right) {
+            int mid = left + (right - left)/2;
+            if (target <= nums[mid]) {
+                index = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return index;
+    }
+
+    public int addDigits(int num) {
+        return (num - 1) % 9 + 1;
+    }
+
+    public boolean isUgly(int n) {
+        if(n < 1) {
+            return false;
+        }
+        while (n % 2 == 0 || n % 3 == 0 || n % 5 == 0) {
+            if (n % 2 == 0) {
+                n /= 2;
+            } else if (n % 3 == 0) {
+                n /= 3;
+            } else if (n % 5 == 0) {
+                n /= 5;
+            }
+        }
+        return n == 1;
+    }
+
+    static boolean out(char c){
+        System.out.print(c);
+        return true;
+    }
+    public static void main18(String[] argv){
+        int i = 0;
+        for(out('A');out('B') && (i<2);out('C')){
+            i++;
+            out('D');
+        }
+    }
+
+    private int nextInt(int n) {
+        int sum = 0;
+        while (n > 0) {
+            sum += (n%10)*(n%10);
+            n /= 10;
+        }
+        return sum;
+    }
+    public boolean isHappy(int n) {
+        Set<Integer> set = new HashSet<>();
+        while (n != 1 && !set.contains(n)) {
+            set.add(n);
+            n = nextInt(n);
+        }
+        return n == 1;
+    }
+
+    public static int romanToInt(String s) {
+        Map<Character,Integer> map = new HashMap<>();
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+        char[] ch = s.toCharArray();
+        int sum = 0;
+        for (int i = 0; i< ch.length; i++) {
+            if (i < ch.length - 1 && map.get(ch[i]) >= map.get(ch[i+1])) {
+                sum += map.get(ch[i]);
+            } else if (i < ch.length - 1 && map.get(ch[i]) < map.get(ch[i+1])){
+                sum -= map.get(ch[i]);
+            } else {
+                sum += map.get(ch[i]);
+            }
+        }
+        return sum;
+    }
+    public static void main16(String[] args) {
+        String s = "III";
+        int tmp = romanToInt(s);
+        System.out.println(tmp);
+    }
+
+    public int removeElement(int[] nums, int val) {
+        int left = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != val) {
+                nums[left] = nums[i];
+                left++;
+            }
+        }
+        return left;
+    }
+
+    public static int removeDuplicates(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            set.add(nums[i]);
+        }
+        Object[] arr = set.toArray();
+        Arrays.sort(arr);
+        for (int i = 0; i < arr.length; i++) {
+            nums[i] = (int)arr[i];
+        }
+
+        return set.size();
+    }
+    public static void main15(String[] args) {
+        int[] arr = {1,1,2};
+        int tmp = removeDuplicates(arr);
+        System.out.println(tmp);
+    }
+
+    public String truncateSentence(String s, int k) {
+        StringBuilder str = new StringBuilder();
+        String[] strings = s.split(" ");
+        for (int i = 0; i < k; i++) {
+            str.append(strings[i]);
+            if (i != k - 1){
+                str.append(" ");
+            }
+        }
+        return str.toString();
+    }
 
     public boolean isCompleteTree(TreeNode root) {
         if(root == null) {
