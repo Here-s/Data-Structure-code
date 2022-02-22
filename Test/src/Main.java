@@ -8,6 +8,39 @@ class ListNode {
 
 public class Main {
 
+    public static ListNode oddEvenList(ListNode head) {
+        if(head == null) {
+            return null;
+        }
+        ListNode oddNumber = head;//单数
+        ListNode numbered = head.next;//偶数
+        ListNode cur = new ListNode(-1);
+        ListNode cur2 = new ListNode(-1);
+        ListNode beredHead = numbered;
+        while (numbered != null && numbered.next != null) {
+            oddNumber.next = numbered.next;
+            oddNumber = oddNumber.next;
+            numbered.next = oddNumber.next;
+            numbered = numbered.next;
+        }
+        oddNumber.next = beredHead;
+        return head;
+    }
+
+    public static void main(String[] args) {
+        ListNode cur = new ListNode(1);
+        ListNode head = cur;
+        cur.next = new ListNode(2);
+        cur = cur.next;
+        cur.next = new ListNode(3);
+        cur = cur.next;
+        cur.next = new ListNode(4);
+        cur = cur.next;
+        cur.next = new ListNode(5);
+        cur = cur.next;
+        oddEvenList(head);
+    }
+
     public ListNode sortList(ListNode head) {
         List<Integer> list = new ArrayList<>();
         while (head != null) {
@@ -56,7 +89,7 @@ public class Main {
         }
         return head.next;
     }
-    public static void main(String[] args) {
+    public static void main23(String[] args) {
         ListNode cur1 = new ListNode(2);
         ListNode head1 = cur1;
         cur1.next = new ListNode(4);
