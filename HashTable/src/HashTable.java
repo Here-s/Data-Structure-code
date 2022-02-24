@@ -1,82 +1,43 @@
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
-interface A {
+public class HashTable {
 
-}
-//这是一个普通的类：因为有了内部类，所以这个类就可以当作外部类
-class OuterClass {
-    public int data1 = 1;
-    private int data2 = 2;
-    public static int data3 = 3;
+    //在一组数据当中，找到想要的关键字，最差得 O(N) 时间复杂度，二叉搜索树当中找的话：最好是：log 以2为底 N。最差是 n
+    //不经过任何比较，就能找到数据：时间复杂度：O(1)  这种数据结构就是哈希表：存的时候，就按照某个方法存，拿的时候也是按照某个方法拿
+    //哈希表，也被叫做散列表
 
-    //实例内部类，定义在类里面  可以看作外部类的实例成员
-    //使用这个类是需要对象的
-    //内部类也可以继承类，实现接口
-    class InnerClass extends OuterClass {
+    //存放到哈希表当中，要通过一个哈希函数来完成：哈希函数可以由我们自己来设计
+    //不同的的关键字，通过相同的哈希函数，有可能找到相同的位置。此时的情况：哈希冲突/哈希碰撞。
+    //如果是负数的话，把它加上某个值，然后变为正数
 
-        public int data1 = 9999;
-        class Inner {
-            //内部类类里面还可以写内部类，但是不要这样写，可读性差，会挨批
+    //哈希表底层的数组长度，往往是小于关键字个数的。所以就应该尽力降低冲突。所以每个位置都可以存好几个数据，所以每个位置就是链表了。
+    //冲突是不可避免的：发生冲突之前，尽力去避免冲突：
+    // 1、哈希函数的设计：哈希函数的定义域，必须包含需要存储的全部码，比如说值最大到10，
+    //      那么哈希函数必须是 0-9 之间。只要能满足线性函数的散列地址就好了
+    // 2、调节负载因子：负载因子就是存入散列表元素的个数/散列表的长度。一般的哈希表的负载因子是 0.75 负载因子越大，冲突率越大
+    //      负载因子想变小的话，就应该调整哈希表的长度了。
+    //解决冲突：
+    // 1、闭散列：开放地址法。
+    //      线性探测：当前位置被占领之后，向后找，找到第一个为空的位置，然后把它放进去。把冲突元素全放在一起了，
+    //              但是删除就麻烦，删掉之后当前位置的冲突元素就找不到了，得做一个标志位
+    //      二次探测：(H+i^2)%m 通过公式得到这个位置。最大局限性，装载英子，不能超过 0.5 也就是会浪费一般的空间
+    // 2、开散列：哈希桶(HashBuck)，链地址法。底层就是数组+链表的形式。因为有负载因子，所以链表的长度控制在常数范围，
+    //              从 JDK1.8开始，链表长度超过 8，数组长度超过 64，这个链表长度就会变成红黑树
+
+    public int firstUniqChar(String s) {
+        Map<Character,Integer> map = new HashMap<>();
+        for (char ch : s.toCharArray()) {
+            map.put(ch, map.getOrDefault(ch,0)+1);
         }
-
-        public int data4 = 4;
-        private int data5 = 5;
-
-        //内部类不能定义静态的，在实例方法里面也不能定义静态
-        //public static int data6 = 6;//是属于类的，不属于对象
-        public static final int data6 = 6;//可以定义静态的常量
-
-        //因为是一个类，所以也能写构造方法
-        public InnerClass() {
-            System.out.println("不带参数的内部类的构造方法");
+        for (int i = 0; i < s.length(); i++) {
+            if (map.get(s.charAt(i)) == 1) {
+                return i;
+            }
         }
-        public void test() {
-            System.out.println(OuterClass.this.data1);
-            System.out.println(data1);
-            System.out.println(data2);
-            System.out.println(data3);
-            System.out.println(data4);
-            System.out.println(data5);
-            System.out.println(data6);
-            System.out.println("InnerClass::test");
-        }
+        return -1;
     }
-
-    public void func1() {
-        System.out.println("OuterClass::func1");
-    }
-}
-
-
-class MyLinkedList {
-    class Node {
-
-    }
-}
-
-public class HashTable extends OuterClass.InnerClass {
-    //要继承内部类，要写一个 super 的构造方法
-    //只要是类，肯定会被继承的
-    public HashTable(OuterClass out) {
-        out.super();
-    }
-
-    //内部类：
-    // 本地内部类：定义在类里面的，只能在当前方法当中使用
-    // 实例内部类：重要 ：在实力内部类当中，不能定义静态的成员变量，如果非要定义，子女定义一个静态的常量。
-    //                 如何实例化一个内部类的对象,
-    //                 一个类由什么组成，就可以设计成内部类。实例内部类当中，如果包含了和外部类同盟的成员变量，
-    //                 如何访问外部类的成员变量。通过：外部类名.this.成员变量 。实例内部类当中可以包括两个 this
-    //                 一个是外部类的 this ，一个是自己的 this 。
-    // 静态内部类：重要 ：
-    // 匿名内部类：重要
     public static void main(String[] args) {
-        OuterClass outerClass = new OuterClass();
-        outerClass.func1();//可以调用内部类的方法
 
-        //外部类类名.内部类类名，就可以拿到内部类的对象
-        OuterClass.InnerClass innerClass = outerClass.new InnerClass();
-        //拿到内部类了，就可以直接调用内部类的方法了
-        innerClass.test();
     }
 }
