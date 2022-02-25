@@ -8,6 +8,175 @@ class ListNode {
 
 public class Main {
 
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Stack<Integer> stack = new Stack<>();
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums2.length; i++) {
+            while (!stack.isEmpty() && stack.peek() < nums2[i]) {
+                map.put(stack.pop(),nums2[i]);
+            }
+            stack.add(nums2[i]);
+        }
+        int[] arr = new int[nums1.length];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = map.getOrDefault(nums1[i],-1);
+        }
+        return arr;
+    }
+
+    public static List<String> buildArray(int[] target, int n) {
+        List<String> list = new LinkedList<>();
+        int j = 0;
+        for (int i = 1; i <= n; i++) {
+            if (target[target.length - 1] < i) {
+                break;
+            }
+            if (target[j] == i) {
+                list.add("Push");
+                j++;
+            } else {
+                list.add("Push");
+                list.add("Pop");
+            }
+
+        }
+        return list;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1,2};
+        int n = 4;
+        buildArray(arr, n);
+    }
+
+    public ListNode detectCycle(ListNode head) {
+        Set<ListNode> set = new HashSet<>();
+        while (head != null) {
+            if (set.contains(head)) {
+                return head;
+            }
+            set.add(head);
+            head = head.next;
+        }
+        return null;
+    }
+
+    public static ListNode reverseList(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        ListNode cur = new ListNode(-1);
+        ListNode newHead = cur;
+        Stack<ListNode> stack = new Stack<>();
+        while (head != null){
+            stack.add(head);
+            head = head.next;
+        }
+        while (!stack.isEmpty()) {
+            cur.next = stack.pop();
+            cur = cur.next;
+        }
+        cur.next = null;
+        return newHead.next;
+    }
+    public static void main26(String[] args) {
+        ListNode cur = new ListNode(1);
+        ListNode head = cur;
+        cur.next = new ListNode(2);
+        cur = cur.next;
+        cur.next = new ListNode(3);
+        cur = cur.next;
+        cur.next = new ListNode(4);
+        cur = cur.next;
+        cur.next = new ListNode(5);
+        cur = cur.next;
+        reverseList(head);
+    }
+
+    public static ListNode deleteDuplication(ListNode pHead) {
+        if(pHead == null){
+            return  null;
+        }
+        // 先找出相同结点，存入 set
+        HashSet<Integer> set = new HashSet<>();
+        ListNode pre = pHead;
+        ListNode cur = pHead.next;
+        while(cur != null){
+            if(cur.val == pre.val){
+                set.add(cur.val);
+            }
+            pre = cur;
+            cur = cur.next;
+        }
+        // 再根据相同节点删除
+        // 先删头部
+        while(pHead != null && set.contains(pHead.val)){
+            pHead = pHead.next;
+        }
+        if(pHead == null){
+            return null;
+        }
+        // 再删中间结点
+        pre = pHead;
+        cur = pHead.next;
+        while(cur != null){
+            if(set.contains(cur.val)){
+                pre.next = cur.next;
+                cur = cur.next;
+            }else{
+                pre = cur;
+                cur = cur.next;
+            }
+        }
+        return pHead;
+    }
+    public static void main25(String[] args) {
+        ListNode cur = new ListNode(1);
+        ListNode head = cur;
+        cur.next = new ListNode(2);
+        cur = cur.next;
+        cur.next = new ListNode(3);
+        cur = cur.next;
+        cur.next = new ListNode(3);
+        cur = cur.next;
+        cur.next = new ListNode(4);
+        cur = cur.next;
+        cur.next = new ListNode(4);
+        cur = cur.next;
+        cur.next = new ListNode(5);
+        cur = cur.next;
+        deleteDuplication(head);
+    }
+
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        if(list1 == null) {
+            return list2;
+        }
+        if (list2 == null) {
+            return list1;
+        }
+        ListNode cur = new ListNode(-1);
+        ListNode newHead = cur;
+        while (list1 != null && list2!= null) {
+            if (list1.val < list2.val) {
+                cur.next = list1;
+                cur = cur.next;
+                list1 = list1.next;
+            } else {
+                cur.next = list2;
+                cur = cur.next;
+                list2 = list2.next;
+            }
+        }
+        if (list1 == null) {
+            cur.next = list2;
+        }
+        if (list2 == null) {
+            cur.next = list1;
+        }
+        return newHead.next;
+    }
+
     public static ListNode oddEvenList(ListNode head) {
         if(head == null) {
             return null;
@@ -27,7 +196,7 @@ public class Main {
         return head;
     }
 
-    public static void main(String[] args) {
+    public static void main24(String[] args) {
         ListNode cur = new ListNode(1);
         ListNode head = cur;
         cur.next = new ListNode(2);
