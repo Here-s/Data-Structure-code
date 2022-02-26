@@ -85,7 +85,7 @@ public class ObjectCompare {
         Card card1 = new Card(1,"♥");
         Card card2 = new Card(2,"♥");
         RankComparator rankComparator = new RankComparator();
-        PriorityQueue<Card> priorityQueue = new PriorityQueue<>();
+        PriorityQueue<Card> priorityQueue = new PriorityQueue<>(rankComparator);
         priorityQueue.offer(card1);
         priorityQueue.offer(card2);
         System.out.println(priorityQueue);
