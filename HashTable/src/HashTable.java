@@ -38,6 +38,12 @@ public class HashTable {
         return -1;
     }
     public static void main(String[] args) {
+        //默认容量是 16
+        HashMap<String, Integer> hashMap1 = new HashMap<>();
+        //容量是 20 但是最终数组的大小是大于 20 并且是最接近 20 的一个二次幂 也就是 32
+        HashMap<String, Integer> hashMap2 = new HashMap<>(20);
+        //也可以传容量 有可以传 负载因子
+        HashMap<String, Integer> hashMap = new HashMap<>();
 
     }
 }
