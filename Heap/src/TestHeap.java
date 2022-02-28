@@ -43,7 +43,7 @@ public class TestHeap {
     }
 
     /**
-     * 入队的向上调整
+     * 入堆的向上调整
      * @param child
      */
     private void shiftUp(int child) {
