@@ -5,8 +5,85 @@ class ListNode {
       ListNode next;
       ListNode(int x) { val = x; }
 }
+class Card implements Comparable<Card> {
+    public int rank;//数值
+    public String suit;//花色
+    public Card(int rank, String suit) {
+        this.rank = rank;
+        this.suit = suit;
+    }
+
+    @Override
+    public int compareTo(Card o) {
+        //这里的排序换一下，就变成大堆排序了
+        return this.rank - o.rank;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "rank=" + rank +
+                ", suit='" + suit + '\'' +
+                '}';
+    }
+}
+
 
 public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Set<String> set = new HashSet<>();
+        while (scanner.hasNext()) {
+            set.add(scanner.next());
+        }
+        System.out.println(set.size());
+    }
+
+    public static void main30(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int k = 0;
+        int m = 1;
+        int sum = 0;
+        while (sum < N) {
+            sum = k + m;
+            k = m;
+            m = sum;
+        }
+        System.out.println(Math.min((N - k),(sum - N)));
+    }
+
+    public static void main29(String[] args) {
+        //默认是一个小根堆
+        //而且放的元素之间是必须能比较的  不能是 null
+        //关于对象的比较：
+        // 1、equals()：比较两个对象相不相同
+        // 2、比较大小：Comparable compareTo
+        PriorityQueue<Card> priorityQueue = new PriorityQueue<>();
+        priorityQueue.offer(new Card(2, "♥"));//
+        priorityQueue.offer(new Card(1, "♥"));
+        System.out.println(priorityQueue);
+    }
+
+    public static void main28(String[] args) {
+        int a = 10;
+        int b = 20;
+        System.out.println(a > b);
+        System.out.println(a < b);
+        System.out.println(a == b);
+        System.out.println();
+        char c1 = 'A';
+        char c2 = 'B';
+        System.out.println(c1 > c2);
+        System.out.println(c1 < c2);
+        System.out.println(c1 == c2);
+        System.out.println();
+        boolean b1 = true;
+        boolean b2 = false;
+        System.out.println(b1 == b2);
+        System.out.println(b1 != b2);
+    }
 
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
         Stack<Integer> stack = new Stack<>();
@@ -43,7 +120,7 @@ public class Main {
         return list;
     }
 
-    public static void main(String[] args) {
+    public static void main27(String[] args) {
         int[] arr = {1,2};
         int n = 4;
         buildArray(arr, n);
