@@ -90,8 +90,20 @@ class Alg3 {
 }
 
 //通配符的上界。可以使用通配符来确定父子类关系
+class up {
+    ArrayList<Integer> arrayList1 = new ArrayList<>();
+    ArrayList<Double> arrayList2 = new ArrayList<>();
+    List<? extends Number> list = arrayList1;
+    Number a = list.get(0);
+}
 
 //通配符的下界：使用 super 。就是可以引用：父类
+//MyArrayList<? super Integer> 是 MyArrayList<Integer>的父类类型
+//MyArrayList<?> 是 MyArrayList<? super Integer>的父类类型
+
+class down {
+
+}
 //下界是不允许读取，
 class Person {
 
@@ -121,6 +133,7 @@ public class GenericsTest {
         arrayList2.add(new Student());
 
         Object o = arrayList1.get(0);
+        System.out.println(o);
     }
 
     public static void main12(String[] args) {
@@ -178,12 +191,14 @@ public class GenericsTest {
 
     //泛型的上界
     public static void main6(String[] args) {
-        MyArray2<Integer> array2 = new MyArray2<>();
-        MyArray2<Number> array21 = new MyArray2<>();
+        MyArray2<Integer> array1 = new MyArray2<>();
+        MyArray2<Number> array2 = new MyArray2<>();
+        array1.set(0,10);
         array2.set(0,10);
+        array2.set(1,12.5);
     }
 
-    //这里就把所有 T 类型的换位 Object 类型了
+    //这里就把所有 T 类型的换为 Object 类型了
     public static void main5(String[] args) {
         ArrayList<Integer> arrayList = new ArrayList<>();
         arrayList.add(1);
