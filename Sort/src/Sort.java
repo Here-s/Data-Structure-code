@@ -52,7 +52,7 @@ public class Sort {
             }
         }
     }
-    public static void main(String[] args) {
+    public static void main11(String[] args) {
         int[] arr = {12,5,6,2,5,418,10,4,2,23,546,97,34,89};
         countingSort(arr);
         System.out.println(Arrays.toString(arr));
@@ -96,7 +96,7 @@ public class Sort {
             nums *= 2;
         }
     }
-    public static void main10(String[] args) {
+    public static void main(String[] args) {
         int[] arr = {12,5,18,10,4,2,23,546,97,34,89};
         mergeSort(arr);
         System.out.println(Arrays.toString(arr));
@@ -154,7 +154,7 @@ public class Sort {
     }
     public static void main9(String[] args) {
         int[] arr = {12,5,18,10,4,2,23,546,97,34,89};
-        mergeSort(arr);
+        mergeSort1(arr);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -199,7 +199,7 @@ public class Sort {
 
 
     //快速排序：非递归
-    // 第一次划分之后，八左右的数对都放到栈当中。前提：Pivot 左边有两个元素，右边有两个元素
+    // 第一次划分之后，把左右的数对都放到栈当中。前提：Pivot 左边有两个元素，右边有两个元素
     public static void quickSort(int[] array) {
         Stack<Integer> stack = new Stack<>();
         int start = 0;
@@ -280,8 +280,8 @@ public class Sort {
             insertSort2(array, start, end);
         }
         //找基准之前，先找到中间大小的值
-        int midValIndex = findMidValIndex(array, start, end);
-        swap(array,midValIndex,start);//加上这两行，就不用担心栈溢出了。
+//        int midValIndex = findMidValIndex(array, start, end);
+//        swap(array,midValIndex,start);//加上这两行，就不用担心栈溢出了。
         //找到基准
         int pivot = partition(array, start, end);
         //处理左边
@@ -328,7 +328,7 @@ public class Sort {
     }
     public static void main6(String[] args) {
         int[] arr = {12,5,18,10,4,2,23,546,97,34,89};
-        quickSort(arr);
+        quickSort1(arr);
         System.out.println(Arrays.toString(arr));
     }
 
