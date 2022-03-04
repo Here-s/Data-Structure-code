@@ -204,13 +204,13 @@ public class MapAndSet {
     //带 Tree 的底层就是红黑树
 
     //Set 是一个集合，存入里面的数据会自动去重
-    public static void main4(String[] args) {
+    public static void main(String[] args) {
         Set<Integer> set = new HashSet<>();
         set.add(1);
         set.add(2);
         set.add(3);
         set.add(1);
-        System.out.println(set);
+//        System.out.println(set);
         Iterator<Integer> iterator = set.iterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
@@ -218,7 +218,7 @@ public class MapAndSet {
         //LinkedHashSet 是 HeshMap 和 LinkedList 的结合
     }
 
-    //entryset：会把 key 和 value 放在一起
+    //entrySet：会把 key 和 value 放在一起
     //HashMap 的插入，删除，查找的时间复杂度都是O(1)
     //TreeMap 里面的数据是一定可以比较的，如果要对插入的数据排序的话，就要用 TreeMap
     //做题用 HashMap
