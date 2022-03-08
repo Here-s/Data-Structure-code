@@ -1,3 +1,6 @@
+import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 class ListNode {
@@ -31,7 +34,97 @@ class Card implements Comparable<Card> {
 
 public class Main {
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws ParseException {
+        Scanner scanner = new Scanner(System.in);
+        String s = scanner.nextLine();
+        int up = 0;
+        int low = 0;
+        int dig = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isDigit(s.charAt(i))) {
+                dig++;
+            }
+            if (Character.isUpperCase(s.charAt(i))) {
+                up++;
+            }
+            if (Character.isLowerCase(s.charAt(i))) {
+                low++;
+            }
+        }
+        System.out.println(up);
+        System.out.println(low);
+        System.out.println(dig);
+    }
+
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int[] arr = Arrays.copyOf(nums1,nums1.length + nums2.length);
+        int j = 0;
+        for (int i = nums1.length; i < arr.length; i++) {
+            arr[i] = nums2[j];
+            j++;
+        }
+        Arrays.sort(arr);
+        if (arr.length % 2 == 0) {
+            int k = arr.length / 2;
+            return (arr[k] + arr[k - 1])/2.0;
+        }
+        return arr[arr.length / 2];
+    }
+
+    public static int lengthOfLongestSubstring(String s) {
+        char[] ch = s.toCharArray();
+        Map<Character, Integer> map = new HashMap<>();
+        int start = 0;
+        int max = 0;
+        for (int end = 0; end < ch.length; end++) {
+            if (map.containsKey(ch[end])) {
+                start = Math.max(map.get(ch[end]),start);
+            }
+            max = Math.max(end - start + 1,max);
+            map.put(ch[end], end + 1);
+        }
+        return max;
+    }
+
+    public static void main33(String[] args) {
+        String s = "abba";
+        lengthOfLongestSubstring(s);
+    }
+
+    public double average(int[] salary) {
+        Arrays.sort(salary);
+        int sum = 0;
+        for (int i = 1; i < salary.length - 1; i++) {
+            sum += salary[i];
+        }
+        return 1.0 * sum / (salary.length - 2);
+    }
+
+    public boolean isPalindrome(int x) {
+        String str = String.valueOf(x);
+        StringBuilder s = new StringBuilder(str);
+        s.reverse();
+        return str.equals(s.toString());
+    }
+
+    public static String largestOddNumber(String num) {
+        int n = num.length();
+        for(int i = n-1; i >= 0; i--) {
+            if (Integer.parseInt(String.valueOf(num.charAt(i))) % 2 != 0) {
+                return num;
+            }
+            num = num.substring(0,i);
+        }
+        return num;
+    }
+
+    public static void main32(String[] args) {
+        String str = "4206";
+        largestOddNumber(str);
+    }
+
+    public static void main31(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Set<String> set = new HashSet<>();
         while (scanner.hasNext()) {
