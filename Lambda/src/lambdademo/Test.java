@@ -1,5 +1,6 @@
 package lambdademo;
 
+
 import java.util.PriorityQueue;
 
 //注解证明这个一个函数式接口
