@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e2b05fa-9393-4e8a-8a5b-259e2ec6c773" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../Test/src/BinaryTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Test/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Test/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HashTable/src/InnerClasses.java" beforeDir="false" afterPath="$PROJECT_DIR$/../HashTable/src/InnerClasses.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +79,7 @@
       <workItem from="1644633221571" duration="7094000" />
       <workItem from="1644668696125" duration="636000" />
       <workItem from="1644721409072" duration="2964000" />
+      <workItem from="1646875867251" duration="994000" />
     </task>
     <servers />
   </component>
