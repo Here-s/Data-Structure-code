@@ -3,39 +3,173 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
-class ListNode {
-      int val;
-      ListNode next;
-      ListNode(int x) { val = x; }
-}
-class Card implements Comparable<Card> {
-    public int rank;//数值
-    public String suit;//花色
-    public Card(int rank, String suit) {
-        this.rank = rank;
-        this.suit = suit;
-    }
-
-    @Override
-    public int compareTo(Card o) {
-        //这里的排序换一下，就变成大堆排序了
-        return this.rank - o.rank;
-    }
-
-    @Override
-    public String toString() {
-        return "Card{" +
-                "rank=" + rank +
-                ", suit='" + suit + '\'' +
-                '}';
-    }
-}
 
 
 public class Main {
 
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int num = scanner.nextInt();
+        if (num == 1) {
+            System.out.println(1);
+            return;
+        }
+        List<List<Integer>> ret = new ArrayList<>();
+        List<Integer> list1 = new ArrayList<>();
+        list1.add(1);
+        ret.add(list1);
+        int flag = 1;
+        int i = 1;
+        while (true) {
+            List<Integer> list = new ArrayList<>();
+            list.add(1);
+            List<Integer> preRow = ret.get(i-1);
+            for(int j = 1; j < i; j++) {
+                int num1 = preRow.get(j) + preRow.get(j-1);
+                list.add(num1);
+                if (num1 == num){
+                    ret.add(list);
+                    flag = 0;
+                    break;
+                }
+            }
+            if (flag == 0) {
+                break;
+            }
+            list.add(1);
+            ret.add(list);
+            i++;
+        }
+        int count = 1;
+        for (i = 0; i <= ret.size(); i++) {
+            List<Integer> k = ret.get(i);
+            for (int j = 0; j <= i; j++) {
+                int key = k.get(j);
+                if (key == num){
+                    System.out.println(count);
+                    return;
+                }
+                count++;
+            }
+        }
+    }
 
-    public static void main(String[] args) throws ParseException {
+    public static void main39(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int[] road = new int[scanner.nextInt() + 1];
+        int count = scanner.nextInt();
+        for (int i = 0; i < road.length; i++) {
+            road[i] = 1;
+        }
+        int num1 = 0;
+        int num2 = 0;
+        for (int i = 0; i < count; i++) {
+            num1 = scanner.nextInt();
+            num2 = scanner.nextInt();
+            for (int j = num1; j <= num2; j++) {
+                road[j] = 0;
+            }
+        }
+        int tree = 0;
+        for (int i = 0; i < road.length; i++) {
+            if (road[i] == 1) {
+                tree++;
+            }
+        }
+        System.out.println(tree);
+    }
+
+    public static int count = 0;
+    public static void frog (int num) {
+        if (num < 0) {
+            return;
+        }
+        if (num == 0) {
+            count++;
+        } else {
+            frog(num - 1);
+            frog(num - 2);
+            frog(num - 3);
+        }
+        return;
+    }
+    public static void main38(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int num = scanner.nextInt();
+        frog(num);
+        System.out.println(count);
+    }
+
+    public static void main37(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int num = scanner.nextInt();
+        int nums = num;
+        if (num == 0 || num == 1) {
+            System.out.println(num);
+            return;
+        }
+        List<Integer> list = new ArrayList<>();
+        int i = 0;
+        for (i = 2; i < nums; i++) {
+            if (num % i == 0) {
+                list.add(i);
+                num /= i;
+                i = 1;
+            }
+            if (num == 1) {
+                break;
+            }
+        }
+        if (i == nums) {
+            list.add(i);
+        }
+        System.out.print(nums+"=");
+        for (i = 0; i < list.size(); i++) {
+            System.out.print(list.get(i));
+            if (i != list.size() - 1) {
+                System.out.print("*");
+            }
+        }
+    }
+
+    public static void main36(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int apple = scanner.nextInt();
+        int height = scanner.nextInt();
+        height += 30;
+        int[] arr = new int[apple];
+        for (int i = 0; i < apple; i++) {
+            arr[i] = scanner.nextInt();
+        }
+        Arrays.sort(arr);
+        int count = 0;
+        for (int i = 0; i <= apple; i++) {
+            if (arr[i] < height) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        System.out.println(count);
+    }
+
+    public static void main35(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] str = scanner.nextLine().split(" ");
+        int[] month = {31,28,31,30,31,30,31,31,30,31,30,31};
+        if (Integer.parseInt(str[0]) % 400 == 0 ||
+                (Integer.parseInt(str[0]) % 4 == 0 && Integer.parseInt(str[0]) % 100 != 0)) {
+            month[1] = 29;
+        }
+        int sum = 0;
+        for (int i = 0; i < Integer.parseInt(str[1]) - 1; i++) {
+            sum += month[i];
+        }
+        sum += Integer.parseInt(str[2]);
+        System.out.println(sum);
+    }
+
+    public static void main34(String[] args) throws ParseException {
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
         int up = 0;
@@ -147,7 +281,7 @@ public class Main {
         System.out.println(Math.min((N - k),(sum - N)));
     }
 
-    public static void main29(String[] args) {
+    /*public static void main29(String[] args) {
         //默认是一个小根堆
         //而且放的元素之间是必须能比较的  不能是 null
         //关于对象的比较：
@@ -219,7 +353,7 @@ public class Main {
         buildArray(arr, n);
     }
 
-    public ListNode detectCycle(ListNode head) {
+    /*public ListNode detectCycle(ListNode head) {
         Set<ListNode> set = new HashSet<>();
         while (head != null) {
             if (set.contains(head)) {
@@ -518,7 +652,7 @@ public class Main {
             arr[i] = stack.pop();
         }
         return arr;
-    }
+    }*/
 
     //一年中的第几天
     public static int dayOfYear(String date) {
