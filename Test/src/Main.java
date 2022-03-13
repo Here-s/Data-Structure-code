@@ -7,7 +7,54 @@ import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[]   args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = scanner.nextInt();
+        }
+        String str = String.valueOf(arr[0]);
+        str += " ";
+        for (int i = 1; i < arr.length; i++) {
+            while (str.contains(String.valueOf(arr[i]))) {
+                arr[i] += 1;
+            }
+            str += arr[i];
+            str += " ";
+        }
+        String[] s = str.split("");
+        for (int i = 0; i < s.length; i++) {
+            System.out.print(s[i]);
+            if (i == s.length - 2){
+                break;
+            }
+        }
+    }
+
+    public static void main41(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Map<Integer,Integer> map = new HashMap<>();
+        int num1 = 0;
+        int num2 = 0;
+        int sum = 0;
+        int max = -1;
+        for (int i = 0; i < 7; i++) {
+            sum = 0;
+            num1 = scanner.nextInt();
+            num2 = scanner.nextInt();
+            sum = num1 + num2;
+            if (max < sum) {
+                max = sum;
+            }
+            if (!map.containsKey(sum)) {
+                map.put(sum,i+1);
+            }
+        }
+        System.out.println(map.get(max));
+    }
+
+    public static void main40(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int num = scanner.nextInt();
         if (num == 1) {
