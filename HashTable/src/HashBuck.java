@@ -21,7 +21,7 @@ public class HashBuck {
     }
 
     /**
-     * put 函数
+     * put 方法
      * @param key
      * @param value
      */
@@ -76,7 +76,7 @@ public class HashBuck {
     public int get(int key) {
         //先找到 key 所对应的位置
         int index = key % this.array.length;
-        //遍历这个下标的链表，看看有没有这个 key ，有的话更新 value
+        //遍历这个下标的链表，看看有没有这个 key ，有的话返回 value，没有的话返回 -1
         Node cur = array[index];
         while (cur!= null) {
             if (cur.key == key) {
@@ -98,5 +98,6 @@ public class HashBuck {
         hashBuck.put(11,11);
         hashBuck.put(8,8);
         System.out.println(hashBuck.get(11));
+        System.out.println(hashBuck.get(6));
     }
 }
