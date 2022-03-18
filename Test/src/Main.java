@@ -7,7 +7,26 @@ import java.util.*;
 
 public class Main {
 
-    public static void main(String[]   args) {
+    public static void main(String[] args) {
+        int one = 0;
+        int i = 1;
+        while (true) {
+            int tmp = i;
+            while(tmp != 0) {
+                if(tmp % 10 == 1) {
+                    one++;
+                }
+                tmp /= 10;
+            }
+            if (one > 2021) {
+                break;
+            }
+            i++;
+        }
+        System.out.println(i-1);
+    }
+
+    public static void main42(String[]   args) {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         int[] arr = new int[n];
