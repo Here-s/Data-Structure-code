@@ -8,6 +8,107 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int M = scanner.nextInt();
+        int N = scanner.nextInt();
+        StringBuilder s = new StringBuilder();
+        if (M == 0) {
+            s.append(0);
+        }
+        int tmp = M;
+        if (M < 0) {
+            M = -M;
+        }
+        Map<Integer,Character> map = new HashMap<>();
+        map.put(10,'A');
+        map.put(11,'B');
+        map.put(12,'C');
+        map.put(13,'D');
+        map.put(14,'E');
+        map.put(15,'F');
+        while (M != 0) {
+            if (M % N > 10) {
+                s.append(map.get(M % N));
+            } else {
+                s.append(M % N);
+            }
+            M /= N;
+        }
+        if (tmp < 0) {
+            s.append("-");
+        }
+        s.reverse();
+        System.out.println(s);
+    }
+
+    public static void main46(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] str = scanner.nextLine().split("");
+        String str2 = new String("1234567890");
+        StringBuilder s1 = new StringBuilder();
+        StringBuilder s2 = new StringBuilder();
+        for (int i = 0; i < str.length; i++) {
+            if (str2.contains(str[i])) {
+                s1.append(str[i]);
+            } else {
+                if (s1.length() > s2.length()) {
+                    s2 = s1;
+                    s1 = new StringBuilder("");
+                } else {
+                    s1 = new StringBuilder("");
+                }
+            }
+        }
+        if (s1.length() > s2.length()) {
+            s2 = s1;
+        }
+        System.out.println(s2);
+    }
+
+    public int MoreThanHalfNum_Solution(int [] array) {
+        Arrays.sort(array);
+        int count = 1;
+        int num = 0;
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] == array[i - 1]) {
+                count++;
+            } else {
+                count = 1;
+            }
+            if (count > array.length / 2) {
+                num = array[i];
+                break;
+            }
+        }
+        return num;
+    }
+
+    public static void main45(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = scanner.nextInt();
+        }
+        int count = 1;
+        for (int i = 1; i < n - 1; i++) {
+            if ((arr[i] > arr[i-1] && arr[i] > arr[i+1]) ||
+                    (arr[i] < arr[i-1] && arr[i] < arr[i+1])) {
+                count++;
+            }
+        }
+        System.out.println(count);
+    }
+
+    public static void main44(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] str = scanner.nextLine().split(" ");
+        for (int i = str.length - 1; i >= 0; i--) {
+            System.out.print(str[i] + " ");
+        }
+    }
+
+    public static void main43(String[] args) {
         int one = 0;
         int i = 1;
         while (true) {
