@@ -7,7 +7,27 @@ import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) {
+
+
+    public static void main48(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String a = scanner.nextLine();
+        String b = scanner.nextLine();
+        int count = 0;
+        for (int i = 0; i < a.length() + 1; i++) {
+            StringBuilder s = new StringBuilder(a.substring(0,i));
+            s.append(b);
+            s.append(a.substring(i));
+            String s1 = s.toString();
+            String s2 = s.reverse().toString();
+            if (s1.equals(s2)) {
+                count++;
+            }
+        }
+        System.out.println(count);
+    }
+
+    public static void main47(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int M = scanner.nextInt();
         int N = scanner.nextInt();
