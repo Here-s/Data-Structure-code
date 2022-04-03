@@ -7,7 +7,189 @@ import java.util.*;
 
 public class Main {
 
+    public static boolean isPrime(int m) {
+        for (int i = 2; i <= Math.sqrt(m); i++) {
+            if (m % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int half = n / 2;
+        for (int i = half; i > 0; i--) {
+            if (isPrime(i) && isPrime(n - i)) {
+                System.out.println(i);
+                System.out.println(n - i);
+                return;
+            }
+        }
+    }
 
+    public static void main54(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        StringBuilder s = new StringBuilder();
+        while (n != 0) {
+            s.append(n % 2);
+            n /= 2;
+        }
+        int count = 0;
+        int max = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '1') {
+                count++;
+            } else {
+                if (count > max) {
+                    max = count;
+                    count = 0;
+                } else {
+                    count = 0;
+                }
+            }
+        }
+        if (count > max) {
+            max = count;
+            count = 0;
+        }
+        System.out.println(max);
+    }
+
+    public static boolean checkWon(int[][] board) {
+        for (int i = 0;  i < board.length; i++) {
+                if (board[i][0] == board[i][1] && board[i][1] == board[i][2]
+                        && board[i][0] != 0 && board[i][0] != -1) {
+                    return true;
+                }
+                if (board[0][i] == board[1][i] && board[1][i] == board[2][i]
+                        && board[i][0] != 0 && board[i][0] != -1) {
+                    return true;
+                }
+        }
+        if (board[0][0] == board[1][1] && board[1][1] == board[2][2]
+                && board[0][0] != 0 && board[0][0] != -1) {
+            return true;
+        }
+        if (board[0][2] == board[1][1] && board[1][1] == board[2][0]
+                && board[2][0] != 0 && board[2][0] != -1) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public static int med(int n, int m) {
+        if ((m == 1 && n >= 1) || (n == 1 && m >= 1)) {
+            return m + n;
+        }
+        return med(n - 1, m) + med(n, m - 1);
+    }
+    public static void main53(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNext()) {
+            int n = scanner.nextInt();
+            int m = scanner.nextInt();
+            System.out.println(med(n, m));
+        }
+    }
+
+    public static boolean SortDictionary(String[] s) {
+        for (int i = 0; i < s.length - 1; i++) {
+            if (s[i].compareTo(s[i + 1]) > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static boolean SortLength(String[] s) {
+        for (int i = 0; i < s.length - 1; i++) {
+            if (s[i].length() > s[i + 1].length()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static void main52(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        String[] strings = new String[n];
+        for (int i = 0; i < n; i++) {
+            strings[i] = scanner.next();
+        }
+        if (SortDictionary(strings) && SortLength(strings)) {
+            System.out.println("both");
+        } else if (SortDictionary(strings)) {
+            System.out.println("lexicographically");
+        } else if (SortLength(strings)) {
+            System.out.println("lengths");
+        } else {
+            System.out.println("none");
+        }
+    }
+
+    public static void main51(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int a = scanner.nextInt();
+        int b = scanner.nextInt();
+        for (int i = Math.max(a, b); i <= a * b; i++) {
+            if (i % a == 0 && i % b == 0) {
+                System.out.println(i);
+                break;
+            }
+        }
+    }
+
+    public static boolean chkParenthesis(String A, int n) {
+        if (n % 2 == 1 || A == null) {
+            return false;
+        }
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < A.length(); i++) {
+            if (A.charAt(i) == '(') {
+                stack.push(A.charAt(i));
+            } else {
+                if (stack.isEmpty()) {
+                    return false;
+                }
+                if (stack.peek() == '(' && A.charAt(i) == ')') {
+                    stack.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+    public static void main50(String[] args) {
+        String s = "()))))()(d";
+        int n = 10;
+        System.out.println(chkParenthesis(s, n));
+    }
+
+    public static void main49(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int a = 0;
+        int b = 1;
+        int c = a + b;
+        int count = 0;
+        while (true) {
+            c = a + b;
+            if (c == n) {
+                System.out.println(count);
+                return;
+            }
+            if (b < n && n < c) {
+                count = Math.min((n - b),(c - n));
+                break;
+            }
+            a = b;
+            b = c;
+        }
+        System.out.println(count);
+    }
 
     public static void main48(String[] args) {
         Scanner scanner = new Scanner(System.in);
