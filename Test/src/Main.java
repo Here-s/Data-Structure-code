@@ -7,6 +7,40 @@ import java.util.*;
 
 public class Main {
 
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String str = scanner.nextLine();
+        int count = 0;
+        List<String> list = new ArrayList<>();
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '"') {
+                i++;
+                while (str.charAt(i) != '"') {
+                    s.append(str.charAt(i));
+                    i++;
+                }
+                list.add(s.toString());
+                s = new StringBuilder("");
+            }
+            if (str.charAt(i) != ' ' && str.charAt(i) != '"') {
+                s.append(str.charAt(i));
+            }
+            if (str.charAt(i) == ' '&& !s.toString().equals("")) {
+                list.add(s.toString());
+                s = new StringBuilder("");
+            }
+        }
+        if (!s.toString().equals("")) {
+            list.add(s.toString());
+            s = new StringBuilder("");
+        }
+        System.out.println(list.size());
+        for (String s1:list) {
+            System.out.println(s1);
+        }
+    }
+
     public static boolean isPrime(int m) {
         for (int i = 2; i <= Math.sqrt(m); i++) {
             if (m % i == 0) {
@@ -15,7 +49,7 @@ public class Main {
         }
         return true;
     }
-    public static void main(String[] args) {
+    public static void main55(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         int half = n / 2;
