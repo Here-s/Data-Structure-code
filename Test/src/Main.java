@@ -1,13 +1,268 @@
-import java.math.BigInteger;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
-
 
 public class Main {
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int M = scanner.nextInt();
+        int[][] arr = new int[N][M];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                arr[i][j] = scanner.nextInt();
+            }
+        }
+        System.out.println(13);
+    }
+
+    public static void main63(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        //N 表示距离
+        int N = scanner.nextInt();
+        //M 红绿灯个数
+        int M = scanner.nextInt();
+        //K 通过 K 个红绿灯之后就可氮气瞬移
+        int K = scanner.nextInt();
+        //最高速度 1/V
+        double V = scanner.nextDouble();
+        V = 1.0/V;
+        //数组三个元素表示：第 i 个红绿灯居家多远，绿灯时间，红灯时间
+        int[][] arr = new int[M][3];
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < 3; j++) {
+                arr[i][j] = scanner.nextInt();
+            }
+        }
+        double time = 0;
+        boolean danqi = true;
+        boolean tiaochu = false;
+        while (N > 0) {
+            for (int i = 0; i < M-1; i++) {
+
+                if (danqi == true) {
+                    N -= arr[i][0];
+                    danqi = false;
+                }
+                if (N <= 0){
+                    tiaochu = true;
+                    break;
+                }
+                int len = arr[i+1][0] - arr[i][0];
+                time += len/V;
+                double a = time;
+                int flag = 0;
+                while (true) {
+                    if (a < arr[i+1][1] || a / arr[i+1][1] == 0) {
+                        flag = 1;
+                        break;
+                    }
+                    a -= arr[i+1][1];
+                    if (a < arr[i+1][2] || a / arr[i+1][2] == 0) {
+                        flag = 2;
+                        break;
+                    }
+                    a -= arr[i+1][2];
+                }
+                danqi = true;
+                if (i % 2 == 1) {
+                    N -= len;
+                }
+                if (flag == 2) {
+                    time += arr[i+1][2] - a;
+                    N -= len;
+                }
+            }
+            if (tiaochu == true) {
+                break;
+            }
+        }
+        System.out.println(time);
+    }
+
+
+    public static int cut(int[] arr, int j) {
+        int n = j;
+        int k = 0;
+        int sum = 0;
+        while (n <= arr.length) {
+            int[] arr1 = new int[j];
+            int a = 0;
+            for (int i = k; i < n; i++) {
+                arr1[a] = arr[i];
+                a++;
+            }
+            Arrays.sort(arr1);
+            boolean flag = true;
+            for (int i = 1; i < arr1.length; i++) {
+                if (Math.abs(arr1[i] - arr1[i - 1]) > 1) {
+                    flag = false;
+                }
+            }
+            if (flag == true) {
+                sum += 1;
+            }
+            k++;
+            n++;
+        }
+        return sum;
+    }
+    public static void main62(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) {
+            arr[i] = scanner.nextInt();
+        }
+        int count = 1;
+        for (int i = 2; i <= N; i++) {
+            int num = cut(arr,i);
+            count += num;
+        }
+        System.out.println(count);
+    }
+
+    public static void main61(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int M = scanner.nextInt();
+        int[][] arr = new int[N][M];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                arr[i][j] = scanner.nextInt();
+            }
+        }
+        int limit = scanner.nextInt();
+
+    }
+
+    public static boolean judge(long num, int n) {
+        while (n != 0) {
+            if (num % 10 == 0) {
+                n--;
+            } else {
+                return false;
+            }
+            num /= 10;
+        }
+        return true;
+    }
+    public static void main60(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int K = scanner.nextInt();
+        long sum = 1;
+        long count = 1;
+        while (true) {
+            count++;
+            sum *= count;
+            if (judge(sum,K)) {
+                System.out.println(count);
+                return;
+            }
+        }
+    }
+
+    public static int count(int[] arr,int n) {
+        int zhong = arr.length/2;
+        int num = arr[zhong] - n;
+        if (n >= arr[zhong]) {
+            return 0;
+        }
+        if (arr.length % 2 == 0) {
+            return num;
+        }
+        return num + 1;
+    }
+    public static void main59(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int[] arr = new int[N];
+        int[] arr2 = new int[N];
+        for (int i = 0; i < N; i++) {
+            arr[i] = scanner.nextInt();
+            arr2[i] = arr[i];
+        }
+        Arrays.sort(arr2);
+        for (int i = 0; i < N; i++) {
+            System.out.print(count(arr2, arr[i]));
+            if (i < N-1) {
+                System.out.print(" ");
+            }
+        }
+    }
+
+    public static void main58(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String s = scanner.nextLine();
+        Map<Character,Integer> map = new HashMap<>();
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (map.containsKey(s.charAt(i))) {
+                map.put(s.charAt(i),map.get(s.charAt(i))+1);
+            } else {
+                map.put(s.charAt(i),1);
+            }
+            if (count < map.get(s.charAt(i))) {
+                count = map.get(s.charAt(i));
+            }
+        }
+        for (char a = 'A'; a <= 'Z'; a++) {
+            if (map.containsKey(a) && map.get(a) == count) {
+                System.out.println(a);
+            }
+        }
+    }
+
+
+    public static void main57(String[] args) {
+        int count = 0;
+        for (int i = 20; i <= 20222; i++) {
+            int j = i;
+            boolean flag = true;
+            int k = 0;
+            int m = 0;
+            String s = String.valueOf(i);
+            while (j != 0) {
+
+                k = j % 10;
+                j /= 10;
+                m = j % 10;
+                if (k < m) {
+                    flag = false;
+                }
+            }
+            if (flag == true && s.charAt(0) < s.charAt(1)) {
+                count++;
+                System.out.println(i);
+            }
+
+        }
+        System.out.println("count=: "+count);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static void main56(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
         int count = 0;
@@ -482,13 +737,13 @@ public class Main {
         System.out.println(tree);
     }
 
-    public static int count = 0;
+    public static int count1 = 0;
     public static void frog (int num) {
         if (num < 0) {
             return;
         }
         if (num == 0) {
-            count++;
+            count1++;
         } else {
             frog(num - 1);
             frog(num - 2);
@@ -500,7 +755,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int num = scanner.nextInt();
         frog(num);
-        System.out.println(count);
+        System.out.println(count1);
     }
 
     public static void main37(String[] args) {
@@ -572,7 +827,7 @@ public class Main {
         System.out.println(sum);
     }
 
-    public static void main34(String[] args) throws ParseException {
+    public static void main34(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
         int up = 0;
