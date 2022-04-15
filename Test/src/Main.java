@@ -4,6 +4,41 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int count = 0;
+        for (int i = 1; i <= n; i++) {
+            int sum = 0;
+            for (int j = 1; j < i; j++) {
+                if(i%j==0){
+                    sum+=j;
+                }
+            }
+            if (sum == i) {
+                count++;
+            }
+        }
+        System.out.println(count);
+    }
+
+    public static void main65(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] str = scanner.nextLine().split(" ");
+        int[] arr = new int[]{31,28,31,30,31,30,31,31,30,31,30,31};
+        int sum = 0;
+        if (Integer.parseInt(str[0]) % 400 == 0 ||
+                (Integer.parseInt(str[0]) % 4 == 0 && Integer.parseInt(str[0]) % 100 != 0)) {
+            //说明是闰年
+            arr[1] += 1;
+        }
+        for (int i = 0; i < Integer.parseInt(str[1]) - 1; i++) {
+            sum += arr[i];
+        }
+        sum += Integer.parseInt(str[2]);
+        System.out.println(sum);
+    }
+
+    public static void main64(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         int N = scanner.nextInt();
         int M = scanner.nextInt();
         int[][] arr = new int[N][M];
