@@ -4,6 +4,27 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNext()) {
+            int n = scanner.nextInt();
+            if (n == 0) {
+                break;
+            }
+            int count = 0;
+            while (n >= 3) {
+                count += n / 3;
+                int num = n % 3;
+                n /= 3;
+                n += num;
+            }
+            if (n == 2) {
+                count++;
+            }
+            System.out.println(count);
+        }
+    }
+
+    public static void main66(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         int count = 0;
         for (int i = 1; i <= n; i++) {
