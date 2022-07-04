@@ -1,8 +1,454 @@
 import java.util.*;
-
 public class Main {
 
+    //求两个整数的最小公倍数
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int a = scanner.nextInt();
+        int b = scanner.nextInt();
+        int c = b;
+        while (true) {
+            if (c % b == 0 && c % a == 0) {
+                System.out.println(c);
+                break;
+            }
+            c++;
+        }
+    }
+
+    //根据 字典序，和 字符串长度排序
+    public static void main81(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        String noon = scanner.nextLine();
+        String[] strings = new String[n];
+        int dire = 1;
+        int len = 1;
+        for (int i = 0; i < n; i++) {
+            strings[i] = scanner.nextLine();
+        }
+        for (int i = 0; i < n - 1; i++) {
+            if (strings[i].compareTo(strings[i + 1]) > 0) {
+                dire = 0;
+            }
+            if (strings[i].length() > strings[i + 1].length()) {
+                len = 0;
+            }
+        }
+        if (dire == 0 && len == 0) {
+            System.out.println("none");
+        } else if (dire == 0) {
+            System.out.println("lengths");
+        } else if (len == 0) {
+            System.out.println("lexicographically");
+        } else if (len == 1 && dire == 1) {
+            System.out.println("both");
+        }
+    }
+
+
+    public static void main80(String[] args) {
+        System.out.println(new B().getValue());
+    }
+    static class A{
+        protected int value;
+        public A(int v) {
+            setValue(v);
+        }
+        public void setValue(int value) {
+            this.value = value;
+        }
+        public int getValue() {
+            try {
+                value++;
+                return value;
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            } finally {
+                this.setValue(value);
+                System.out.println(value);
+            }
+            return value;
+        }
+    }
+    static class B extends A{
+        public B() {
+            super(5);
+            setValue(getValue() - 3);
+        }
+        public void setValue(int value) {
+            super.setValue(2 * value);
+        }
+    }
+
+
+    //多线程按顺序输出 c b a
+    public static void main79(String[] args) throws InterruptedException {
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("a");
+            }
+        });
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("b");
+            }
+        });
+        Thread t3 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("c");
+            }
+        });
+        t3.start();
+        t3.join();
+        t2.start();
+        t2.join();
+        t1.start();
+    }
+    //判断是否是合法括号
+    public class Parenthesis {
+        public boolean chkParenthesis(String A, int n) {
+            String[] arr = A.split("");
+            String s = "{}()[]";
+            Stack<String> stack1 = new Stack<>();
+            Stack<String> stack2 = new Stack<>();
+            for (int i = 0; i < n; i++) {
+                if (!s.contains(arr[i])) {
+                    return false;
+                }
+                stack1.push(arr[i]);
+            }
+            return true;
+        }
+    }
+
+    //将一个数变成斐波那契数需要多少步
+    public static void main78(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int num = scanner.nextInt();
+        int count = 0;
+        int a = 0;
+        int b = 1;
+        int c = a + b;
+        while (c < num) {
+            a = b;
+            b = c;
+            c = a + b;
+        }
+        int k = num - b;
+        int j = c - num;
+        System.out.println(Math.min(k, j));
+    }
+    public static void main77(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int table = scanner.nextInt();
+        int custCount = scanner.nextInt();
+        int[] tablePeople = new int[table];
+        for (int i = 0; i < table; i++) {
+            tablePeople[i] = scanner.nextInt();
+        }
+        Arrays.sort(tablePeople);
+        //两个参数，客人和消费额
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        //先放钱再放人
+        int[] moneys = new int[custCount];
+        for (int i = 0; i < custCount; i++) {
+            int number = scanner.nextInt();
+            int money = scanner.nextInt();
+            moneys[i] = money;
+            hashMap.put(money, number);
+        }
+        Arrays.sort(moneys);
+        long sum = 0;
+        for (int i = 0; i < custCount; i++) {
+            //取出最大的 钱 对应的人
+            int needTable = hashMap.get(moneys[custCount - i - 1]);
+            for (int j = 0; j < table ;j++) {
+                if (tablePeople[j] >= needTable) {
+                    //说明可以坐下吃饭
+                    sum += moneys[custCount - i - 1];
+                    tablePeople[j] = 0;
+                    break;
+                }
+            }
+        }
+        System.out.println(sum);
+    }
+    public ArrayList<Integer> GetLeastNumbers_Solution (int[] input, int k) {
+        Arrays.sort(input);
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0;i < k; i++) {
+            list.add(input[i]);
+        }
+        return list;
+    }
+    public static void main76(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] s = scanner.nextLine().split("");
+        String number = "1234567890";
+        HashMap<Integer, StringBuilder> hashMap = new HashMap<>();
+        int i = 0;
+        int max = 0;
+        while (i < s.length) {
+            int count = 0;
+            StringBuilder stringBuilder = new StringBuilder();
+            if (number.contains(s[i])) {
+                count++;
+                stringBuilder.append(s[i]);
+                i++;
+                while (i < s.length && number.contains(s[i])) {
+                    stringBuilder.append(s[i]);
+                    count++;
+                    i++;
+                }
+                if (max < count) {
+                    max = count;
+                }
+                hashMap.put(count, stringBuilder);
+            }
+            i++;
+        }
+        System.out.println(hashMap.get(max));
+    }
+    public static void main75(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int w = in.nextInt();
+        int h = in.nextInt();
+        int count = 0;
+        int[][] arr = new int[w][h];
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                if (arr[i][j] == 0) {
+                    count++;
+                    if(i + 2 < w) {
+                        arr[i + 2][j] = 1;
+                    }
+                    if(j + 2 < h) {
+                        arr[i][j + 2] = 1;
+                    }
+                }
+
+            }
+        }
+        System.out.println(count);
+    }
+    public int StrToInt(String str) {
+        if (str.equals("")) {
+            return 0;
+        }
+        String s1 = "1234567890+-/";
+        String[] s2 = str.split("");
+        if (s2[0].equals("+")) {
+            if (s2.length == 1) {
+                return 0;
+            }
+            str = str.substring(1, str.length());
+            return Integer.parseInt(str);
+        }
+        if (s2[0].equals("-")) {
+            if (s2.length == 1) {
+                return 0;
+            }
+            str = str.substring(1, str.length());
+            return -Integer.parseInt(str);
+        }
+        for (int i = 0; i < s2.length; i++) {
+            if (!s1.contains(s2[i])) {
+                return 0;
+            }
+        }
+        if (!str.contains("/")) {
+            return Integer.parseInt(str);
+        }
+        String[] strings = str.split("/");
+        return Integer.parseInt(strings[0]) / Integer.parseInt(strings[1]);
+    }
+    public static void main74(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = scanner.nextInt();
+        }
+        int sum = arr[0];
+        int max = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            sum = Math.max(sum + arr[i], arr[i]);
+            if (sum > max) {
+                max = sum;
+            }
+        }
+        System.out.println(max);
+    }
+    public static void main73(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] s1 = scanner.nextLine().split("");
+        String s2 = scanner.nextLine();
+        int i = 0;
+        int count = 0;
+        while (i <= s1.length) {
+            StringBuilder stringBuilder = new StringBuilder();
+            int j = 0;
+            for (; j < i; j++) {
+                stringBuilder.append(s1[j]);
+            }
+            stringBuilder.append(s2);
+            for (; j < s1.length; j++) {
+                stringBuilder.append(s1[j]);
+            }
+            StringBuilder stringBuilder1 = new StringBuilder(stringBuilder);
+            stringBuilder1 = stringBuilder1.reverse();
+            if (stringBuilder1.toString().equals(stringBuilder.toString())) {
+                count++;
+            }
+            i++;
+        }
+        System.out.println(count);
+    }
+    public static void main72(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int m = scanner.nextInt();
+        int n = scanner.nextInt();
+        int flag = 0;
+        if (m < 0) {
+            flag = 1;
+            m = -m;
+        }
+        HashMap<Integer, Character> hashMap = new HashMap<>();
+        hashMap.put(10, 'A');
+        hashMap.put(11, 'B');
+        hashMap.put(12, 'C');
+        hashMap.put(13, 'D');
+        hashMap.put(14, 'E');
+        hashMap.put(15, 'F');
+        StringBuilder stringBuilder = new StringBuilder();
+        while (m != 0) {
+            int k = m % n;
+            if (k > 9) {
+                stringBuilder.append(hashMap.get(k));
+            } else {
+                stringBuilder.append(k);
+            }
+            m /= n;
+        }
+        if (flag == 1) {
+            stringBuilder.append("-");
+        }
+        stringBuilder.reverse();
+        System.out.println(stringBuilder);
+    }
+    public static void main71(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n1 = scanner.nextInt();//a-b
+        int n2 = scanner.nextInt();//b-c
+        int n3 = scanner.nextInt();//a+b
+        int n4 = scanner.nextInt();//b+c
+        //n1+n3 = 2a   n2+n4 = 2b
+        int a = (n1 + n3) / 2;
+        int b = (n2 + n4) / 2;
+        int c = b - n2;
+        if ((n1 == a - b) && (n2 == b - c) && (n3 == a + b) && (n4 == b + c)) {
+            System.out.println(a + " " + b + " " + c);
+        } else {
+            System.out.println("No");
+        }
+    }
+    public ListNode getKthFromEnd(ListNode head, int k) {
+        ListNode newHead = head;
+        Stack<ListNode> stack = new Stack();
+        while (newHead != null) {
+            stack.push(newHead);
+            newHead = newHead.next;
+        }
+        while (!stack.isEmpty())
+        for (int i = 0; i < k; i++) {
+            head = stack.pop();
+        }
+        return head;
+    }
+
+    public static int[] exchange(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+        while(left < right) {
+            while(left < right && nums[left] % 2 == 1) {
+                left++;
+            }
+            while(left < right && nums[right] % 2 == 0) {
+                right--;
+            }
+            int tmp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = tmp;
+        }
+        return nums;
+    }
+
+    public static void main70(String[] args) {
+        int[] arr = {1,2,3,4};
+        exchange(arr);
+    }
+    public static int MoreThanHalfNum_Solution(int [] array) {
+        Arrays.sort(array);
+        int i = 0;
+        while (i < array.length - 1) {
+            int count = 1;
+            int num = 0;
+            if (array[i] == array[i + 1]) {
+                num = array[i];
+                count++;
+                i++;
+                while(i < array.length - 1 && array[i] == array[i + 1]) {
+                    count++;
+                    i++;
+                }
+                if (count > array.length/2) {
+                    return num;
+                }
+            }
+            i++;
+        }
+        return array[0];
+    }
+
+    public static void main69(String[] args) {
+        int[] arr = {1};
+        int n = MoreThanHalfNum_Solution(arr);
+        System.out.println(n);
+    }
+    public static void main68(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String[] s = in.nextLine().split("");
+        String s1 = "0123456789";
+        int i = 0;
+        int num = 0;
+        HashMap<Integer, StringBuilder> hashMap = new HashMap<>();
+        while (i < s.length) {
+            StringBuilder stringBuilder = new StringBuilder();
+            int count = 0;
+            if(s1.contains(s[i])) {
+                stringBuilder.append(s[i]);
+                count++;
+                i++;
+                while (i < s.length && s1.contains(s[i])) {
+                    stringBuilder.append(s[i]);
+                    count++;
+                    i++;
+                }
+                if (count > num) {
+                    num = count;
+                    hashMap.put(num, stringBuilder);
+                }
+            }
+            i++;
+        }
+        System.out.println(hashMap.get(num));
+    }
+
+    public static void main67(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()) {
             int n = scanner.nextInt();
@@ -612,7 +1058,7 @@ public class Main {
         System.out.println(s2);
     }
 
-    public int MoreThanHalfNum_Solution(int [] array) {
+    public int MoreThanHalfNum_Solution1(int [] array) {
         Arrays.sort(array);
         int count = 1;
         int num = 0;
@@ -995,18 +1441,6 @@ public class Main {
         System.out.println(Math.min((N - k),(sum - N)));
     }
 
-    /*public static void main29(String[] args) {
-        //默认是一个小根堆
-        //而且放的元素之间是必须能比较的  不能是 null
-        //关于对象的比较：
-        // 1、equals()：比较两个对象相不相同
-        // 2、比较大小：Comparable compareTo
-        PriorityQueue<Card> priorityQueue = new PriorityQueue<>();
-        priorityQueue.offer(new Card(2, "♥"));//
-        priorityQueue.offer(new Card(1, "♥"));
-        System.out.println(priorityQueue);
-    }
-
     public static void main28(String[] args) {
         int a = 10;
         int b = 20;
@@ -1067,7 +1501,7 @@ public class Main {
         buildArray(arr, n);
     }
 
-    /*public ListNode detectCycle(ListNode head) {
+    public ListNode detectCycle(ListNode head) {
         Set<ListNode> set = new HashSet<>();
         while (head != null) {
             if (set.contains(head)) {
@@ -1366,7 +1800,7 @@ public class Main {
             arr[i] = stack.pop();
         }
         return arr;
-    }*/
+    }
 
     //一年中的第几天
     public static int dayOfYear(String date) {
