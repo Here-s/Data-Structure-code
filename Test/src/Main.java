@@ -1,8 +1,143 @@
 import java.util.*;
+
 public class Main {
 
-    //求两个整数的最小公倍数
+    //密码强度等级牛客
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String s = scanner.nextLine();
+        int sum = 0;
+        //判断密码长度
+        if (s.length() <= 4) {
+            sum += 5;
+        } else if (s.length() <= 7) {
+            sum += 10;
+        } else {
+            sum += 25;
+        }
+        //判断字母
+        int small = 0;
+        int big = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) >= 'a' && s.charAt(i) <= 'z') {
+                small++;
+            } else if (s.charAt(i) >= 'A' && s.charAt(i) <= 'Z') {
+                big++;
+            }
+        }
+        if (small == 0 && big == 0) {
+            sum += 0;
+        } else if (small == 0 && big != 0) {
+            sum += 10;
+        } else if (small != 0 && big == 0) {
+            sum += 10;
+        } else {
+            sum += 20;
+        }
+        //数字
+        int num = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
+                num++;
+            }
+        }
+        if (num == 0) {
+            sum += 0;
+        } else if (num == 1) {
+            sum += 10;
+        } else {
+            sum += 20;
+        }
+        //符号
+        String ch = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+        int countCh = 0;
+        String[] s1 = s.split("");
+        for (int i = 0; i < s.length(); i++) {
+            if (ch.contains(s1[i])) {
+                countCh++;
+            }
+        }
+        if (countCh == 0) {
+            sum += 0;
+        } else if (countCh == 1) {
+            sum += 10;
+        } else {
+            sum += 25;
+        }
+
+        if (small != 0 && big != 0 && num != 0 && countCh != 0) {
+            sum += 5;
+        } else if ((small != 0 || big != 0) && num != 0 && countCh != 0) {
+            sum += 3;
+        } else if ((small != 0 || big != 0) && num != 0) {
+            sum += 2;
+        }
+        //输出
+        if (sum >= 90) {
+            System.out.println("VERY_SECURE");
+        } else if (sum >= 80) {
+            System.out.println("SECURE");
+        } else if (sum >= 70) {
+            System.out.println("VERY_STRONG");
+        } else if (sum >= 60) {
+            System.out.println("STRONG");
+        } else if (sum >= 50) {
+            System.out.println("AVERAGE");
+        } else if (sum >= 25) {
+            System.out.println("WEAK");
+        } else {
+            System.out.println("VERY_WEAK");
+        }
+    }
+
+    //井字棋，判断 1 的玩家是否胜出
+    public class Board {
+        public boolean checkWon(int[][] board) {
+            if (board[0][0] == board[0][1] && board[0][1] == board[0][2] && board[0][0] == 1) {
+                return true;
+            } else if (board[1][0] == board[1][1] && board[1][1] == board[1][2] && board[1][0] == 1) {
+                return true;
+            } else if (board[2][0] == board[2][1] && board[2][1] == board[2][2] && board[2][0] == 1) {
+                return true;
+            } else if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] == 1) {
+                return true;
+            } else if (board[2][0] == board[1][1] && board[1][1] == board[0][2] && board[2][0] == 1) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    //计算 n*m 的棋盘格子，n 横向，m 纵向。从左上角走到右下角共有多少种走法，
+    // 只能往右和往下走。
+    public static int count(int n, int m) {
+        if (n == 1 || m == 1) {
+            return m+n;
+        }
+        return count(n - 1, m) + count(n, m - 1);
+    }
+    public static void main83(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
+        System.out.println(count(n, m));
+    }
+
+    //给定两个整形，编写一个函数返回 A+B，不能使用 + 和其它算术运算符
+    public class UnusualAdd {
+        public int addAB(int A, int B) {
+            int sum = 0;
+            while (B != 0) {
+                sum = A ^ B;
+                B = (A & B) << 1;
+                A = sum;
+            }
+            return A;
+        }
+    }
+
+    //求两个整数的最小公倍数
+    public static void main82(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int a = scanner.nextInt();
         int b = scanner.nextInt();
@@ -740,28 +875,6 @@ public class Main {
         }
         System.out.println("count=: "+count);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public static void main56(String[] args) {
