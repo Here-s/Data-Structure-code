@@ -2,8 +2,53 @@ import java.util.*;
 
 public class Main {
 
-    //密码强度等级牛客
+
+    //把一个指数转化为二进制，求连续的 1 的个数
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        StringBuilder stringBuilder = new StringBuilder();
+        while (n != 0) {
+            stringBuilder.append(n % 2);
+            n /= 2;
+        }
+        int max = 0;
+        String[] s = stringBuilder.toString().split("");
+        int i = 0;
+        while (i < s.length) {
+            int count = 0;
+            if (s[i].equals("1")) {
+                count++;
+                i++;
+                while (i < s.length && s[i].equals("1")) {
+                    count++;
+                    i++;
+                }
+            }
+            if (count >= max) {
+                max = count;
+            }
+            i++;
+        }
+        System.out.println(max);
+    }
+
+    //求二叉树节点最近公共祖先
+    public class LCA {
+        public int getLCA(int a, int b) {
+            while (a != b) {
+                if (a > b) {
+                    a /= 2;
+                } else {
+                    b /= 2;
+                }
+            }
+            return a;
+        }
+    }
+
+    //密码强度等级牛客
+    public static void main84(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
         int sum = 0;
