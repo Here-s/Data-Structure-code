@@ -2,9 +2,81 @@ import java.util.*;
 
 public class Main {
 
+    //调整数组顺序使奇数位于偶数前面
+    class Solution {
+        public int[] exchange(int[] nums) {
+            int left = 0;
+            int right = nums.length - 1;
+            while(left < right) {
+                while(left < right && nums[left] % 2 == 1) {
+                    left++;
+                }
+                while(left < right && nums[right] % 2 == 0) {
+                    right--;
+                }
+                int tmp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = tmp;
+            }
+            return nums;
+        }
+    }
+
+    //在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，
+    // 每一列都按照从上到下递增的顺序排序。请完成一个高效的函数，
+    // 输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+    class Solution2 {
+        public boolean findNumberIn2DArray(int[][] matrix, int target) {
+            int i = matrix.length - 1, j = 0;
+            while(i >= 0 && j < matrix[0].length)
+            {
+                if(matrix[i][j] > target) i--;
+                else if(matrix[i][j] < target) j++;
+                else return true;
+            }
+            return false;
+        }
+    }
+
+    //反转链表，要求 空间复杂度：O（1）  时间复杂度：O（N）
+    class Solution1 {
+        public ListNode reverseList(ListNode head) {
+            ListNode cur = head;
+            ListNode prev = null;
+            while (head != null) {
+                head = head.next;
+                cur.next = prev;
+                prev = cur;
+                cur = head;
+
+            }
+            return prev;
+        }
+    }
+
+    public static void main86(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] s1 = scanner.nextLine().split("#");
+        char[] ch = s1[0].toCharArray();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < ch.length; i++) {
+            if (ch[i] >= 'A' && ch[i] <= 'Z') {
+                //大写
+                String c = String.valueOf(ch[i]);
+                stringBuilder.append(c.toLowerCase());
+            } else if (ch[i] >= 'a' && ch[i] <= 'z') {
+                //小写
+                String a = String.valueOf(ch[i]);
+                stringBuilder.append(a.toUpperCase());
+            } else {
+                stringBuilder.append(ch[i]);
+            }
+        }
+        System.out.println(stringBuilder);
+    }
 
     //把一个指数转化为二进制，求连续的 1 的个数
-    public static void main(String[] args) {
+    public static void main85(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         StringBuilder stringBuilder = new StringBuilder();
