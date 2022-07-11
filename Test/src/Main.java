@@ -1,6 +1,94 @@
 import java.util.*;
 
 public class Main {
+    
+
+    //根据输入日期，计算当前是这一年第几天
+    public static void main89(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int year = scanner.nextInt();
+        int month = scanner.nextInt();
+        int day = scanner.nextInt();
+        int[] days = {31,28,31,30,31,30,31,31,30,31,30,31};
+        if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) {
+            days[1] = 29;
+        }
+        int sum = 0;
+        for (int i = 0; i < month - 1; i++) {
+            sum += days[i];
+        }
+        sum += day;
+        System.out.println(sum);
+    }
+
+    //参数解析
+    public static void main88(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String str = scanner.nextLine();
+        int count = 1;
+        int i = 0;
+        while (i < str.length()) {
+            if (str.charAt(i) == '"') {
+                i++;
+                while (i < str.length() && str.charAt(i) != '"') {
+                    i++;
+                }
+            }
+            if (str.charAt(i) == ' ') {
+                count++;
+            }
+            i++;
+        }
+        System.out.println(count);
+        i = 0;
+        int flag = 1;
+        while (i < str.length()) {
+            //碰到第一个双引号
+            if (str.charAt(i) == '"') {
+                flag ^= 1;
+            }
+            //不是双引号和空格就输出
+            if (str.charAt(i) != ' ' && str.charAt(i) != '"') {
+                System.out.print(str.charAt(i));
+            }
+            //双引号里面的要输出
+            if (str.charAt(i) == ' ' && flag == 0) {
+                System.out.print(str.charAt(i));
+            }
+            //双引号以外的空格换行
+            if (str.charAt(i) == ' ' && flag == 1) {
+                System.out.println();
+            }
+            i++;
+        }
+    }
+
+    //查找组成一个偶数最接近的两个素数
+    public static boolean isPrime1(int n) {
+        for (int i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static void main87(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        for (int i = n / 2; i >= 0; i--) {
+            if (isPrime1(i) && isPrime1(n - i)) {
+                System.out.println(i);
+                System.out.println(n - i);
+                break;
+            }
+        }
+    }
+
+    //二进制插入：给定两个32位整数n和m，同时给定i和j，将m的二进制数位插入到n的二进制的第j到第i位,
+    // 保证n的第j到第i位均为零，且m的二进制位数小于等于i-j+1，其中二进制的位数从0开始由低到高。
+    public int binInsert(int n, int m, int j, int i) {
+        return n | (m << j);
+    }
 
     //调整数组顺序使奇数位于偶数前面
     class Solution {
@@ -2583,7 +2671,7 @@ public class Main {
         System.out.println(sum);
     }
 
-    class Solution {
+    class Solution3 {
         public int calPoints(String[] ops) {
             if (ops == null) {
                 return 0;
@@ -2614,7 +2702,7 @@ public class Main {
         }
     }
 
-    public class Solution1 {
+    public class Solution4 {
         public boolean IsPopOrder(int [] pushA,int [] popA) {
             Stack<Integer> stack = new Stack<>();
             int i = 0;
@@ -2634,7 +2722,7 @@ public class Main {
         }
     }
 
-    class Solution2 {
+    class Solution5 {
         public boolean backspaceCompare(String s, String t) {
             if (s == null || t == null) {
                 return false;
@@ -2728,7 +2816,7 @@ public class Main {
     数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。
     请找出数组中任意一个重复的数字。*/
 
-    class Solution3 {
+    class Solution6 {
         public int findRepeatNumber(int[] nums) {
             Arrays.sort(nums);
             for(int i = 1; i < nums.length; i++){
@@ -2748,7 +2836,7 @@ public class Main {
     你可以按任意顺序返回答案。*/
 
     //这里通过暴力遍历的方法去求解
-    class Solution4 {
+    class Solution7 {
         public int[] twoSum(int[] nums, int target) {
             for(int i = 0;i< nums.length; i++){
                 for(int j = 0;j<nums.length; j++){
@@ -2773,7 +2861,7 @@ public class Main {
     给定数组 trust，该数组由信任对 trust[i] = [a, b] 组成，表示编号为 a 的人信任编号为 b 的人。
     如果小镇存在秘密法官并且可以确定他的身份，请返回该法官的编号。否则，返回 -1。*/
 
-    class Solution5 {
+    class Solution8 {
         public int findJudge(int n, int[][] trust) {
             if (n == 1) return 1;
             int[] arr = new int[n + 1];
