@@ -1,7 +1,48 @@
 import java.util.*;
 
 public class Main {
-    
+
+    //手套牛客
+    public class Gloves {
+        public int findMinimum(int n, int[] left, int[] right) {
+            int leftSum = 0;
+            int rightSum = 0;
+            int sum = 0;
+            int leftMin = Integer.MAX_VALUE;
+            int rightMin = Integer.MAX_VALUE;
+            for (int i = 0; i < n; i++) {
+                if (left[i] * right[i] == 0) {
+                    sum += left[i] + right[i];
+                } else {
+                    leftSum += left[i];
+                    rightSum += right[i];
+                    if (leftMin > left[i]) {
+                        leftMin = left[i];
+                    }
+                    if (rightMin > right[i]) {
+                        rightMin = right[i];
+                    }
+                }
+            }
+            return Math.min(leftSum - leftMin + 1,rightSum - rightMin + 1) + sum +1;
+        }
+    }
+
+    //查找输入整数二进制中的 1 的个数
+    public static void main90 (String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNextInt()) {
+            int n = scanner.nextInt();
+            int count = 0;
+            while (n != 0) {
+                if (n % 2 == 1) {
+                    count++;
+                }
+                n /= 2;
+            }
+            System.out.println(count);
+        }
+    }
 
     //根据输入日期，计算当前是这一年第几天
     public static void main89(String[] args) {
