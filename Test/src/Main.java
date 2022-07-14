@@ -2,6 +2,68 @@ import java.util.*;
 
 public class Main {
 
+    //杨辉三角变形
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        if (n <= 2) {
+            System.out.println(-1);
+        } else if (n % 2 == 1) {
+            System.out.println(2);;
+        } else if (n % 4 == 0) {
+            System.out.println(3);
+        } else {
+            System.out.println(4);
+        }
+    }
+
+    //扑克牌大小
+    public static void main92(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] pai = scanner.nextLine().split("-");
+        String[] pai1 = pai[0].split(" ");
+        String[] pai2 = pai[1].split(" ");
+        String s = "34567891jJQKA2";
+        if (pai[0].equals("joker JOKER") || pai[1].equals("joker JOKER")) {
+            System.out.println("joker JOKER");
+        } else if (pai1.length == pai2.length) {
+            if (s.indexOf(pai1[0].substring(0, 1)) > s.indexOf(pai2[0].substring(0, 1))) {
+                System.out.println(pai[0]);
+            } else {
+                System.out.println(pai[1]);
+            }
+        } else if (pai1.length == 4) {
+            System.out.println(pai[0]);
+        } else if (pai2.length == 4) {
+            System.out.println(pai[1]);
+        } else {
+            System.out.println("ERROR");
+        }
+    }
+
+    //完全数计算
+    public static void main91(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int count = 0;
+        for (int i = 2; i <= n; i++) {
+            int sum = 0;
+            for (int j = 2; j * j <= i; j++) {
+                if (i % j == 0) {
+                    if (i / j == j) {
+                        sum += j;
+                    } else {
+                        sum = sum + i / j + j;
+                    }
+                }
+            }
+            if (sum + 1 == i) {
+                count++;
+            }
+        }
+        System.out.println(count);
+    }
+
     //手套牛客
     public class Gloves {
         public int findMinimum(int n, int[] left, int[] right) {
