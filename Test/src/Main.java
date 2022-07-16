@@ -2,8 +2,76 @@ import java.util.*;
 
 public class Main {
 
+    //最长回文子串
+    class Solution {
+        public int longCount(String s, int left, int right) {
+            while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+                --left;
+                ++right;
+            }
+            return right - left - 1;
+        }
+        public String longestPalindrome(String s) {
+            if (s == null || s.length() < 1) {
+                return "";
+            }
+            int start = 0, end = 0;
+            for (int i = 0; i < s.length(); i++) {
+                int len1 = longCount(s, i, i);
+                int len2 = longCount(s, i, i + 1);
+                int len = Math.max(len1, len2);
+                if (len > end - start) {
+                    start = i - (len - 1) / 2;
+                    end = i + len / 2;
+                }
+            }
+            return s.substring(start, end + 1);
+        }
+    }
+
+    //统计每个月兔子的总数
+    public static void main95(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        n--;
+        int a = 0;
+        int b = 1;
+        int c = a + b;
+        while (n != 0) {
+            c = a + b;
+            a = b;
+            b = c;
+            n--;
+        }
+        System.out.println(c);
+    }
+
+    //计算某字符出现的次数
+    public static void main94(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] line = scanner.nextLine().split("");
+        String s = scanner.next();
+        int count = 0;
+        if (s.charAt(0) >= 'A' && s.charAt(0) <= 'Z') {
+            String s2 = s.toLowerCase();
+            for (int i = 0; i < line.length; i++) {
+                if (line[i].equals(s) || line[i].equals(s2)) {
+                    count++;
+                }
+            }
+        } else {
+            String s2 = s.toUpperCase();
+            for (int i = 0; i < line.length; i++) {
+                if (line[i].equals(s) || line[i].equals(s2)) {
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
+    }
+
     //杨辉三角变形
-    public static void main(String[] args) {
+    public static void main93(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         if (n <= 2) {
