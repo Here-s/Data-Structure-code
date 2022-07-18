@@ -2,6 +2,58 @@ import java.util.*;
 
 public class Main {
 
+    //移除元素
+    class Solution {
+        public int removeElement(int[] nums, int val) {
+            int left = 0;
+            for (int right = 0; right < nums.length; right++) {
+                if (nums[right] != val) {
+                    nums[left] = nums[right];
+                    left++;
+                }
+            }
+            return left;
+        }
+    }
+
+    //删除数组当中的重复项
+    class Solution {
+        public int removeDuplicates(int[] nums) {
+            int p = 0;
+            int q = 1;
+            while(q < nums.length){
+                if(nums[p] != nums[q]){
+                    nums[p + 1] = nums[q];
+                    p++;
+                }
+                q++;
+            }
+            return p + 1;
+        }
+    }
+
+    //汽水瓶
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNext()) {
+            int n = scanner.nextInt();
+            if (n == 0) {
+                break;
+            }
+            int count = 0;
+            while (n >= 3) {
+                count += n / 3;
+                int num = n % 3;
+                n /= 3;
+                n += num;
+            }
+            if (n == 2) {
+                count++;
+            }
+            System.out.println(count);
+        }
+    }
+
     //最长回文子串
     class Solution {
         public int longCount(String s, int left, int right) {
@@ -262,7 +314,7 @@ public class Main {
     }
 
     //调整数组顺序使奇数位于偶数前面
-    class Solution {
+    class Solution7 {
         public int[] exchange(int[] nums) {
             int left = 0;
             int right = nums.length - 1;
@@ -3007,7 +3059,7 @@ public class Main {
     你可以按任意顺序返回答案。*/
 
     //这里通过暴力遍历的方法去求解
-    class Solution7 {
+    class Solution9 {
         public int[] twoSum(int[] nums, int target) {
             for(int i = 0;i< nums.length; i++){
                 for(int j = 0;j<nums.length; j++){
