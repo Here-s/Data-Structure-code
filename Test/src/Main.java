@@ -2,8 +2,60 @@ import java.util.*;
 
 public class Main {
 
-    //移除元素
+    //二叉树中序遍历
     class Solution {
+        public List<Integer> inorderTraversal(TreeNode root) {
+            List<Integer> list = new ArrayList<Integer>();
+            inorder(root, list);
+            return list;
+        }
+        public void inorder(TreeNode root, List<Integer> list) {
+            if (root == null) {
+                return;
+            }
+            inorder(root.left, list);
+            list.add(root.val);
+            inorder(root.right, list);
+        }
+    }
+
+    //合并两个有序数组
+    class Solution {
+        public void merge(int[] nums1, int m, int[] nums2, int n) {
+            for (int i = 0; i != n; ++i) {
+                nums1[m + i] = nums2[i];
+            }
+            Arrays.sort(nums1);
+        }
+    }
+
+    //搜索插入位置
+    class Solution {
+        public int searchInsert(int[] nums, int target) {
+            int left = 0;
+            int right = nums.length;
+            while(left < right) {
+                int mid = (left + right) / 2;
+                if(nums[mid] == target) {
+                } else if(nums[mid] < target) {
+                    left = mid + 1;
+                } else {
+                    right = mid;
+                }
+            }
+            return 0;
+        }
+    }
+
+    //字符串反转
+    public static void main97(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        StringBuilder stringBuilder = new StringBuilder(scanner.nextLine());
+        System.out.println(stringBuilder.reverse());
+    }
+
+    //移除元素
+    class Solution10 {
         public int removeElement(int[] nums, int val) {
             int left = 0;
             for (int right = 0; right < nums.length; right++) {
@@ -17,7 +69,7 @@ public class Main {
     }
 
     //删除数组当中的重复项
-    class Solution {
+    class Solution11 {
         public int removeDuplicates(int[] nums) {
             int p = 0;
             int q = 1;
@@ -33,7 +85,7 @@ public class Main {
     }
 
     //汽水瓶
-    public static void main(String[] args) {
+    public static void main96(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()) {
             int n = scanner.nextInt();
@@ -55,7 +107,7 @@ public class Main {
     }
 
     //最长回文子串
-    class Solution {
+    class Solution12 {
         public int longCount(String s, int left, int right) {
             while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
                 --left;
