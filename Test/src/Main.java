@@ -2,8 +2,50 @@ import java.util.*;
 
 public class Main {
 
+    //年终奖
+    public int getMost(int[][] board) {
+        int row = board.length;
+        int col = board[0].length;
+        for(int i = 1; i < col; i++) {
+            board[0][i] += board[0][i-1];
+        }
+        for(int i = 1; i < row; i++) {
+            board[i][0] += board[i-1][0];
+        }
+        for(int i = 1; i < row; i++) {
+            for(int j = 1; j < col; j++) {
+                board[i][j] += Math.max(board[i-1][j], board[i][j-1]);
+            }
+        }
+        return board[row-1][col-1];
+    }
+
+    //微信红包
+    public static int getValue(int[] gifts, int n) {
+        int num = 0;
+        int count = 1;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < gifts.length; i++) {
+            if (map.get(gifts[i]) == null) {
+                map.put(gifts[i], 1);
+            } else {
+                map.put(gifts[i], map.get(gifts[i]) + 1);
+            }
+            if (map.get(gifts[i]) > gifts.length / 2) {
+                return gifts[i];
+            }
+        }
+        return 0;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1,2,3,2,2};
+        int n = 5;
+        System.out.println(getValue(arr, n));
+    }
+
     //二叉树中序遍历
-    class Solution {
+    class Solution14 {
         public List<Integer> inorderTraversal(TreeNode root) {
             List<Integer> list = new ArrayList<Integer>();
             inorder(root, list);
@@ -14,13 +56,12 @@ public class Main {
                 return;
             }
             inorder(root.left, list);
-            list.add(root.val);
             inorder(root.right, list);
         }
     }
 
     //合并两个有序数组
-    class Solution {
+    class Solution13 {
         public void merge(int[] nums1, int m, int[] nums2, int n) {
             for (int i = 0; i != n; ++i) {
                 nums1[m + i] = nums2[i];
