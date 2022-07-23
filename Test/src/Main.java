@@ -2,6 +2,83 @@ import java.util.*;
 
 public class Main {
 
+    //根据前序遍历贺中序遍历构造二叉树
+    class Solution {
+        public int preIndex = 0;
+        public TreeNode createTreeByPandI(int[] preorder, int[] inorder, int inbegin, int inend) {
+            if(inbegin > inend) {
+                return null;
+            }
+            TreeNode root = new TreeNode(preorder[preIndex]);
+            int rootIndex = findIndexOfI(inorder, inbegin, inend,preorder[preIndex]);
+            if(rootIndex == -1) {
+                return null;
+            }
+            preIndex++;
+            root.left = createTreeByPandI(preorder, inorder, inbegin, rootIndex - 1);
+            root.right = createTreeByPandI(preorder, inorder, rootIndex + 1, inend);
+            return root;
+        }
+        private int findIndexOfI(int[] inorder, int inbegin, int inend, int key) {
+            for(int i = inbegin; i <= inend; i++) {
+                if(inorder[i] == key) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        public TreeNode buildTree(int[] preorder, int[] inorder) {
+            if(preorder == null || inorder == null) {
+                return null;
+            }
+            return createTreeByPandI(preorder, inorder, 0, inorder.length - 1);
+        }
+    }
+
+    //二叉树的层序遍历
+    class Solution17 {
+        public List<List<Integer>> levelOrder(TreeNode root) {
+            List<List<Integer>> ret = new ArrayList<>();
+            if (root == null) {
+                return ret;
+            }
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.offer(root);
+            while (!queue.isEmpty()) {
+                int size = queue.size();
+                List<Integer> list = new ArrayList<>();
+                while (size != 0) {
+                    TreeNode cur = queue.poll();
+                    list.add(cur.val);
+                    if (cur.left != null) {
+                        queue.offer(cur.left);
+                    }
+                    if (cur.right != null) {
+                        queue.offer(cur.right);
+                    }
+                    size--;
+                }
+                ret.add(list);
+            }
+            return ret;
+        }
+    }
+
+    //相同的树
+    class Solution16 {
+        public boolean isSameTree(TreeNode p, TreeNode q) {
+            if(p == null && q == null) {
+                return true;
+            } else if(p != null && q == null || q != null && p == null) {
+                return false;
+            } else if(p.val != q.val) {
+                return false;
+            } else {
+                return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+            }
+        }
+    }
+
     //年终奖
     public int getMost(int[][] board) {
         int row = board.length;
