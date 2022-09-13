@@ -2,14 +2,87 @@ import java.util.*;
 
 public class Main {
 
+    
+
+    //二叉树的镜像
+    class Solution24 {
+        public TreeNode mirrorTree(TreeNode root) {
+            if (root == null) {
+                return null;
+            }
+            TreeNode tmp = root.left;
+            root.left = mirrorTree(root.right);
+            root.right = mirrorTree(tmp);
+            return root;
+        }
+    }
+
+    //两个栈实现队列
+    class CQueue {
+        Stack<Integer> stack1;
+        Stack<Integer> stack2;
+        public CQueue() {
+            stack1 = new Stack<>();
+            stack2 = new Stack<>();
+        }
+        public void appendTail(int value) {
+            stack1.push(value);
+        }
+        public int deleteHead() {
+            if (stack2.isEmpty()) {
+                while (!stack1.isEmpty()) {
+                    int key = stack1.pop();
+                    stack2.push(key);
+                }
+            }
+            if (stack2.isEmpty()) {
+                return -1;
+            }
+            return stack2.pop();
+        }
+    }
+
+    //重建二叉树，根据先序和后续
+    class Solution23 {
+        public int tmp = 0;
+        public TreeNode build(int[] preorder, int start, int[] inorder, int end) {
+            if(start > end) {
+                return null;
+            }
+            TreeNode root = new TreeNode((char) preorder[tmp]);
+            int rootIndex = findLocation(inorder, start, end, preorder[tmp]);
+            if(rootIndex == -1) {
+                return null;
+            }
+            tmp++;
+            root.left = build(preorder, start, inorder, rootIndex - 1);
+            root.right = build(preorder, rootIndex + 1, inorder, end);
+            return root;
+        }
+        public int findLocation(int[] inorder, int start, int end, int key) {
+            for(int i = start; i <= end; i++) {
+                if(inorder[i] == key) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        public TreeNode buildTree(int[] preorder, int[] inorder) {
+            if(preorder == null || inorder == null) {
+                return null;
+            }
+            return build(preorder, 0, inorder, preorder.length - 1);
+        }
+    }
+
     //根据前序遍历贺中序遍历构造二叉树
-    class Solution {
+    class Solution22 {
         public int preIndex = 0;
         public TreeNode createTreeByPandI(int[] preorder, int[] inorder, int inbegin, int inend) {
             if(inbegin > inend) {
                 return null;
             }
-            TreeNode root = new TreeNode(preorder[preIndex]);
+            TreeNode root = new TreeNode((char)preorder[preIndex]);
             int rootIndex = findIndexOfI(inorder, inbegin, inend,preorder[preIndex]);
             if(rootIndex == -1) {
                 return null;
@@ -49,7 +122,7 @@ public class Main {
                 List<Integer> list = new ArrayList<>();
                 while (size != 0) {
                     TreeNode cur = queue.poll();
-                    list.add(cur.val);
+                    list.add((int) cur.val);
                     if (cur.left != null) {
                         queue.offer(cur.left);
                     }
@@ -148,7 +221,7 @@ public class Main {
     }
 
     //搜索插入位置
-    class Solution {
+    class Solution19 {
         public int searchInsert(int[] nums, int target) {
             int left = 0;
             int right = nums.length;
