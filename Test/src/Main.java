@@ -2,7 +2,78 @@ import java.util.*;
 
 public class Main {
 
-    
+    //删除链表中的重复元素
+    class Solution {
+        public ListNode deleteDuplicates(ListNode head) {
+            ListNode cur = head;
+            while(cur != null && cur.next != null) {
+                if(cur.val == cur.next.val) {
+                    cur.next = cur.next.next;
+                } else {
+                    cur = cur.next;
+                }
+            }
+            return head;
+        }
+    }
+
+    //加一
+    class Solution28 {
+        public int[] plusOne(int[] digits) {
+            for (int i = digits.length - 1; i >= 0; i--) {
+                digits[i]++;
+                digits[i] = digits[i] % 10;
+                if (digits[i] != 0) return digits;
+            }
+            digits = new int[digits.length + 1];
+            digits[0] = 1;
+            return digits;
+        }
+    }
+
+    //最后一个单词的长度
+    class Solution27 {
+        public int lengthOfLastWord(String s) {
+            String[] strings = s.split(" ");
+            return strings[strings.length - 1].length();
+        }
+    }
+
+    //最长公共前缀
+    class Solution26 {
+        public String longestCommonPrefix(String[] strs) {
+            if(strs.length == 0)
+                return "";
+            String ans = strs[0];
+            for(int i =1;i<strs.length;i++) {
+                int j=0;
+                for(;j<ans.length() && j < strs[i].length();j++) {
+                    if(ans.charAt(j) != strs[i].charAt(j))
+                        break;
+                }
+                ans = ans.substring(0, j);
+                if(ans.equals(""))
+                    return ans;
+            }
+            return ans;
+        }
+    }
+
+    //对称二叉树
+    class Solution25 {
+        public boolean check(TreeNode leftTree, TreeNode rightTree) {
+            if (leftTree == null && rightTree == null) {
+                return true;
+            }
+            if (leftTree == null || rightTree == null) {
+                return false;
+            }
+            return leftTree.val == rightTree.val && check(leftTree.left, rightTree.right) && check(leftTree.right, rightTree.left);
+        }
+        public boolean isSymmetric(TreeNode root) {
+            return check(root, root);
+        }
+    }
 
     //二叉树的镜像
     class Solution24 {
