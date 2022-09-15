@@ -2,6 +2,28 @@ import java.util.*;
 
 public class Main {
 
+    //第二高的薪水
+    //select max(salary) as secondHighestSalary from Employee
+    // where salary < (select max(Salary) from Employee)
+
+
+    //查找重复的电子邮箱
+    //select email from person group by email having count(email) > 1;
+
+
+    //超过经理收入的员工
+    //select a.name as 'Employee' from employee as a,employee as b
+    // where a.managerid = b.id and a.salary > b.salary;
+
+
+    //组合两个表
+    //select firstname,lastname,city,state from person left join
+    // address on person.personid = address.personid
+
+
+    //某网站包含两个表，Customers 表和 Orders 表。编写一个 SQL 查询，找出所有从不订购任何东西的客户。
+    //select a.name as 'customers' from customers as a where a.id not in (select customerid from orders);
+
     //删除链表中的重复元素
     class Solution {
         public ListNode deleteDuplicates(ListNode head) {
