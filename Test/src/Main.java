@@ -2,6 +2,91 @@ import java.util.*;
 
 public class Main {
 
+
+    //两个链表的第一个公共节点
+    class Solution34 {
+        ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+            ListNode a = headA;
+            ListNode b = headB;
+            while (headA != headB) {
+                a = a != null ? a.next : headB;
+                b = b != null ? b.next : headA;
+            }
+            return headA;
+        }
+    }
+
+
+    //第一个只出现一次的字符
+    class Solution33 {
+        public char firstUniqChar(String s) {
+            HashMap<Character, Boolean> map = new HashMap<>();
+            for (int i = 0; i < s.length(); i++) {
+                if (!map.containsKey(s.charAt(i))) {
+                    map.put(s.charAt(i), true);
+                } else {
+                    //已经存在
+                    map.put(s.charAt(i), false);
+                }
+            }
+            for (int i = 0; i < s.length(); i++) {
+                if (map.get(s.charAt(i))) {
+                    return s.charAt(i);
+                }
+            }
+            return ' ';
+        }
+    }
+
+
+    //连续子数组的最大和
+    class Solution32 {
+        public int maxSubArray(int[] nums) {
+            int ret = nums[0];
+            for(int i = 1; i < nums.length; i++) {
+                nums[i] += Math.max(nums[i - 1], 0);
+                ret = Math.max(ret, nums[i]);
+            }
+            return ret;
+        }
+    }
+
+
+    //输出最小的 k 个数
+    class Solution31 {
+        public int[] getLeastNumbers(int[] arr, int k) {
+            int[] ret = new int[k];
+            PriorityQueue<Integer> queue = new PriorityQueue<>();
+            for (int i = 0; i < arr.length; i++) {
+                queue.offer(arr[i]);
+            }
+            for (int i = 0; i < k; i++) {
+                ret[i] = queue.poll();
+            }
+            return ret;
+        }
+    }
+
+
+    //数组当中出现次数超过一半的数字
+    class Solution30 {
+        public int majorityElement(int[] nums) {
+            HashMap<Integer, Integer> map = new HashMap<>();
+            for (int i = 0; i < nums.length; i++) {
+                if (!map.containsKey(nums[i])) {
+                    map.put(nums[i], 1);
+                } else {
+                    map.put(nums[i], map.get(nums[i]) + 1);
+                    if (map.get(nums[i]) > nums.length / 2) {
+                        return nums[i];
+                    }
+                }
+            }
+            return nums[0];
+        }
+    }
+
+
     //第二高的薪水
     //select max(salary) as secondHighestSalary from Employee
     // where salary < (select max(Salary) from Employee)
@@ -25,7 +110,7 @@ public class Main {
     //select a.name as 'customers' from customers as a where a.id not in (select customerid from orders);
 
     //删除链表中的重复元素
-    class Solution {
+    class Solution29 {
         public ListNode deleteDuplicates(ListNode head) {
             ListNode cur = head;
             while(cur != null && cur.next != null) {
