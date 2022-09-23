@@ -3,6 +3,70 @@ import java.util.*;
 public class Main {
 
 
+    //二叉搜索树的第 k 大节点
+    class Solution37 {
+        int k;
+        int num;
+        public void mid(TreeNode root) {
+            if (root == null) {
+                return;
+            }
+            mid(root.right);
+            if (k == 0) {
+                return;
+            }
+            k--;
+            if (k == 0) {
+                num = root.val;
+            }
+            mid(root.left);
+        }
+        public int kthLargest(TreeNode root, int k) {
+            this.k = k;
+            mid(root);
+            return num;
+        }
+    }
+
+
+    //0 - n-1 中消失的数字
+    class Solution36 {
+        public int missingNumber(int[] nums) {
+            int i = 0;
+            int j = nums.length - 1;
+            while(i <= j) {
+                int m = (i + j) / 2;
+                if(nums[m] == m) {
+                    i = m + 1;
+                } else {
+                    j = m - 1;
+                }
+            }
+            return i;
+        }
+    }
+
+
+    //求排序数组当中一个数字出现的次数
+    class Solution35 {
+        public int helper(int[] nums, int tar) {
+        int i = 0, j = nums.length - 1;
+        while(i <= j) {
+            int m = (i + j) / 2;
+            if(nums[m] <= tar) {
+                i = m + 1;
+            } else {
+                j = m - 1;
+            }
+        }
+        return i;
+        }
+        public int search(int[] nums, int target) {
+            return helper(nums, target) - helper(nums, target - 1);
+        }
+    }
+
+
     //两个链表的第一个公共节点
     class Solution34 {
         ListNode getIntersectionNode(ListNode headA, ListNode headB) {
@@ -366,7 +430,7 @@ public class Main {
         return 0;
     }
 
-    public static void main(String[] args) {
+    public static void main98(String[] args) {
         int[] arr = {1,2,3,2,2};
         int n = 5;
         System.out.println(getValue(arr, n));
