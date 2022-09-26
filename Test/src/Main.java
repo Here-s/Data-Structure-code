@@ -3,6 +3,58 @@ import java.util.*;
 public class Main {
 
 
+    //和为 s 的两个数字
+    class Solution40 {
+        public int[] twoSum(int[] nums, int target) {
+            int i = 0;
+            int j = nums.length-1;
+            while (i < j) {
+                int s = nums[i] + nums[j];
+                if (s < target) {
+                    i++;
+                } else if (s > target) {
+                    j--;
+                } else {
+                    return new int[] {nums[i], nums[j]};
+                }
+            }
+            return nums;
+        }
+    }
+
+    //平衡二叉树
+    class Solution39 {
+        public int tree(TreeNode root) {
+            if (root == null) {
+                return 0;
+            }
+            int left = tree(root.left);
+            if (left == -1) {
+                return -1;
+            }
+            int right = tree(root.right);
+            if (right == -1) {
+                return -1;
+            }
+            return Math.abs(left - right) < 2 ? Math.max(left,right) +1 : -1;
+        }
+        public boolean isBalanced(TreeNode root) {
+            return tree(root) != -1;
+        }
+    }
+
+
+    //二叉树的深度
+    class Solution38 {
+        public int maxDepth(TreeNode root) {
+            if (root == null) {
+                return 0;
+            }
+            return Math.max(maxDepth(root.left),maxDepth(root.right)) + 1;
+        }
+    }
+
+
     //二叉搜索树的第 k 大节点
     class Solution37 {
         int k;
