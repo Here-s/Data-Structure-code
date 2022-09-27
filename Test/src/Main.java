@@ -3,6 +3,58 @@ import java.util.*;
 public class Main {
 
 
+    //左旋转字符串
+    class Solution43 {
+        public String reverseLeftWords(String s, int n) {
+            return s.substring(n, s.length()) + s.substring(0, n);
+        }
+    }
+
+
+    //翻转单词顺序
+    class Solution42 {
+        public String reverseWords(String s) {
+            String[] strings = s.split(" ");
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = strings.length - 1; i >= 0; i--) {
+                if (strings[i].equals(" ")) {
+                    continue;
+                }
+                stringBuilder.append(strings[i]).append(" ");
+            }
+            return stringBuilder.toString().trim();
+        }
+    }
+
+
+    //和为 s 的两个连续正数序列
+    class Solution41 {
+        public int[][] findContinuousSequence(int target) {
+            int i = 1;
+            int j = 1;
+            int sum = 0;
+            List<int[]> list = new ArrayList<>();
+            while (i <= target / 2) {
+                if (sum < target) {
+                    sum += j;
+                    j++;
+                } else if (sum > target) {
+                    sum -= i;
+                    i++;
+                } else {
+                    int[] arr = new int[j - i];
+                    for (int k = i; k < j; k++) {
+                        arr[k - i] = k;
+                    }
+                    list.add(arr);
+                    sum -= i;
+                    i++;
+                }
+            }
+            return list.toArray(new int[list.size()][]);
+        }
+    }
+
     //和为 s 的两个数字
     class Solution40 {
         public int[] twoSum(int[] nums, int target) {
