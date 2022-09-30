@@ -3,6 +3,41 @@ import java.util.*;
 public class Main {
 
 
+    //圆圈中最后剩下的数字
+    class Solution45 {
+        public int f(int n, int m) {
+            if (n == 1) {
+                return 0;
+            }
+            int x = f(n - 1, m);
+            return (m + x) % n;
+        }
+        public int lastRemaining(int n, int m) {
+            return f(n, m);
+        }
+    }
+
+
+    //扑克牌中的顺子
+    class Solution44 {
+        public boolean isStraight(int[] nums) {
+            Set<Integer> set = new HashSet<>();
+            int max = 0;
+            int min = 14;
+            for(int num : nums) {
+                if(num == 0) continue;
+                max = Math.max(max, num);
+                min = Math.min(min, num);
+                if(set.contains(num)) {
+                    return false;
+                }
+                set.add(num);
+            }
+            return max - min < 5;
+        }
+    }
+
+
     //左旋转字符串
     class Solution43 {
         public String reverseLeftWords(String s, int n) {
