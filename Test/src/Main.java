@@ -3,6 +3,45 @@ import java.util.*;
 public class Main {
 
 
+    //二叉树的最近公共祖先
+    class Solution48 {
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            if(root == null || root == p || root == q) return root;
+            TreeNode left = lowestCommonAncestor(root.left, p, q);
+            TreeNode right = lowestCommonAncestor(root.right, p, q);
+            if(left == null) return right;
+            if(right == null) return left;
+            return root;
+        }
+    }
+
+
+    //二叉搜索树的最近公共祖先
+    class Solution47 {
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            while(root != null) {
+                if(root.val < p.val && root.val < q.val)
+                    root = root.right;
+                else if(root.val > p.val && root.val > q.val)
+                    root = root.left;
+                else break;
+            }
+            return root;
+        }
+    }
+
+    //不用加减乘除做加法
+    class Solution46 {
+        public int add(int a, int b) {
+            while(b != 0) {
+                int c = (a & b) << 1;
+                a ^= b;
+                b = c;
+            }
+            return a;
+        }
+    }
+
     //圆圈中最后剩下的数字
     class Solution45 {
         public int f(int n, int m) {
