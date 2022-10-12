@@ -3,6 +3,48 @@ import java.util.*;
 public class Main {
 
 
+    //从上到下打印二叉树
+    class Solution50 {
+        public int[] levelOrder(TreeNode root) {
+            if(root == null) return new int[0];
+            int[] res;
+            List<Integer> list = new ArrayList<>();
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.add(root);
+            while(!queue.isEmpty()){
+                TreeNode node = queue.poll();
+                list.add(node.val);
+                if(node.left != null)
+                    queue.add(node.left);
+                if(node.right != null)
+                    queue.add(node.right);
+            }
+            Integer[] arr = list.toArray(new Integer[list.size()]);
+            res = new int[arr.length];
+            for(int i = 0; i < arr.length; i ++)
+                res[i] = arr[i];
+            return res;
+        }
+    }
+
+
+    //栈的压入，弹出序列
+    class Solution49 {
+        public boolean validateStackSequences(int[] pushed, int[] popped) {
+            Stack<Integer> stack = new Stack<>();
+            int i = 0;
+            for(int num = 0; num < pushed.length; num++) {
+                stack.push(pushed[num]);
+                while(!stack.isEmpty() && stack.peek() == popped[i]) {
+                    stack.pop();
+                    i++;
+                }
+            }
+            return stack.isEmpty();
+        }
+    }
+
+
     //二叉树的最近公共祖先
     class Solution48 {
         public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
