@@ -2,6 +2,42 @@ import java.util.*;
 
 public class Main {
 
+    //二叉搜素树的后序遍历序列
+    class Solution52 {
+        public boolean verifyPostorder(int[] postorder) {
+            return recur(postorder, 0, postorder.length - 1);
+        }
+        boolean recur(int[] postorder, int i, int j) {
+            if(i >= j) return true;
+            int p = i;
+            while(postorder[p] < postorder[j]) p++;
+            int m = p;
+            while(postorder[p] > postorder[j]) p++;
+            return p == j && recur(postorder, i, m - 1) && recur(postorder, m, j - 1);
+        }
+    }
+
+
+    //从上到下每一层从左到右打印在一行，打印二叉树
+    class Solution51 {
+        public List<List<Integer>> levelOrder(TreeNode root) {
+            Queue<TreeNode> queue = new LinkedList<>();
+            List<List<Integer>> res = new ArrayList<>();
+            if(root != null) queue.add(root);
+            while(!queue.isEmpty()) {
+                List<Integer> tmp = new ArrayList<>();
+                for(int i = queue.size(); i > 0; i--) {
+                    TreeNode node = queue.poll();
+                    tmp.add(node.val);
+                    if(node.left != null) queue.add(node.left);
+                    if(node.right != null) queue.add(node.right);
+                }
+                res.add(tmp);
+            }
+            return res;
+        }
+    }
+
 
     //从上到下打印二叉树
     class Solution50 {
