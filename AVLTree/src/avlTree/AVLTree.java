@@ -20,7 +20,7 @@ public class AVLTree {
     public boolean insert(int val) {
         TreeNode node = new TreeNode(val);
         if (root == null) {
-            root = new TreeNode(val);
+            root = node;
             return true;
         }
 
@@ -82,6 +82,8 @@ public class AVLTree {
                         rotateLR(parent);
                     }
                 }
+                //已经平衡
+                break;
             }
         }
         return true;
@@ -170,7 +172,7 @@ public class AVLTree {
             subL.bf = 0;
             subLR.bf = 0;
             parent.bf = 1;
-        } else {
+        } else if (bf == 1) {
             subL.bf = -1;
             subLR.bf = 0;
             parent.bf = 0;
@@ -182,5 +184,59 @@ public class AVLTree {
      * @param parent
      */
     private void rotateRL(TreeNode parent) {
+        TreeNode subR = parent.right;
+        TreeNode subRL = subR.left;
+        int bf = subRL.bf;
+
+        rotateRight(parent.right);
+        rotateLeft(parent);
+
+        if (bf == 1) {
+            parent.bf = -1;
+            subR.bf = 0;
+            subRL.bf = 0;
+        } else if (bf == -1) {
+            parent.bf = 0;
+            subR.bf = 0;
+            subRL.bf = 1;
+        }
+    }
+
+
+    //中序遍历的解惑是有序的，不一定能说明当前树是 AVLTree
+    public void inorder(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        inorder(root.left);
+        System.out.println(root.val+" ");
+        inorder(root.right);
+    }
+
+    private int height(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftH = height(root.left);
+        int rightH = height(root.right);
+
+        return  leftH > rightH ? leftH+1 : rightH+1;
+    }
+
+    public boolean isBalanced(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        int leftH = height(root.left);
+        int rightH = height(root.right);
+
+        if (rightH - leftH != root.bf) {
+            System.out.println("这个节点：" + root.val + " 平衡因子异常");
+            return false;
+        }
+
+        return Math.abs(leftH - rightH) <= 1
+                && isBalanced(root.left)
+                && isBalanced(root.right);
     }
 }
