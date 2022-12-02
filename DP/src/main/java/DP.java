@@ -72,9 +72,9 @@ public class DP {
 
     //给出一个三角形，计算从三角形顶部到底部的最小路径和，每一步都可以移动到下面一行相邻的数字
     // 状态F(i)：从(0,0)到（i,j)的最小路径和
-    // 转移方程：F(i,j): min(F(i-1, j-1),F(i-1,j)) + array[i][j]
-    // 初始状态：F(0,0) = array[0][0]
-    // 返回结果：min（F(row-1,j))
+    // 转移方程：F(i,j): min(F(i+1, j),F(i+1,j+1)) + array[i][j]
+    // 初始状态：F(row-1,j) = array[row-1][j]
+    // 返回结果：F(0.0)
 
     public int minimumTotal(ArrayList<ArrayList<Integer>> triangle) {
         int sum ;
@@ -87,5 +87,55 @@ public class DP {
             sum = sum + Math.min(getResult(triangle, l + 1, k), getResult(triangle, l + 1, k + 1));
         }
         return sum;
+    }
+
+
+    //一个机器人再 m*n 大小的地图的左上角，机器人每次向下或向右移动，然后到达右下角，有多少种路径
+    // 状态 F(i,j)：从(0,0)到达(i,j)的路径的个数
+    // 状态转移方程 F(i,j): F(i,j-1) + F(i-1,j)
+    // 初始状态：F(i,0) = F(0,j) = 1
+    // 返回：F(m-1, n-1)
+    public int uniquePaths (int m, int n) {
+        int[][] pathNum = new int[m][n];
+        // F(i,0) = F(0,j) = 1
+        for (int i = 0; i < m; i++) {
+            pathNum[i][0] = 1;
+        }
+        for (int j = 1; j < n; j++) {
+            pathNum[0][j] = 1;
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                pathNum[i][j] = pathNum[i][j-1] + pathNum[i-1][j];
+            }
+        }
+        return pathNum[m-1][n-1];
+    }
+
+    //最小路径和，从左上角走到右下角，只能向左和向右走
+    // 转移方程：F(i,j) = min(F(i,j-1),F(i-1,j)) + array[i][j]
+    // 第一行：F(0,j) = F(0,j-1) + array[0][j]
+    // 第一列：F(i,0) = F(j-1,0) + array[i][0]
+    // 初始状态：F(0,0) = array[0][0]
+    // 返回：F(row-1,col-1)
+    public int minPathSum(int[][] grid) {
+        if (grid.length == 0) {
+            return 0;
+        }
+        int sum = grid[0][0];
+        //第一行
+        for (int i = 1; i < grid[0].length; i++) {
+            grid[0][i] = grid[0][i-1] + grid[0][i];
+        }
+        //第一列
+        for (int i = 1; i < grid.length; i++) {
+            grid[i][0] = grid[i-1][0] + grid[i][0];
+        }
+        for (int i = 1; i < grid.length; i++) {
+            for (int j = 1; j < grid[i].length; j++) {
+                grid[i][j] = Math.min(grid[i][j-1], grid[i-1][j]) + grid[i][j];
+            }
+        }
+        return grid[grid.length - 1][grid[0].length - 1];
     }
 }
