@@ -138,4 +138,32 @@ public class DP {
         }
         return grid[grid.length - 1][grid[0].length - 1];
     }
+
+
+    //把 n 个物品和一个大小为 n 的背包，给定数组 A 表示每个物品的大小和数组 V 表示每个物品的价值
+    // 问最多能装进的总价值是多大。
+    // 状态：F(i,j) = 从前 i 个商品当中选择，包的大小为 j 时id最大价值
+    // 状态转移方程：如果 A[i-1] <= j，  F(i,j) = max(F(i-1,j),F(i-1,j-A[i-1]) + V[i-1])
+    //            如果：A[i-1] > j,   F(i,j) = F(i-1,j)
+    // 初始状态：F(0,j) = 0      F(i,0) = 0
+    public int backPackII(int m, int[] A, int[] V) {
+        int n = A.length;
+        int[] maxValue = new int[m + 1];
+        for (int i = 1; i <= n; i++) {
+            for (int j = m; j > 0; j--) {
+                if (A[i - 1] <= j) {
+                    maxValue[j] = Math.max(maxValue[j],maxValue[j-A[i-1]] + V[i-1]);
+                }
+            }
+        }
+        return maxValue[m];
+    }
+
+
+    //给出一个字符串，分割使得分割出的每个字串都是回文串，计算分割回文的最小切割数。
+    // 字符串 “aab” 返回1，因为分割为 aa b
+    // 状态：F(i) = s的前i个字符的最小分割次数
+    // 状态转移方程：F(i) = j<i && [j+1,i] 是回文串，找出一个 min(F(j) + 1)
+
+
 }
