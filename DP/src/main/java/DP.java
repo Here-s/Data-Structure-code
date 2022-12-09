@@ -164,6 +164,55 @@ public class DP {
     // 字符串 “aab” 返回1，因为分割为 aa b
     // 状态：F(i) = s的前i个字符的最小分割次数
     // 状态转移方程：F(i) = j<i && [j+1,i] 是回文串，找出一个 min(F(j) + 1)
+    //             F(i): [1,i]是回文串：0
+    // 初始状态：F(i) = i - 1
+    // 返回结果：F(s.size())  F(s.length())
+    public int minCut(String s) {
+        int n = s.length();
+        int[] dp = new int[n+1];
+        dp[0]=0;
+        for(int i=1;i<=n;i++){
+            dp[i]=i;
+            for(int j=0;j<i;j++){
+                if(valid(s,j,i-1)){
+                    dp[i]=Math.min(dp[i],dp[j]+1);
+                }
+            }
+        }
+        return dp[n]-1;
+    }
+    public boolean valid(String s,int l,int r){
+        while(l<r){
+            if(s.charAt(l)!=s.charAt(r)){
+                return false;
+            }
+            l++;
+            r--;
+        }
+        return true;
+    }
 
+
+    //给定两个单词 word1 和 word2 计算将 word1 转化为 word2 需要多少步操作
+    // 可以在单词中插入一个字符，删掉一个字符，替换一个字符。求最小操作次数
+    // 问题：word1 到 word2 编辑距离
+    // 子问题：word1 的局部变成 word2 局部需要的编辑距离
+    // 状态 F(i,j): word1 前 i 个字符到 word2 的前 j 个字符的编辑距离
+    // 状态转移方程：F(i,j)
+    public int minDistance(String word1, String word2) {
+        int n1 = word1.length();
+        int n2 = word2.length();
+        int[][] dp = new int[n1 + 1][n2 + 1];
+        for (int j = 1; j <= n2; j++) dp[0][j] = dp[0][j - 1] + 1;
+        for (int i = 1; i <= n1; i++) dp[i][0] = dp[i - 1][0] + 1;
+
+        for (int i = 1; i <= n1; i++) {
+            for (int j = 1; j <= n2; j++) {
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) dp[i][j] = dp[i - 1][j - 1];
+                else dp[i][j] = Math.min(Math.min(dp[i - 1][j - 1], dp[i][j - 1]), dp[i - 1][j]) + 1;
+            }
+        }
+        return dp[n1][n2];
+    }
 
 }
