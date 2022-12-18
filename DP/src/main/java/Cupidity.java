@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class Cupidity {
 
     //分割平衡字符串
@@ -61,6 +64,27 @@ public class Cupidity {
         }
     }
 
+    //无重叠区间
+    //给定一个区间的集合 intervals ，其中 intervals[i] = [starti, endi]
+    // 返回 需要移除区间的最小数量，使剩余区间互不重叠 。
+    class Solution {
 
-
+        public int eraseOverlapIntervals(int[][] intervals) {
+            Arrays.sort(intervals, new Comparator<int[]>() {
+                public int compare(int[] a1, int[] a2) {
+                    return a1[1] - a2[1];
+                }
+            });
+            int right = intervals[0][1];
+            int count = 0;
+            for(int i = 1; i < intervals.length; i++) {
+                if(intervals[i][0] < right) {
+                    count++;
+                } else {
+                    right = intervals[i][1];
+                }
+            }
+            return count;
+        }
+    }
 }
