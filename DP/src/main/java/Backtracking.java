@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Backtracking {
 
     //员工的重要性
@@ -60,6 +63,71 @@ public class Backtracking {
         }
     }
 
+    //被围绕的区域
+    //给你一个 m x n 的矩阵 board ，由若干字符 'X' 和 'O' ，找到所有被 'X' 围绕的区域，
+    // 并将这些区域里所有的 'O' 用 'X' 填充。
+    class Solution {
 
+        public void dfs(char[][] board, int x, int y) {
+            if(x < 0 || x >= board.length || y < 0 || y >= board[0].length || board[x][y] != 'O') {
+                return;
+            }
+            board[x][y] = 'k';
+            dfs(board, x+1, y);
+            dfs(board, x-1, y);
+            dfs(board, x, y+1);
+            dfs(board, x, y-1);
+        }
+        public void solve(char[][] board) {
+            for(int i = 0; i < board.length; i++) {
+                //左右两侧
+                dfs(board, i, 0);
+                dfs(board, i, board[0].length - 1);
+            }
+            for(int i = 0; i < board[0].length; i++) {
+                //上下
+                dfs(board, 0, i);
+                dfs(board, board.length - 1, i);
+            }
+            for(int i = 0; i < board.length; i++) {
+                for(int j = 0; j < board[0].length; j++) {
+                    if(board[i][j] == 'k') {
+                        board[i][j] = 'O';
+                    } else if(board[i][j] == 'O') {
+                        board[i][j] = 'X';
+                    }
+                }
+            }
+        }
+    }
 
+    //岛屿数量
+    //给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
+    //岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
+    //此外，你可以假设该网格的四条边均被水包围。
+    class Solution {
+        public void dfs(char[][]grid, int i, int j) {
+            if(i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == '0') {
+                return;
+            }
+            grid[i][j] = '0';
+            dfs(grid, i + 1, j);
+            dfs(grid, i - 1, j);
+            dfs(grid, i, j + 1);
+            dfs(grid, i, j - 1);
+        }
+
+        public int numIslands(char[][] grid) {
+            int num = 0;
+            for(int i = 0; i < grid.length; i++) {
+                for(int j = 0; j < grid[0].length; j++) {
+                    if(grid[i][j] == '1') {
+                        num++;
+                        dfs(grid, i, j);
+                    }
+                }
+            }
+            return num;
+        }
+    }
 }
