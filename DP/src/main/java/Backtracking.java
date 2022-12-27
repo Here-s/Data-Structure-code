@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class Backtracking {
 
@@ -130,4 +131,72 @@ public class Backtracking {
             return num;
         }
     }
+
+    //电话号码的组合
+    //给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。
+    //答案可以按 任意顺序 返回。给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+    class Solution {
+        public void dfs(List<String> list, Map<String, String> map, String[] strings, int len, int index, StringBuffer buffer) {
+            if(index == len) {
+                list.add(buffer.toString());
+            } else {
+                //得到字符串
+                String s = map.get(strings[index]);
+                for(int i = 0; i < s.length(); i++) {
+                    buffer.append(s.charAt(i));
+                    dfs(list, map, strings, len, index+1, buffer);
+                    buffer.deleteCharAt(index);
+                }
+            }
+        }
+        public List<String> letterCombinations(String digits) {
+            List<String> list = new ArrayList<>();
+            if (digits.length() == 0) {
+                return list;
+            }
+            Map<String, String> map = new HashMap<>();
+            map.put("2", "abc");
+            map.put("3", "def");
+            map.put("4", "ghi");
+            map.put("5", "jkl");
+            map.put("6", "mno");
+            map.put("7", "pqrs");
+            map.put("8", "tuv");
+            map.put("9", "wxyz");
+            String[] strings = digits.split("");
+            int len = digits.length();
+            int index = 0;
+            StringBuffer buffer = new StringBuffer();
+            dfs(list, map, strings, len, index, buffer);
+            return list;
+        }
+    }
+
+    //N 叉树的层序遍历
+    //给定一个 N 叉树，返回其节点值的层序遍历。（即从左到右，逐层遍历）。
+    //树的序列化输入是用层序遍历，每组子节点都由 null 值分隔（参见示例）。
+    class Solution {
+        public List<List<Integer>> levelOrder(Node root) {
+            List<List<Integer>> list = new ArrayList<List<Integer>>();
+            if(root == null) {
+                return list;
+            }
+            Queue<Node> queue = new ArrayDeque<>();
+            queue.offer(root);
+            while(!queue.isEmpty()) {
+                int count = queue.size();
+                List<Integer> level = new ArrayList<>();
+                for(int i = 0; i < count; i++) {
+                    Node cur = queue.poll();
+                    level.add(cur.val);
+                    for(Node k : cur.children) {
+                        queue.offer(k);
+                    }
+                }
+                list.add(level);
+            }
+            return list;
+        }
+    }
+
 }
