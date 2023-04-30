@@ -2,6 +2,122 @@ import java.util.*;
 
 public class Main {
 
+
+    //数组中只出现一次的两个数
+    public class Solution {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param array int整型一维数组
+         * @return int整型一维数组
+         */
+        public int[] FindNumsAppearOnce (int[] array) {
+            // write code here
+            Set<Integer> set = new HashSet<>();
+            int[] arr = new int[2];
+            for(int i = 0; i < array.length; i++) {
+                if(set.contains(array[i])) {
+                    set.remove(array[i]);
+                } else {
+                    set.add(array[i]);
+                }
+            }
+            int i = 0;
+            for(int num : set) {
+                arr[i++] = num;
+            }
+            return arr;
+        }
+    }
+
+    //二叉树中和为某一值的路径
+    public class Solution {
+        /**
+         *
+         * @param root TreeNode类
+         * @param sum int整型
+         * @return bool布尔型
+         */
+        public boolean hasPathSum (TreeNode root, int sum) {
+            // write code here
+            if(root == null) {
+                return false;
+            }
+            if(root.left == null && root.right == null && sum - root.val == 0) {
+                return true;
+            }
+            return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+        }
+    }
+
+    //二叉树层序遍历
+    public class Solution {
+        /**
+         *
+         * @param root TreeNode类
+         * @return int整型ArrayList<ArrayList<>>
+         */
+
+        public ArrayList<ArrayList<Integer>> levelOrder (TreeNode root) {
+            // write code here
+
+            ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+            if(root == null) {
+                return list;
+            }
+            Queue<TreeNode> queue = new ArrayDeque<>();
+            queue.offer(root);
+            while(!queue.isEmpty()) {
+
+                ArrayList<Integer> list1 = new ArrayList<>();
+                int n = queue.size();
+                for(int i = 0; i < n; i++) {
+                    TreeNode node = queue.poll();
+                    list1.add(node.val);
+                    if(node.left != null) {
+                        queue.add(node.left);
+                    }
+                    if(node.right != null) {
+                        queue.add(node.right);
+                    }
+                }
+
+                list.add(list1);
+            }
+            return list;
+        }
+    }
+
+    //二叉树中序遍历
+    public class Solution {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param root TreeNode类
+         * @return int整型一维数组
+         */
+        public void order(List<Integer> list, TreeNode node) {
+            if(node == null) {
+                return;
+            }
+            order(list, node.left);
+            list.add(node.val);
+            order(list, node.right);
+        }
+        public int[] inorderTraversal (TreeNode root) {
+            // write code here
+            List<Integer> list = new ArrayList<>();
+            order(list, root);
+            int[] arr = new int[list.size()];
+            for(int i = 0; i < arr.length; i++) {
+                arr[i] = list.get(i);
+            }
+            return arr;
+        }
+    }
+
     //二叉搜素树的后序遍历序列
     class Solution52 {
         public boolean verifyPostorder(int[] postorder) {
