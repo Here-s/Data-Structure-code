@@ -3,6 +3,82 @@ import java.util.*;
 public class Main {
 
 
+    //归并排序
+    public static void process(int[] arr, int l, int r) {
+        if (l == r) {
+            return ;
+        }
+        int mid = (l + r) / 2;
+        process(arr, l, mid);
+        process(arr, mid + 1, r);
+        marge(arr, l, mid, r);
+    }
+    public static void marge(int[] arr, int l, int m, int r) {
+        int[] help = new int[r - l + 1];
+        int i = 0;
+        int p1 = l;
+        int p2 = m + 1;
+        while (p1 <= m && p2 <= r) {
+            if (arr[p1] >= arr[p2]) {
+                help[i++] = arr[p2++];
+            } else {
+                help[i++] = arr[p1++];
+            }
+        }
+        while (p1 <= m) {
+            //后半部分空了
+            help[i++] = arr[p1++];
+        }
+        while (p2 <= r) {
+            help[i++] = arr[p2++];
+        }
+//        System.out.println(Arrays.toString(help));
+        for (i = 0; i < help.length; i++) {
+            arr[l + i] = help[i];
+        }
+    }
+
+    //快排
+    public static void quickSort(int[] arr, int left, int right) {
+        if (left > right) {
+            return;
+        }
+        int i = left;
+        int j = right;
+        int part = arr[i];//基准值
+        while (i < j) {
+            //右边找到比 num 小的了
+            while (arr[j] >= part && i < j) {
+                j--;
+            }
+            if (i < j) {
+                arr[i++] = arr[j];
+            }
+            //左边找到比 part 大的了
+            while (arr[i] < part && i < j) {
+                i++;
+            }
+            if (i < j) {
+                arr[j--] = arr[i];
+            }
+
+        }
+        arr[i] = part;
+        quickSort(arr, left, i - 1);
+        quickSort(arr, i + 1, right);
+    }
+
+    //递归求最大值
+    public static int getMax(int[] arr, int l, int r) {
+        if (l == r) {
+            return arr[l];
+        }
+        int mid = (l + r) / 2;
+        int left = getMax(arr, l, mid);
+        int right = getMax(arr, mid + 1, r);
+        return Math.max(left, right);
+    }
+
     //数组中只出现一次的两个数
     public class Solution {
         /**
