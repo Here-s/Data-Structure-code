@@ -3,6 +3,108 @@ import java.util.*;
 public class Main {
 
 
+    //后续遍历非递归
+    class Solution {
+        public List<Integer> postorderTraversal(TreeNode root) {
+            List<Integer> list = new ArrayList<>();
+            if(root == null) {
+                return list;
+            }
+            Stack<TreeNode> stack1 = new Stack<>();
+            Stack<TreeNode> stack2 = new Stack<>();
+            stack1.push(root);
+            while(!stack1.isEmpty()) {
+                TreeNode node = stack1.pop();
+                stack2.push(node);
+                if(node.left != null) {
+                    stack1.push(node.left);
+                }
+                if(node.right != null) {
+                    stack1.push(node.right);
+                }
+            }
+            while(!stack2.isEmpty()) {
+                list.add(stack2.pop().val);
+            }
+            return list;
+        }
+    }
+
+    //先序遍历非递归
+    class Solution {
+        public List<Integer> preorderTraversal(TreeNode root) {
+            List<Integer> list = new ArrayList<>();
+            if(root == null) {
+                return list;
+            }
+            Stack<TreeNode> stack = new Stack<>();
+            stack.push(root);
+            while(!stack.isEmpty()) {
+                TreeNode node = stack.pop();
+                list.add(node.val);
+                if(node.right != null) {
+                    stack.push(node.right);
+                }
+                if(node.left != null) {
+                    stack.push(node.left);
+                }
+            }
+            return list;
+        }
+    }
+
+    //复制带随机指针的链表
+    class Solution {
+        public Node copyRandomList(Node head) {
+            Map<Node, Node> map = new HashMap<>();
+            Node node = head;
+            while(node != null) {
+                map.put(node, new Node(node.val));
+                node = node.next;
+            }
+            Stack<Integer> stack = new Stack<>();
+
+            node = head;
+            while(node != null) {
+                map.get(node).next = map.get(node.next);
+                map.get(node).random = map.get(node.random);
+                node = node.next;
+            }
+            return map.get(head);
+        }
+    }
+
+    //链表是否是回文结构
+    public class Solution {
+        /**
+         *
+         * @param head ListNode类 the head
+         * @return bool布尔型
+         */
+        public boolean isPail (ListNode head) {
+            // write code here
+            Stack<Integer> stack = new Stack<>();
+            ListNode node = head;
+            ListNode node2 = head;
+            while(node2 != null && node2.next != null) {
+                node2 = node2.next.next;
+                node = node.next;
+            }
+            while(node != null) {
+                stack.push(node.val);
+                node = node.next;
+            }
+            node = head;
+            while(!stack.isEmpty()) {
+                if(node.val != stack.pop()) {
+                    return false;
+                }
+                node = node.next;
+            }
+            return true;
+        }
+    }
+
     //归并排序
     public static void process(int[] arr, int l, int r) {
         if (l == r) {
