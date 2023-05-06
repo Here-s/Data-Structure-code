@@ -2,6 +2,62 @@ import java.util.*;
 
 public class Main {
 
+    //是否为完全二叉树
+    class Solution {
+        public boolean isCompleteTree(TreeNode root) {
+            if(root == null) {
+                return false;
+            }
+            Queue<TreeNode> queue = new ArrayDeque<>();
+            queue.offer(root);
+            boolean child = false;
+            while(!queue.isEmpty()) {
+                TreeNode node = queue.poll();
+                if(node.left == null && node.right != null) {
+                    return false;
+                }
+                if(child && (node.left != null || node.right != null)) {
+                    return false;
+                }
+                if(node.left == null || node.right == null) {
+                    //接下来就都是孩子节点了
+                    child = true;
+                }
+                if(node.left != null) {
+                    queue.offer(node.left);
+                }
+                if(node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            return true;
+        }
+    }
+
+    //验证二叉搜索树
+    class Solution {
+        public void listTree(TreeNode root, List<Integer> list) {
+            if(root == null) {
+                return;
+            }
+            listTree(root.left, list);
+            list.add(root.val);
+            listTree(root.right, list);
+        }
+        public boolean isValidBST(TreeNode root) {
+            if(root == null) {
+                return false;
+            }
+            List<Integer> list = new ArrayList<>();
+            listTree(root, list);
+            for(int i = 1; i < list.size(); i++) {
+                if(list.get(i) <= list.get(i - 1)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
 
     //中序遍历非递归
     class Solution {
