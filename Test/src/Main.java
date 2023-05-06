@@ -3,6 +3,28 @@ import java.util.*;
 public class Main {
 
 
+    //中序遍历非递归
+    class Solution {
+        public List<Integer> inorderTraversal(TreeNode root) {
+            List<Integer> list = new ArrayList<>();
+            if(root == null) {
+                return list;
+            }
+            Stack<TreeNode> stack = new Stack<>();
+            while(!stack.isEmpty() || root != null) {
+                if(root != null) {
+                    stack.push(root);
+                    root = root.left;
+                } else {
+                    root = stack.pop();
+                    list.add(root.val);
+                    root = root.right;
+                }
+            }
+            return list;
+        }
+    }
+
     //后续遍历非递归
     class Solution {
         public List<Integer> postorderTraversal(TreeNode root) {
