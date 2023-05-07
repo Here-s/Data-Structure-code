@@ -2,6 +2,61 @@ import java.util.*;
 
 public class Main {
 
+    //二叉树的公共祖先（优化版本）
+    class Solution {
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            if(root == null || root == p || root == q) {
+                return root;
+            }
+            TreeNode left = lowestCommonAncestor(root.left, p, q);
+            TreeNode right = lowestCommonAncestor(root.right, p, q);
+            if(left == null) {
+                return right;
+            }
+            if(right == null) {
+                return left;
+            }
+            return root;
+        }
+    }
+
+    //二叉树的最近公共祖先
+    class Solution {
+        public void process(TreeNode node, HashMap<TreeNode, TreeNode> map) {
+            if(node == null) {
+                return;
+            }
+            map.put(node.left, node);
+            map.put(node.right, node);
+            process(node.left, map);
+            process(node.right, map);
+        }
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            if(root == null) {
+                return root;
+            }
+            HashMap<TreeNode, TreeNode> map = new HashMap<>();
+            //每个节点的父节点存在哈希表里面
+            map.put(root, root);
+            process(root, map);
+            TreeNode node = p;
+            Set<TreeNode> set1 = new HashSet<>();
+            while(node != map.get(node)) {
+                set1.add(node);
+                node = map.get(node);
+            }
+            //set1已经放满了 p 的链路
+            node = q;
+            while(node != map.get(node)) {
+                if(set1.contains(node)) {
+                    break;
+                }
+                node = map.get(node);
+            }
+            return node;
+        }
+    }
+
     //是否为完全二叉树
     class Solution {
         public boolean isCompleteTree(TreeNode root) {
