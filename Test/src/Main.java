@@ -2,6 +2,56 @@ import java.util.*;
 
 public class Main {
 
+    //最多可以参加的会议数目
+    class Solution {
+        public int maxEvents(int[][] events) {
+            Set<Integer> set = new HashSet<>();
+            Arrays.sort(events, (first, second) -> first[1]==second[1]?
+                    first[0]-second[0]:first[1]-second[1]);
+
+            for(int[] event: events) {
+                for(int i = event[0]; i<=event[1]; i++)
+                    if(set.add(i)) break;
+            }
+            return set.size();
+        }
+    }
+
+    //二叉树的序列化与反序列化
+    public class Codec {
+
+        // Encodes a tree to a single string.
+        public String serialize(TreeNode root) {
+            if(root == null) {
+                return "#_";
+            }
+            String str = root.val + "_";
+            str += serialize(root.left);
+            str += serialize(root.right);
+            return str;
+        }
+
+        // Decodes your encoded data to tree.
+        public TreeNode getTree(Queue<String> queue) {
+            String val = queue.poll();
+            if(val.equals("#")) {
+                return null;
+            }
+            TreeNode node = new TreeNode(Integer.valueOf(val));
+            node.left = getTree(queue);
+            node.right = getTree(queue);
+            return node;
+        }
+        public TreeNode deserialize(String data) {
+            String[] strings = data.split("_");
+            Queue<String> queue = new ArrayDeque<>();
+            for(int i = 0; i < strings.length; i++) {
+                queue.offer(strings[i]);
+            }
+            return getTree(queue);
+        }
+    }
+
     //二叉树的公共祖先（优化版本）
     class Solution {
         public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
