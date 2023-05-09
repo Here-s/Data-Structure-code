@@ -2,6 +2,59 @@ import java.util.*;
 
 public class Main {
 
+
+    //数据流的中位数
+    class MedianFinder {
+
+        PriorityQueue<Integer> min ;
+        PriorityQueue<Integer> max ;
+        /** initialize your data structure here. */
+        public MedianFinder() {
+            min = new PriorityQueue<>();
+            max = new PriorityQueue<>((a,b) -> {return  b - a ;});
+        }
+
+        public void addNum(int num) {
+            max.add(num);
+            min.add(max.remove());
+            if (min.size() > max.size()) {
+                max.add(min.remove());
+            }
+        }
+
+        public double findMedian() {
+            if (max.size() == min.size()) {
+                return (max.peek() + min.peek()) / 2.0;
+            } else {
+                return max.peek();
+            }
+        }
+    }
+
+    //字母异位词分组
+    class Solution {
+        public List<List<String>> groupAnagrams(String[] strs) {
+            List<List<String>> list = new ArrayList<>();
+            Map<String, List<String>> map = new HashMap<>();
+            for(int i = 0; i < strs.length; i++) {
+                char[] arr = strs[i].toCharArray();
+                Arrays.sort(arr);
+                String key = new String(arr);
+                if(map.containsKey(key)) {
+                    //有这一类的list
+                    map.get(key).add(strs[i]);
+                } else {
+                    //还没有这一类的list
+                    List<String> list1 = new ArrayList<>();
+                    list1.add(strs[i]);
+                    map.put(key, list1);
+                    list.add(list1);
+                }
+            }
+            return list;
+        }
+    }
+
     //最多可以参加的会议数目
     class Solution {
         public int maxEvents(int[][] events) {
