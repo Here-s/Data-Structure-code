@@ -2,8 +2,144 @@ import java.util.*;
 
 public class Main {
 
+    //规定1和A对应、2和B对应、3和C对应...
+    //那么一个数字字符串比如"111"，就可以转化为"AAA”、“KA"和"AK"。
+    // 给定一个只有数字字符组成的字符串str，返回有多少种转化结果。
+    class Solution {
+        public int process(char[] str, int i) {
+            if(i == str.length) {
+                return 1;
+            }
+            if(str[i] == '0') {
+                return 0;
+            }
+            if(str[i] == '1') {
+                //i 作为单独的部分，后续有多少解法
+                int res = process(str, i + 1);
+                if(i + 1 < str.length) {
+                    //因为 i 是 1，所以还是字符下标，所以可以看看 i 和后面数字组成一队
+                    // 也就是直接跳过了 i + 1 的字符，直接去 i + 2 的字符
+                    res += process(str, i + 2);
+                }
+                return res;
+            }
+            if(str[i] == '2') {
+                int res = process(str, i + 1);
+                if(i + 1 < str.length && str[i + 1] >= '0' && str[i + 1] <= '6') {
+                    res += process(str, i + 2);
+                }
+                return res;
+            }
+            //剩下的就是 3 ~ 9 的数字了，不能和后续数字合并了
+            return process(str, i + 1);
+        }
+        public int numDecodings(String s) { //解码方法
+            char[] ch = s.toCharArray();
+            return process(ch, 0);
+        }
+    }
+
+    //使用递归逆序栈
+    public static int func(Stack<Integer> stack) {
+        int num = stack.pop();
+        if(stack.isEmpty()) {
+            //栈为空，说明 num 已经是栈底的元素了
+            return num;
+        } else {
+            int last = func(stack);
+            stack.push(num);
+            return last;
+        }
+    }
+    public static void reverse(Stack<Integer> stack) {
+        if (stack.isEmpty()) {
+            return;
+        }
+        //拿到栈底的元素
+        int num = func(stack);
+        //继续去拿
+        reverse(stack);
+        //然后递归放到栈里面
+        stack.push(num);
+    }
+
+    //打印一个字符串的全排列
+    public class Solution {
+        ArrayList<String> res = new ArrayList<>();
+        char[] c;
+        public ArrayList<String> Permutation(String str) {
+            c = str.toCharArray();
+            dfs(0);
+            return res;
+        }
+        void dfs(int x) {
+            if (x == c.length - 1) {
+                //到了最后一个字母，添加排列进去
+                res.add(String.valueOf(c));
+                return;
+            }
+            HashSet<Character> set = new HashSet<>();
+            for (int i = x; i < c.length; i++) {
+                if (set.contains(c[i])) continue; //有重复，直接跳过
+                set.add(c[i]);
+                //交换剩下的其它字母的位置
+                swap(i, x);
+                //延展到 x + 1 字符的位置
+                dfs(x + 1);
+                //恢复交换之前的位置
+                swap(i, x);
+            }
+        }
+        void swap(int a, int b) {
+            char tmp = c[a];
+            c[a] = c[b];
+            c[b] = tmp;
+        }
+    }
+
+    //一个字符串的全部子序列
+    class Solution {
+        public int distinctSubseqII(String s) {
+            int mod = (int)1e9 + 7;
+            long result = 0L;
+
+            // 记录26个字符每个字符的子序列总数
+            long[] letter = new long[26];
+            for (char sc : s.toCharArray()) {
+
+                // 获得字符sc前一次统计的子序列数
+                long pre = letter[sc - 'a'];
+
+                // 计算当前字符sc的子序列数
+                letter[sc - 'a'] = (result + 1) % mod;
+
+                // 加mod的目的是为了防止结果溢出为负数
+                result = (result + letter[sc - 'a'] - pre + mod) % mod;
+            }
+            return (int)result;
+        }
+    }
+
     //汉诺塔问题
-    
+    class Solution {
+        // 将N个圆盘从A柱经由B柱移动到C柱
+        public void func(int i, List<Integer> A, List<Integer> B, List<Integer> C) {
+            if(i == 1) {
+                //还剩一个圆盘，直接移动到 C 柱子
+                C.add(0,A.remove(0));
+                return;
+            }
+            //把 A 柱子最后一个盘子上面的所有盘子都移动到 B 柱子上面
+            func(i - 1, A, C, B);
+            C.add(0, A.remove(0));
+            //把所有 B 柱子上面的盘子都移动到 C 上面
+            func(i - 1, B, A, C);
+        }
+        public void hanota(List<Integer> A, List<Integer> B, List<Integer> C) {
+            int n = A.size();
+            func(n, A, B, C);
+        }
+    }
 
     //数据流的中位数
     class MedianFinder {
