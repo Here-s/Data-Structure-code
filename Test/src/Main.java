@@ -2,6 +2,64 @@ import java.util.*;
 
 public class Main {
 
+    //将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序
+    class Solution {
+        public void moveZeroes(int[] nums) {
+            int n = 0;
+            //把遇到的非 0 都挪到前面
+            for(int i = 0; i < nums.length; i++) {
+                if(nums[i] != 0) {
+                    nums[n] = nums[i];
+                    n++;
+                }
+            }
+            //把后面的都变成 0
+            for(int i = n; i < nums.length; i++) {
+                nums[i] = 0;
+            }
+        }
+    }
+
+    //一个矩阵中只有0和1两种值，每个位置都可以和自己的上、下、左、右四个位置相连，
+    // 如果有一片1连在一起，这个部分叫做一个岛，求一个矩阵中有多少个岛?
+    class Solution {
+        public void getGrid(char[][] grid, int i, int j, int n, int m) {
+            if(grid[i][j] != '1') {
+                //说明不是岛屿，直接返回
+                return;
+            }
+            //当前位置变为 2
+            grid[i][j] = '2';
+            if(i + 1 < n) {
+                getGrid(grid, i + 1, j, n, m);
+            }
+            if(i - 1 >= 0) {
+                getGrid(grid, i - 1, j, n, m);
+            }
+            if(j + 1 < m) {
+                getGrid(grid, i, j + 1, n, m);
+            }
+            if(j - 1 >= 0) {
+                getGrid(grid, i, j - 1, n, m);
+            }
+        }
+        public int numIslands(char[][] grid) {
+            int num = 0;
+            int n = grid.length;
+            int m = grid[0].length;
+            for(int i = 0; i < n; i++) {
+                for(int j = 0; j < m; j++) {
+                    if(grid[i][j] == '1') {
+                        //是岛屿
+                        num++;
+                        getGrid(grid, i, j, n, m);
+                    }
+                }
+            }
+            return num;
+        }
+    }
+
     //规定1和A对应、2和B对应、3和C对应...
     //那么一个数字字符串比如"111"，就可以转化为"AAA”、“KA"和"AK"。
     // 给定一个只有数字字符组成的字符串str，返回有多少种转化结果。
