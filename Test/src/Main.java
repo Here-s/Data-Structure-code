@@ -2,6 +2,60 @@ import java.util.*;
 
 public class Main {
 
+    //最长回文串
+    class Solution {
+        public int longestPalindrome(String s) {
+            char[] ch = s.toCharArray();
+            Map<Character, Integer> map = new HashMap<>();
+            for(int i = 0; i < ch.length; i++) {
+                if (map.containsKey(ch[i])) {
+                    //存在 key，然后 +1
+                    map.put(ch[i], map.get(ch[i]) + 1);
+                } else {
+                    //不存在，放到 map 当中
+                    map.put(ch[i], 1);
+                }
+            }
+            int max = 0;
+            for (char c = 'A'; c <= 'z'; c++) {
+                //字符是否在 map 当中
+                if (map.containsKey(c)) {
+                    if (map.get(c) % 2 == 0) {
+                        //出现 2 次，直接加进去
+                        max += map.get(c);
+                    } else if (map.get(c) > 2) {
+                        //大于 2 次，-1 就变成偶数次了
+                        max += map.get(c) - 1;
+                    }
+                }
+            }
+            if (max < s.length()) {
+                //有奇数的情况，奇数放到最中间，再 +1
+                max += 1;
+            }
+            return max;
+        }
+    }
+
+    //盛最多水的容器
+    class Solution {
+        public int maxArea(int[] height) {
+            int left = 0;
+            int right = height.length - 1;
+            int max = 0;
+            while(left < right) {
+                if(height[left] < height[right]) {
+                    max = Math.max(max, (right - left) * height[left]);
+                    left++;
+                } else {
+                    max = Math.max(max, (right - left) * height[right]);
+                    right--;
+                }
+            }
+            return max;
+        }
+    }
+
     //将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序
     class Solution {
         public void moveZeroes(int[] nums) {
