@@ -1,6 +1,60 @@
+import java.net.Inet4Address;
 import java.util.*;
 
 public class Main {
+
+    //接雨水
+    class Solution {
+        public int trap(int[] height) {
+            int maxRain = 0;
+            Deque<Integer> queue = new ArrayDeque<>();
+            int n = height.length;
+            for(int i = 0; i < n; i++) {
+                while(!queue.isEmpty() && height[i] > height[queue.peek()]) {
+                    //单调栈上面的元素比下面大了
+                    int top = queue.poll();
+                    if(queue.isEmpty()) {
+                        break;
+                    }
+                    int left = queue.peek();
+                    //水池的宽度
+                    int width = i - left - 1;
+                    int high = Math.min(height[left], height[i]) - height[top];
+                    maxRain += width * high;
+                }
+                queue.push(i);
+            }
+            return maxRain;
+        }
+    }
+
+    //滑动窗口的最大值
+    class Solution {
+        public int[] maxSlidingWindow(int[] nums, int k) {
+            if (nums == null || k < 1 || nums.length < k) {
+                return null;
+            }
+            Deque<Integer> queue = new ArrayDeque<>();
+            int[] arr = new int[nums.length - k + 1];
+            int index = 0;
+            for (int i = 0; i < nums.length; i++) {
+                while (!queue.isEmpty() && nums[queue.peekLast()] <= nums[i]) {
+                    queue.pollLast();
+                }
+                //小的都清理掉了，放入大的
+                queue.addLast(i);
+                if (queue.peekFirst() == i - k) {
+                    //窗口过期的部分
+                    queue.pollFirst();
+                }
+                if (i >= k - 1) {
+                    //达到窗口大小
+                    arr[index++] = nums[queue.peekFirst()];
+                }
+            }
+            return arr;
+        }
+    }
 
     //最长回文串
     class Solution {
