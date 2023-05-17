@@ -3,6 +3,71 @@ import java.util.*;
 
 public class Main {
 
+    //机器人走路，优化之后（记忆化搜索，就是调用到了之前的位置，直接返回之前记录的值就好了）
+    // 有两个可变参数是可以确定的，就是 k 和 s ，     k：还剩几步， s：当前位置
+    class Solution {
+        public int func(int n, int e, int k, int s, int[][] dp) {
+            if (dp[k][s] != -1) {
+                //之前算过这个逻辑，所以就不用再去算了，直接返回之前算好的值就可以了
+                return dp[k][s];
+            }
+            //缓存没命中
+            if (k == 0) {
+                //步数走完了
+                //记录缓存
+                dp[k][s] = s == e ? 1 : 0;
+                return dp[k][s];
+            }
+
+            //还有步数可以走
+            if (s == 1) {
+                //到最左边了，所以 s 是 2
+                dp[k][s] = func(n, e, k - 1, 2, dp);
+                return dp[k][s];
+            } else if (s == n) {
+                //到最右边了，所以 s 是 n - 1
+                dp[k][s] = func(n, e, k - 1, n - 1, dp);
+                return dp[k][s];
+            } else {
+                dp[k][s] = func(n, e, k - 1, s - 1, dp) + func(n, e, k - 1, s + 1, dp);
+            }
+            return dp[k][s];
+        }
+        public int walkWays(int n, int e, int s, int k) {
+            //因为加了缓存，而且有两个参数，所以就要加一个二维表，第一个是 k ，所以 k + 1 就可以了
+            // 第二个是当前位置，在 1 - n 的格子上面，所以是 n + 1
+            int[][] dp = new int[k + 1][n + 1];
+            for (int i = 0; i < dp.length; i++) {
+                for (int j = 0; j < dp[0].length; j++) {
+                    dp[i][j] = -1;
+                }
+            }
+            return func(n, e, k, s, dp);
+        }
+    }
+    
+    //机器人走路，从开始走到结束位置（一维，有 1-N 段路），走 n 步，有多少种走法
+    // 可优化的点：如果之后又调用到了之前的位置，直接拿之前位置的记录值就可以了
+    class Solution {
+        public int func(int n, int e, int k, int s) {
+            if (k == 0) {
+                return s == e ? 1 : 0;
+            }
+            if (s == 1) {
+                //到最左边了，所以 s 是 2
+                return func(n, e, k - 1, 2);
+            }
+            if (s == n) {
+                //到最右边了，所以 s 是 n - 1
+                return func(n, e, k - 1, n - 1);
+            }
+            return func(n, e, k - 1, s - 1) + func(n, e, k - 1, s + 1);
+        }
+        public int walkWays(int n, int e, int s, int k) {
+            return func(n, e, k, s);
+        }
+    }
+
     //接雨水
     class Solution {
         public int trap(int[] height) {
