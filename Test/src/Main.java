@@ -3,6 +3,86 @@ import java.util.*;
 
 public class Main {
 
+    //兑换零钱, dp 优化
+    //给定数组arr，arr中所有的值都为正整数且不重复。每个值代表一种面值的货币，
+    // 每种面值的货币可以使用任意张，再给定一个aim，代表要找的钱数，求组成aim的最少货币数。
+    class Solution {
+        public int func(int[] arr, int index, int aim, int[][] dp) {
+            if (aim < 0) {
+                return -1;
+            }
+            if (dp[index][aim] != -2) {
+                return dp[index][aim];
+            }
+
+            if (aim == 0) {
+                dp[index][aim] = 0;
+            } else if (index == arr.length) {
+                dp[index][aim] = -1;
+            } else {
+                int p1 = func(arr, index + 1, aim, dp);
+                int p2 = func(arr, index + 1, aim - arr[index], dp) + 1;
+
+                if (p1 == -1 && p2 == -1) {
+                    dp[index][aim] = -1;
+                } else {
+                    if (p1 == -1) {
+                        dp[index][aim] = p2 + 1;
+                    }
+                    if (p2 == -1) {
+                        dp[index][aim] = p1;
+                    }
+                    dp[index][aim] = Math.min(p1, p2 + 1);
+                }
+            }
+            return dp[index][aim];
+        }
+        public int minCoins(int[] arr, int aim) {
+            int[][] dp = new int[arr.length - 1][aim + 1];
+            for (int i = 0; i < dp.length; i++) {
+                for (int j = 0; j <= aim; j++) {
+                    dp[i][j] = -2;
+                }
+            }
+            return func(arr, 0, aim, dp);
+        }
+    }
+
+    //兑换零钱
+    //给定数组arr，arr中所有的值都为正整数且不重复。每个值代表一种面值的货币，
+    // 每种面值的货币可以使用任意张，再给定一个aim，代表要找的钱数，求组成aim的最少货币数。
+    class Solution {
+        public int func(int[] arr, int index, int aim) {
+            if (aim < 0) {
+                return -1;
+            }
+            if (aim == 0) {
+                return 0;
+            }
+            //没凑够钱，没硬币
+            if (index == arr.length) {
+                return -1;
+            }
+            //没凑够钱，有硬币
+            int p1 = func(arr, index + 1, aim);
+            int p2 = func(arr, index + 1, aim - arr[index]) + 1;
+            if (p1 == -1 && p2 == -1) {
+                return -1;
+            } else {
+                if (p1 == -1) {
+                    return p2 + 1;
+                }
+                if (p2 == -1) {
+                    return p1;
+                }
+                return Math.min(p1, p2 + 1);
+            }
+        }
+        public int minCoins(int[] arr, int aim) {
+            return func(arr, 0, aim);
+        }
+    }
+
     //机器人走路，优化之后（记忆化搜索，就是调用到了之前的位置，直接返回之前记录的值就好了）
     // 有两个可变参数是可以确定的，就是 k 和 s ，     k：还剩几步， s：当前位置
     class Solution {
