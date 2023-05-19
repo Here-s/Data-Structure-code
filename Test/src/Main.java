@@ -3,6 +3,67 @@ import java.util.*;
 
 public class Main {
 
+    //二维数组的查找
+    public class Solution {
+        public boolean Find(int target, int [][] array) {
+            int i = array.length - 1;
+            int j = 0;
+            while(i >= 0 && j < array[0].length) {
+                if(array[i][j] > target) {
+                    i--;
+                } else if (array[i][j] < target) {
+                    j++;
+                } else {
+                    //找到了
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+
+    //最终版兑换零钱 dp
+    class Solution {
+        public int minCoins(int[] arr, int aim) {
+            int[][] dp = new int[arr.length - 1][aim + 1];
+            for (int i = 0; i < dp.length; i++) {
+                for (int j = 0; j <= aim; j++) {
+                    dp[i][j] = -2;
+                }
+            }
+            for (int i = 0; i <= arr.length; i++) {
+                dp[i][0] = 0;
+            }
+            for (int j = 1; j <= aim; j++) {
+                dp[arr.length][j] = 0;
+            }
+            for (int i = arr.length - 1; i >= 0; i--) {
+                for (int j = 1; j <= aim; j++) {
+                    //没凑够钱，有硬币
+                    int p1 = dp[i + 1][j];
+                    int p2 = -1;
+                    if (aim - arr[i] >= 0) {
+                        p2 = dp[i + 1][aim - arr[i]];
+                    }
+
+                    if (p1 == -1 && p2 == -1) {
+                        dp[i][j] = -1;
+                    } else {
+                        if (p1 == -1) {
+                            dp[i][j] = p2 + 1;
+                        }
+                        if (p2 == -1) {
+                            dp[i][j] = p1;
+                        }
+                        dp[i][j] = Math.min(p1, p2 + 1);
+                    }
+                }
+            }
+            return dp[0][aim];
+        }
+    }
+
     //兑换零钱, dp 优化
     //给定数组arr，arr中所有的值都为正整数且不重复。每个值代表一种面值的货币，
     // 每种面值的货币可以使用任意张，再给定一个aim，代表要找的钱数，求组成aim的最少货币数。
