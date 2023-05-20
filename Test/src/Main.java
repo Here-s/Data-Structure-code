@@ -3,6 +3,96 @@ import java.util.*;
 
 public class Main {
 
+    //按之字形打印二叉树
+    public class Solution {
+        public ArrayList Print(TreeNode pRoot) {
+            Deque<TreeNode> deque = new LinkedList<>();
+            ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+            if (pRoot != null) {
+                deque.add(pRoot);
+            }
+            while (!deque.isEmpty()) {
+                // 打印奇数层
+                ArrayList<Integer> tmp = new ArrayList<>();
+                for (int i = deque.size(); i > 0; i--) {
+                    // 从左向右打印
+                    TreeNode node = deque.removeFirst();
+                    tmp.add(node.val);
+                    // 先左后右加入下层节点
+                    if (node.left != null) {
+                        deque.addLast(node.left);
+                    }
+                    if (node.right != null) {
+                        deque.addLast(node.right);
+                    }
+                }
+                res.add(tmp);
+                if (deque.isEmpty()) break; // 若为空则提前跳出
+                // 打印偶数层
+                tmp = new ArrayList<>();
+                for (int i = deque.size(); i > 0; i--) {
+                    // 从右向左打印
+                    TreeNode node = deque.removeLast();
+                    tmp.add(node.val);
+                    // 先右后左加入下层节点
+                    if (node.right != null) {
+                        deque.addFirst(node.right);
+                    }
+                    if (node.left != null) {
+                        deque.addFirst(node.left);
+                    }
+                }
+                res.add(tmp);
+            }
+            return res;
+        }
+    }
+
+    //数组中的逆序对
+    public class Solution {
+        int num = 0;
+        public int InversePairs(int [] array) {
+            int[] temp = new int[array.length];//在排序前，先建好一个长度等于原数组长度的临时数组，避免递归中频繁开辟空间
+            sort(array, 0, array.length - 1, temp);
+            return num;
+        }
+        private  void sort(int[] array, int left, int right, int []temp) {
+            if (left < right) {
+                int mid = (left + right) / 2;
+                sort(array, left, mid, temp); //左边归并排序，使得左子序列有序
+                sort(array, mid + 1, right,
+                        temp); //右边归并排序，使得右子序列有序
+                merge(array, left, mid, right, temp); //将两个有序子数组合并操作
+            }
+        }
+        private  void merge(int[] array, int left, int mid, int right, int[] temp) {
+            int i = left;//左序列指针
+            int j = mid + 1; //右序列指针
+            int t = 0;//临时数组指针
+            while (i <= mid && j <= right) {
+                if (array[i] <= array[j]) {
+                    temp[t++] = array[i++];
+                } else {
+                    temp[t++] = array[j++];
+                    num = (num + mid - i + 1) % 1000000007;
+                }
+            }
+
+            while (i <= mid) { //将左边剩余元素填充进temp中
+                temp[t++] = array[i++];
+            }
+            while (j <= right) { //将右序列剩余元素填充进temp中
+                temp[t++] = array[j++];
+            }
+            t = 0;
+            //将temp中的元素全部拷贝到原数组中
+            while (left <= right) {
+                array[left++] = temp[t++];
+            }
+        }
+    }
+
+
     //二维数组的查找
     public class Solution {
         public boolean Find(int target, int [][] array) {
