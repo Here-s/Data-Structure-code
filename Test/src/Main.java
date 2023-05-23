@@ -1,7 +1,186 @@
-import java.net.Inet4Address;
 import java.util.*;
 
 public class Main {
+
+    //一个数组，里面都是正数，而且没有重复值，一个位置的值，代表一个面值的货币
+    // 数组的值代表可以使用当前面值的货币，货币可以无限使用，要组出一个钱数，有多少种方法
+    // dp 版本
+    class Solution {
+        public int way(int[] arr, int aim) {
+            return process(arr, 0, aim);
+        }
+    }
+
+    //一个数组，里面都是正数，而且没有重复值，一个位置的值，代表一个面值的货币
+    // 数组的值代表可以使用当前面值的货币，货币可以无限使用，要组出一个钱数，有多少种方法
+    class Solution {
+        //随便使用 index 位置的钱
+        public int process(int[] arr, int index, int aim) {
+            if (index == arr.length) {
+                return aim == 0 ? 1 : 0;
+            }
+            int ways = 0;
+            //arr[index] 加起来不能超过 aim
+            for (int num = 0; num * arr[index] <= aim; num++) {
+                ways += process(arr, index + 1, aim - arr[index] * num);
+            }
+            return ways;
+        }
+        public int way(int[] arr, int aim) {
+            return process(arr, 0, aim);
+        }
+    }
+
+    //给定一个 x 行，y 列的数组，一个人在 n，m 位置，然后给一个参数 k，
+    // 这个人每次都可以 上下左右 四个方向走，等概率随机，求最后活下来的概率，只要越界，就会死掉
+    class Solution {
+        //n * m 的区域，从 row, col 出发，走 k 步之后，获得的生存次数
+        public long process(int n, int m, int row, int col, int k) {
+            if (row < 0 || row == n || col < 0 || col == m) {
+                return 0;
+            }
+            //走完了，并且 row, col 没越界
+            if (k == 0) {
+                return 1;
+            }
+            //没走完，并且没越界
+            long live = process(n, m, row - 1, col, k - 1);
+            live += process(n, m, row + 1, col, k - 1);
+            live += process(n, m, row, col - 1, k - 1);
+            live += process(n, m, row, col + 1, k - 1);
+            return  live;
+        }
+        public long gcd(long m, long n) {
+            return n == 0? m: gcd(n, m % n);
+        }
+        public String live(int n, int m, int i, int j, int k) {
+            long num = (long)Math.pow(4, k);
+            long live = process(n, m, i, j, k);
+            long gcd = gcd(num, live);
+            return String.valueOf((live / gcd) + "/" + (num / gcd));
+        }
+    }
+
+    //象棋的马在指定位置出发，然后跳到指定位置，必须跳 n 步，有多少种跳法
+    // dp 版本
+    class Solution {
+        public int getValue(int[][][] dp, int row, int col, int step) {
+            if(row < 0 || row > 8 || col < 0 || col > 9) {
+                return 0;
+            }
+            return dp[row][col][step];
+        }
+        //x 有 9 个格子，y 有 10 个格子
+        public int houseJump(int x, int y, int n) {
+            if(x < 0 || x > 8 || y < 0 || y > 9) {
+                return 0;
+            }
+            int[][][] dp = new int[9][10][n + 1];
+            dp[0][0][0] = 1;
+            for (int h = 1; h < n + 1; h++) {
+                for (int r = 0; r < 9; r++) {
+                    for (int c = 0; c < 10; c++) {
+                        dp[r][c][h] = getValue(dp, x + 1, y + 2, n - 1);
+                        dp[r][c][h] = getValue(dp, x + 1, y - 2, n - 1);
+                        dp[r][c][h] = getValue(dp, x + 2, y + 1, n - 1);
+                        dp[r][c][h] = getValue(dp, x + 2, y - 1, n - 1);
+                        dp[r][c][h] = getValue(dp, x - 1, y + 2, n - 1);
+                        dp[r][c][h] = getValue(dp, x - 1, y - 2, n - 1);
+                        dp[r][c][h] = getValue(dp, x - 2, y - 1, n - 1);
+                        dp[r][c][h] = getValue(dp, x - 2, y + 1, n - 1);
+                    }
+                }
+            }
+            return dp[x][y][n];
+        }
+    }
+
+    //象棋的马在指定位置出发，然后跳到指定位置，必须跳 n 步，有多少种跳法
+    class Solution {
+        //潜台词：从（0，0）位置出发，跳到（x，y）位置，必须跳 n 步。所以从 x，y 位置跳回 0，0 也可以
+        public int process(int x, int y, int n) {
+            if(x < 0 || x > 8 || y < 0 || y > 9) {
+                return 0;
+            }
+            if (n == 0) {
+                if (x == 0 && y == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+            return process(x + 1, y + 2, n - 1) +
+                    process(x + 1, y - 2, n - 1) +
+                    process(x + 2, y + 1, n - 1) +
+                    process(x + 2, y - 1, n - 1) +
+                    process(x - 1, y + 2, n - 1) +
+                    process(x - 1, y - 2, n - 1) +
+                    process(x - 2, y - 1, n - 1) +
+                    process(x - 2, y + 1, n - 1);
+        }
+        //x 有 9 个格子，y 有 10 个格子
+        public int houseJump(int x, int y, int n) {
+            return process(x, y, n);
+        }
+    }
+
+    //两人从数组里面左边或者右边拿数字，拿到最大的是赢家，求先手能获得的最优分数是多少
+    /**
+     * 动态规划版本
+     */
+    class Solution {
+        public int win(int[] arr) {
+            if(arr == null || arr.length == 0) {
+                return -1;
+            }
+            int[][] f = new int[arr.length][arr.length];
+            int[][] s = new int[arr.length][arr.length];
+            for (int i = 0; i < arr.length; i++) {
+                f[i][i] = arr[i];
+            }
+            int row = 0;
+            int col = 1;
+            //对角线开始填信息
+            while (col < arr.length) {
+                int i = row;
+                int j = col;
+                while (i < arr.length && j < arr.length) {
+                    f[i][i] = Math.max(arr[i] + s[i + 1][j], arr[j] + s[i][j - 1]);
+                    s[i][j] = Math.min(f[i + 1][j], f[i][j - 1]);
+                    i++;
+                    j++;
+                }
+                col++;
+            }
+            return Math.max(f[0][arr.length - 1], s[0][arr.length - 1]);
+        }
+    }
+
+    //两人从数组里面左边或者右边拿数字，拿到最大的是赢家，求先手能获得的最优分数是多少
+    class Solution {
+        //这里是后手拿
+        public int s(int[] arr, int i, int j) {
+            if (i == j) {
+                return 0;
+            }
+            //i - j 选最小，因为对手会把最小的留出来
+            return  Math.min(func(arr, i + 1, j), func(arr, i, j - 1));
+        }
+        //这里是先手拿
+        public int func(int[] arr, int i, int j) {
+            if (i == j) {
+                return arr[i];
+            }
+            //i - j 选最大
+            return Math.max(arr[i] + s(arr, i + 1, j), arr[j] + s(arr, i, j - 1));
+        }
+        public int win(int[] arr) {
+            if(arr == null || arr.length == 0) {
+                return -1;
+            }
+            return Math.max(func(arr, 0, arr.length - 1), s(arr, 0, arr.length - 1));
+        }
+    }
 
     //按之字形打印二叉树
     public class Solution {
