@@ -2,12 +2,95 @@ import java.util.*;
 
 public class Main {
 
+    //寻找第 k 大的元素
+    public class Solution {
+        public int findKth(int[] a, int n, int K) {
+            if(a.length == 0) {
+                return -1;
+            }
+            PriorityQueue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
+                @Override
+                public int compare(Integer o1, Integer o2) {
+                    return o2-o1;
+                }
+            });
+
+            for(int i = 0; i < a.length; i++) {
+                queue.add(a[i]);
+            }
+
+            for(int i = 1; i <K ; i++) {
+                queue.poll();
+            }
+            return queue.poll();
+        }
+    }
+
+    //最小的 k 个数
+    public class Solution {
+        public ArrayList<Integer> GetLeastNumbers_Solution(int [] input, int k) {
+            ArrayList<Integer> list = new ArrayList<>();
+            if(input.length == 0) {
+                return list;
+            }
+            Queue<Integer> queue = new PriorityQueue<>();
+            for(int i = 0; i < input.length; i++) {
+                queue.add(input[i]);
+            }
+            for(int i = 0; i < k; i++) {
+                list.add(queue.poll());
+            }
+            return list;
+        }
+    }
+
+    //滑动窗口最大值
+    public class Solution {
+        public ArrayList<Integer> maxInWindows(int [] num, int size) {
+            Deque<Integer> queue = new ArrayDeque<>();
+            ArrayList<Integer> list = new ArrayList<>();
+            if(size == 0) {
+                return list;
+            }
+            //放入的是下标，方便比较
+            for (int i = 0; i < num.length; i++) {
+                while(!queue.isEmpty() && num[queue.peekLast()] < num[i]) {
+                    queue.pollLast();
+                }
+                queue.add(i);
+                if(queue.peekFirst() == i - size) {
+                    //窗口前面应该缩小了
+                    queue.pollFirst();
+                }
+                //达到窗口大小
+                if(i >= size - 1) {
+                    list.add(num[queue.peekFirst()]);
+                }
+            }
+            return list;
+        }
+    }
+
     //一个数组，里面都是正数，而且没有重复值，一个位置的值，代表一个面值的货币
     // 数组的值代表可以使用当前面值的货币，货币可以无限使用，要组出一个钱数，有多少种方法
     // dp 版本
     class Solution {
         public int way(int[] arr, int aim) {
-            return process(arr, 0, aim);
+            if (arr.length == 0) {
+                return 0;
+            }
+            int n = arr.length;
+            int[][] dp = new int[n + 1][aim + 1];
+            dp[n][0] = 1;
+            for (int index = n - 1; index >= 0; index--) {
+                for (int col = 0; col <= aim; col++) {
+                    dp[index][aim] = dp[index + 1][aim];
+                    if (aim - arr[index] >= 0) {
+                        dp[index][aim] += dp[index][aim - arr[index]];
+                    }
+                }
+            }
+            return dp[0][aim];
         }
     }
 
